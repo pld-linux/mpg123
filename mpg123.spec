@@ -2,6 +2,8 @@
 # Conditional build:
 # _with_mmx	- use MMX to decode stream (won't run without MMX)
 #
+# _without_esound	-  enable ESD support
+
 Summary:	MPEG audio player
 Summary(es):	Ejecuta archivos MP3
 Summary(pl):	Odtwarzacz plików audio MPEG
@@ -20,7 +22,7 @@ Patch2:		%{name}-audio_sun.patch
 Patch3:		%{name}-security.patch
 Patch4:		%{name}-id3v2-hack.patch
 URL:		http://www.mpg123.de/
-BuildRequires:	esound-devel
+%{!?_without_esound:BuildRequires:	esound-devel}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %ifarch %{ix86}
@@ -102,7 +104,7 @@ Wersja z wyj¶ciem na ESD.
 %prep
 %setup -q -n %{name}
 %patch0 -p1
-%patch1 -p1
+%{!?_without_esound:%patch1 -p1}
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
@@ -112,17 +114,20 @@ Wersja z wyj¶ciem na ESD.
 	OPT_FLAGS="%{rpmcflags} %{!?debug:-fomit-frame-pointer} -DINET6"
 
 mv -f mpg123 mpg123.base
-
+%if %{!?_without_esound:1}%{?_without_esound:0}
 %{__make} clean
 %{__make} %{trgt}-esd \
 	OPT_FLAGS="%{rpmcflags} %{!?debug:-fomit-frame-pointer} -DINET6"
+%endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_mandir}/man1}
 
 install %{name}.base	$RPM_BUILD_ROOT%{_bindir}/%{name}
+%if %{!?_without_esound:1}%{?_without_esound:0}
 install %{name}		$RPM_BUILD_ROOT%{_bindir}/%{name}-esd
+%endif
 install %{name}.1	$RPM_BUILD_ROOT%{_mandir}/man1
 
 %clean
@@ -139,4 +144,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %files esd
 %defattr(644,root,root,755)
+%if %{!?_without_esound:1}%{?_without_esound:0}
 %attr(755,root,root) %{_bindir}/%{name}-esd
+%endif
