@@ -9,7 +9,7 @@ Source:      http://www-ti.informatik.uni-tuebingen.de/~hippm/mpg123/%{name}-%{v
 Patch0:      mpg123-opts.patch
 Patch1:      mpg123-sparc.patch
 URL:         http://www-ti.informatik.uni-tuebingen.de/~hippm/mpg123.html
-Buildroot:   /tmp/%{name}-%{version}-root
+Buildroot:   /tmp/buildroot-%{name}-%{version}
 
 %description
 Mpg123 is a fast, free(for non-commercial use) and portable MPEG audio
