@@ -11,7 +11,7 @@ Summary(ru):	ğÒÏÉÇÒÙ×ÁÔÅÌØ MPEG ÁÕÄÉÏÆÁÊÌÏ×
 Summary(uk):	ğÒÏÇÒÁ×ÁŞ MPEG ÁÕÄ¦ÏÆÁÊÌ¦×
 Name:		mpg123
 Version:	0.59s
-Release:	0.pre.6.1
+Release:	0.pre.6.2
 Group:		Applications/Sound
 License:	freely distributable for non-commercial use, GPL (mpglib)
 Source0:	http://www.mpg123.de/mpg123/%{name}-pre%{version}.tar.gz
@@ -23,6 +23,7 @@ Patch3:		%{name}-security.patch
 Patch4:		%{name}-id3v2-hack.patch
 Patch5:		%{name}-http-overflow.patch
 Patch6:		%{name}-layer2-overflow.patch
+Patch7:		%{name}-bufoverflow.patch
 URL:		http://www.mpg123.de/
 %{?with_esd:BuildRequires:	esound-devel}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -56,7 +57,7 @@ Ejecuta archivos MP3.
 
 %description -l pl
 Mpg123 jest szybkim, darmowym (do celów niekomercyjnych) oraz
-uniwersalnym dekoderem plików d¼wiêkowych MPEG dla systemów unixowych.
+uniwersalnym dekoderem plików d¼wiêkowych MPEG dla systemów uniksowych.
 Obs³uguje standard MPEG 1.0/2.0 warstwy 1, 2 oraz 3 (s³ynne "mp3"). Do
 uzyskania pe³nej jako¶ci CD wymagany jest silny procesor (Pentium,
 SPARCstation10, DEC Alpha lub podobny). Ni¿sz± jako¶æ (22 lub 11 kHz)
@@ -114,6 +115,7 @@ Wersja z wyj¶ciem na ESD.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p0
+%patch7 -p1
 
 %build
 %{__make} %{trgt} \
