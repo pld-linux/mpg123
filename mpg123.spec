@@ -54,7 +54,7 @@ even possible on 486 CPUs.
 
 Version for ESD output.
 
-%description -l pl esd
+%description esd -l pl
 Mpg123 jest szybkim, darmowym (do celów niekomercyjnych) oraz
 uniwersalnym dekoderem plików d¼wiêkowych MPEG dla systemów unixowych.
 Obs³uguje standart MPEG 1.0/2.0 warstwy 1, 2 oraz 3 (s³ynne "mp3"). Do
@@ -73,7 +73,7 @@ Wersja z wyj¶ciem na ESD.
 
 %build
 %ifarch %{ix86}
-%{__make} OPT_FLAGS="%{rpmcflags} -DINET6" linux 
+%{__make} OPT_FLAGS="%{rpmcflags} -DINET6" linux
 %else
 %{__make} OPT_FLAGS="%{rpmcflags} -DINET6" linux-%{_target_cpu}
 %endif
