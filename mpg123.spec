@@ -4,7 +4,7 @@ Summary(pl):	Odtwarzacz plików audio MPEG
 Summary(pt_BR):	Tocador de arquivos MP3
 Name:		mpg123
 Version:	0.59r
-Release:	5
+Release:	6
 Group:		Applications/Sound
 Group(de):	Applikationen/Laut
 Group(es):	Aplicaciones/Sonido
