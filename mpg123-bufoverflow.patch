@@ -1,0 +1,39 @@
+--- mpg123/httpget.c	2000-10-30 18:45:12.000000000 +0100
++++ mpg123.new/httpget.c	2004-10-26 00:30:26.808354344 +0200
+@@ -130,6 +130,12 @@
+       if( url[i] == '/' )
+          return 0;
+     }
++    
++    if(pos-url > 255)
++    {
++	    fprintf(stderr,"Error: URL too long!\n");
++	    exit(1);
++    }
+     strncpy(auth,url,pos-url);
+     auth[pos-url] = 0;
+     strcpy(url,pos+1);
+@@ -333,6 +339,11 @@
+ 			}
+ 			strcat (request, sptr);
+ 		}
++		if((strlen(request) + 26 + strlen(prgName) + strlen(prgVersion))> linelength)
++		{
++			fprintf(stderr,"Error: Request too long!\n");
++			exit(1);
++		}
+ 		sprintf (request + strlen(request),
+ 			" HTTP/1.0\r\nUser-Agent: %s/%s\r\n",
+ 			prgName, prgVersion);
+@@ -402,6 +413,11 @@
+                           encode64(httpauth1,buf);
+                         else
+ 			  encode64(httpauth,buf);
++			if((strlen(request) + strlen(buf) + 4) > linelength)
++			{
++				fprintf(stderr,"Error: Request too long!\n");
++				exit(1);
++			}
+ 			strcat (request,buf);
+ 			strcat (request,"\r\n");
+ 		}
