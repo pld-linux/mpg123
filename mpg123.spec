@@ -10,7 +10,7 @@ Source:		http://www.mpg123.de/mpg123/%{name}-%{version}.tar.gz
 Patch0:		ftp://ftp.kame.net/pub/kame/misc/mpg123-059r-v6-20000111.diff.gz
 Patch1:		mpg123-makefile.patch
 URL:		http://www.mpg123.de/
-Buildroot:	/tmp/%{name}-%{version}-root
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 Mpg123 is a fast, free(for non-commercial use) and portable MPEG audio
