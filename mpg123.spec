@@ -4,7 +4,7 @@ Summary(pl):	Odtwarzacz plików audio MPEG
 Summary(pt_BR):	Tocador de arquivos MP3
 Name:		mpg123
 Version:	0.59r
-Release:	6
+Release:	7
 Group:		Applications/Sound
 License:	freely distributable for non-commercial use, GPL (mpglib)
 Source0:	http://www.mpg123.de/mpg123/%{name}-%{version}.tar.gz
@@ -95,14 +95,12 @@ install %{name}.base	$RPM_BUILD_ROOT%{_bindir}/%{name}
 install %{name}		$RPM_BUILD_ROOT%{_bindir}/%{name}-esd
 install %{name}.1	$RPM_BUILD_ROOT%{_mandir}/man1
 
-gzip -9nf BUGS COPYING CHANGES JUKEBOX README BENCHMARKING README.remote TODO
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc *.gz
+%doc BUGS COPYING CHANGES JUKEBOX README BENCHMARKING README.remote TODO
 
 %attr(755,root,root) %{_bindir}/%{name}
 %{_mandir}/man1/*
