@@ -4,12 +4,13 @@ Name:        mpg123
 Version:     0.59o
 Release:     5
 Group:       Applications/Sound
+Group(pl):   Aplikacje/D¼wiêk
 Copyright:   Freely distributable for non-commercial use
 Source:      http://www-ti.informatik.uni-tuebingen.de/~hippm/mpg123/%{name}-%{version}.tar.gz
 Patch0:      mpg123-opts.patch
 Patch1:      mpg123-sparc.patch
 URL:         http://www-ti.informatik.uni-tuebingen.de/~hippm/mpg123.html
-Buildroot:   /tmp/buildroot-%{name}-%{version}
+Buildroot:   /tmp/%{name}-%{version}-root
 
 %description
 Mpg123 is a fast, free(for non-commercial use) and portable MPEG audio
@@ -22,7 +23,7 @@ reduced quality playback (22 kHz or 11 kHz) is even possible on 486 CPUs.
 Mpg123 jest szybkim, darmowym (przy u¿ytku niekomercyjnym) oraz uniwersalnym
 dekoderem plików d¼wiêkowych MPEG dla systemów Unixowych.  Obs³uguje
 standart MPEG 1.0/2.0 warstwy 1, 2 oraz 3 (s³ynne "mp3").  Do uzyskania
-pe³nej jako¶ci CD wymagany jest sliny procesor (Pentium, SPARCstation10, DEC
+pe³nej jako¶ci CD wymagany jest silny procesor (Pentium, SPARCstation10, DEC
 Alpha lub podobny). Ni¿sz± jako¶æ (22 lub 11 kHz) mo¿na uzyskaæ ju¿ na
 procesorach 486.
 
@@ -44,14 +45,17 @@ install -d $RPM_BUILD_ROOT/usr/{bin,man/man1}
 install mpg123 $RPM_BUILD_ROOT/usr/bin
 install mpg123.1 $RPM_BUILD_ROOT/usr/man/man1
 
+gzip -9nf BUGS COPYING CHANGES JUKEBOX README \
+	$RPM_BUILD_ROOT/usr/man/man1/mpg123.1
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
-%defattr(644, root, root, 755)
-%doc BUGS COPYING CHANGES JUKEBOX README 
-%attr(755, root, root) /usr/bin/mpg123
-%attr(644, root,  man) /usr/man/man1/mpg123.1
+%defattr(644,root,root,755)
+%doc {BUGS,COPYING,CHANGES,JUKEBOX,README}.gz 
+%attr(755,root,root) /usr/bin/mpg123
+/usr/man/man1/mpg123.1.gz
 
 %changelog
 * Fri Nov 27 1998 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
