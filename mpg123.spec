@@ -11,7 +11,7 @@ Summary(ru):	Проигрыватель MPEG аудиофайлов
 Summary(uk):	Програвач MPEG ауд╕офайл╕в
 Name:		mpg123
 Version:	0.59s
-Release:	0.pre.5
+Release:	0.pre.6
 Group:		Applications/Sound
 License:	freely distributable for non-commercial use, GPL (mpglib)
 Source0:	http://www.mpg123.de/mpg123/%{name}-pre%{version}.tar.gz
@@ -31,7 +31,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		trgt	linux-3dnow
 %else
 %ifarch i586 i686
-%define		trgt	linux%{?_with_mmx:-mmx}
+%define		trgt	linux%{?with_mmx:-mmx}
 %else
 %define		trgt	linux-i486
 %endif
