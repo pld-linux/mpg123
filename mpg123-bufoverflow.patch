@@ -17,7 +17,7 @@
  			}
  			strcat (request, sptr);
  		}
-+		if((strlen(request) + 28 + strlen(prgName) + strlen(prgVersion))> sizeof(request))
++		if((strlen(request) + 26 + strlen(prgName) + strlen(prgVersion))> linelength)
 +		{
 +			fprintf(stderr,"Error: Request too long!\n");
 +			exit(1);
@@ -29,9 +29,9 @@
                            encode64(httpauth1,buf);
                          else
  			  encode64(httpauth,buf);
-+			if((strlen(request) + strlen(buf) + 4) > sizeof(request))
++			if((strlen(request) + strlen(buf) + 4) > linelength)
 +			{
-+				fprintf(stderr,"Error: Request too long.\n");
++				fprintf(stderr,"Error: Request too long!\n");
 +				exit(1);
 +			}
  			strcat (request,buf);
