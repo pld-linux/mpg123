@@ -1,7 +1,7 @@
 #
 # Conditional build:
-# _with_mmx		- use MMX to decode stream (won't run without MMX)
-# _without_esd		- don't build esound subpackage
+%bcond_with	mmx	# use MMX to decode stream (won't run without MMX)
+%bcond_without	esd	# don't build esound subpackage
 #
 Summary:	MPEG audio player
 Summary(es):	Ejecuta archivos MP3
@@ -11,7 +11,7 @@ Summary(ru):	Проигрыватель MPEG аудиофайлов
 Summary(uk):	Програвач MPEG ауд╕офайл╕в
 Name:		mpg123
 Version:	0.59s
-Release:	0.pre.2
+Release:	0.pre.3
 Group:		Applications/Sound
 License:	freely distributable for non-commercial use, GPL (mpglib)
 Source0:	http://www.mpg123.de/mpg123/%{name}-pre%{version}.tar.gz
@@ -21,8 +21,9 @@ Patch1:		%{name}-esd.patch
 Patch2:		%{name}-audio_sun.patch
 Patch3:		%{name}-security.patch
 Patch4:		%{name}-id3v2-hack.patch
+Patch5:		%{name}-http-overflow.patch
 URL:		http://www.mpg123.de/
-%{!?_without_esd:BuildRequires:	esound-devel}
+%{?with_esd:BuildRequires:	esound-devel}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %ifarch %{ix86}
@@ -38,8 +39,6 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %else
 %define		trgt	linux-%{_target_cpu}
 %endif
-
-%define		specflags	-fomit-frame-pointer
 
 %description
 Mpg123 is a fast, free(for non-commercial use) and portable MPEG audio
@@ -110,16 +109,17 @@ Wersja z wyj╤ciem na ESD.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %build
 %{__make} %{trgt} \
-	OPT_FLAGS="%{rpmcflags} -DINET6"
+	OPT_FLAGS="%{rpmcflags} %{!?debug:-fomit-frame-pointer} -DINET6"
 
 mv -f mpg123 mpg123.base
-%if %{!?_without_esd:1}%{?_without_esd:0}
+%if %{with esd}
 %{__make} clean
 %{__make} %{trgt}-esd \
-	OPT_FLAGS="%{rpmcflags} -DINET6"
+	OPT_FLAGS="%{rpmcflags} %{!?debug:-fomit-frame-pointer} -DINET6"
 %endif
 
 %install
@@ -127,7 +127,7 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_mandir}/man1}
 
 install %{name}.base	$RPM_BUILD_ROOT%{_bindir}/%{name}
-%if %{!?_without_esd:1}%{?_without_esd:0}
+%if %{with esd}
 install %{name}		$RPM_BUILD_ROOT%{_bindir}/%{name}-esd
 %endif
 install %{name}.1	$RPM_BUILD_ROOT%{_mandir}/man1
@@ -144,7 +144,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/%{name}
 %{_mandir}/man1/*
 
-%if 0%{!?_without_esd:1}
+%if %{with esd}
 %files esd
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/%{name}-esd
