@@ -1,30 +1,6 @@
---- mpg123-0.59r/Makefile.wiget	Tue Oct 19 13:04:00 1999
-+++ mpg123-0.59r/Makefile	Tue Oct 19 13:13:34 1999
-@@ -14,17 +14,17 @@
- CFLAGS+=-DINET6
- 
- ### KAME stack
--IPV6LIBDIR=-L/usr/local/v6/lib
--IPV6LIB=-linet6
--IPV6STACK="KAME"
-+#IPV6LIBDIR=-L/usr/local/v6/lib
-+#IPV6LIB=-linet6
-+#IPV6STACK="KAME"
- ### BSD/OS 4.0 (NRL) stack
- #IPV6LIBDIR=
- #IPV6LIB=
- #IPV6STACK="BSD/OS 4.0"
- ### Linux stack
--#IPV6LIBDIR= #/usr/inet6/lib
--#IPV6LIB= #-linet6
--#IPV6STACK="Linux"
-+IPV6LIBDIR= 
-+IPV6LIB= 
-+IPV6STACK="Linux"
- 
- ###################################################
- ######                                       ######
-@@ -127,7 +127,7 @@
+--- mpg123-0.59r/Makefile.wiget	Mon Jan 10 23:36:19 2000
++++ mpg123-0.59r/Makefile	Mon Jan 10 23:36:19 2000
+@@ -123,7 +123,7 @@
  			audio_oss.o term.o' \
  		CFLAGS='$(CFLAGS) -DI386_ASSEM -DPENTIUM_OPT -DREAL_IS_FLOAT -DLINUX \
  			-DREAD_MMAP -DOSS -DTERM_CONTROL\
@@ -33,7 +9,7 @@
  			-fomit-frame-pointer -funroll-all-loops \
  			-finline-functions -ffast-math' \
  		mpg123-make
-@@ -138,7 +138,7 @@
+@@ -134,7 +134,7 @@
  			decode_3dnow.o audio_oss.o term.o' \
  		CFLAGS='$(CFLAGS) -DI386_ASSEM -DREAL_IS_FLOAT -DPENTIUM_OPT -DLINUX \
  			-DUSE_3DNOW -DREAD_MMAP -DOSS -DTERM_CONTROL\
@@ -42,7 +18,7 @@
  			-fomit-frame-pointer -funroll-all-loops \
  			-finline-functions -ffast-math' \
  		mpg123-make
-@@ -149,7 +149,7 @@
+@@ -145,7 +145,7 @@
  			decode_i486.o dct64_i486.o audio_oss.o term.o' \
  		CFLAGS='$(CFLAGS) -DI386_ASSEM -DREAL_IS_FLOAT -DI486_OPT -DLINUX \
  			-DREAD_MMAP -DOSS -DTERM_CONTROL\
@@ -51,7 +27,7 @@
  			-fomit-frame-pointer -funroll-all-loops \
  			-finline-functions -ffast-math' \
  		mpg123-make
-@@ -161,20 +161,20 @@
+@@ -157,20 +157,20 @@
  			audio_esd.o' \
  		CFLAGS='$(CFLAGS) -DI386_ASSEM -DREAL_IS_FLOAT -DPENTIUM_OPT -DLINUX \
  			-DREAD_MMAP -DOSS -DUSE_ESD \
@@ -75,7 +51,7 @@
  			-fomit-frame-pointer -funroll-all-loops \
  			-finline-functions -ffast-math \
  			$(RPM_OPT_FLAGS)' \
-@@ -185,30 +185,30 @@
+@@ -181,30 +181,30 @@
  		AUDIO_LIB='-lasound' \
  		OBJECTS='decode.o dct64.o audio_alsa.o term.o' \
  		CFLAGS='$(CFLAGS) -DREAL_IS_FLOAT -DLINUX -DREAD_MMAP -DALSA \
@@ -114,7 +90,7 @@
  		mpg123-make
  
  #linux-ppc:
-@@ -233,36 +233,40 @@
+@@ -229,36 +229,40 @@
  linux-ppc:
  	$(MAKE) CC=gcc  LDFLAGS= \
  		OBJECTS='decode.o dct64.o audio_oss.o' \
@@ -163,7 +139,7 @@
  		mpg123-make
  
  linux-sajber:
-@@ -282,9 +286,10 @@
+@@ -278,9 +282,10 @@
  		OBJECTS='decode_i386.o dct64_i386.o decode_i586.o \
  			control_sajber.o control_tk3play.o audio_oss.o' \
  		CFLAGS='$(CFLAGS) -DFRONTEND -DOSS -DI386_ASSEM -DREAL_IS_FLOAT \
@@ -176,7 +152,7 @@
  		$(FRONTEND)
  
  linux-nas:
-@@ -293,9 +298,10 @@
+@@ -289,9 +294,10 @@
  		OBJECTS='decode_i386.o dct64_i386.o audio_nas.o' \
  		CFLAGS='$(CFLAGS) -I/usr/X11R6/include \
  			-DI386_ASSEM -DREAL_IS_FLOAT -DLINUX -DNAS \
@@ -189,7 +165,7 @@
  		mpg123-make
  
  #### the following defines are for experimental use ... 
-@@ -396,7 +402,7 @@
+@@ -392,7 +398,7 @@
  			audio_oss.o' \
  		CFLAGS='$(CFLAGS) -DI386_ASSEM -DREAL_IS_FLOAT -DPENTIUM_OPT -DUSE_MMAP \
  			-DREAD_MMAP -DOSS \
@@ -198,7 +174,7 @@
  			-funroll-all-loops -finline-functions' \
  		mpg123-make
  
-@@ -557,7 +563,7 @@
+@@ -553,7 +559,7 @@
  # maybe you need the additonal options LDFLAGS='-lnsl -lsocket' when linking (see solaris:)
  generic:
  	$(MAKE) LDFLAGS= OBJECTS='decode.o dct64.o audio_dummy.o' \
