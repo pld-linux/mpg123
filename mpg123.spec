@@ -6,7 +6,7 @@ Release:	5
 Group:		Applications/Sound
 Group(de):	Applikationen/Laut
 Group(pl):	Aplikacje/D¼wiêk
-Copyright:	Freely distributable for non-commercial use, GPL (mpglib)
+License:	Freely distributable for non-commercial use, GPL (mpglib)
 Source0:	http://www.mpg123.de/mpg123/%{name}-%{version}.tar.gz
 Patch0:		ftp://ftp.kame.net/pub/kame/misc/%{name}-059r-v6-20000111.diff.gz
 Patch1:		%{name}-makefile.patch
@@ -61,8 +61,8 @@ Wersja z wyj¶ciem na ESD.
 %prep
 %setup -q
 %patch0 -p0
-%patch1 -p1 -b .wiget
-%patch2 -p1 -b .misiek
+%patch1 -p1
+%patch2 -p1
 
 %build
 %ifarch i386 i586 i686
@@ -71,7 +71,7 @@ Wersja z wyj¶ciem na ESD.
 %{__make} OPT_FLAGS="%{rpmcflags} -DINET6" linux-%{_target_cpu}
 %endif
 
-mv mpg123 mpg123.base
+mv -f mpg123 mpg123.base
 
 %{__make} clean
 %{__make} OPT_FLAGS="%{rpmcflags} -DINET6" linux-esd
