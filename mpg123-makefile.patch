@@ -1,5 +1,5 @@
---- mpg123/Makefile.orig	Tue Jan 23 19:00:46 2001
-+++ mpg123/Makefile	Tue Feb  4 23:03:44 2003
+--- mpg123/Makefile.orig	2001-01-23 19:00:46.000000000 +0100
++++ mpg123/Makefile	2004-08-11 22:12:56.477514479 +0200
 @@ -152,7 +152,7 @@
  linux-devel:
  	$(MAKE) OBJECTS='decode_i386.o dct64_i386.o audio_oss.o' \
@@ -175,7 +175,7 @@
  			-finline-functions -ffast-math' \
  		mpg123-make
  
-@@ -279,43 +302,39 @@
+@@ -279,45 +302,59 @@
  	$(MAKE) CC=gcc LDFLAGS= \
  		AUDIO_LIB='-lasound' \
  		OBJECTS='decode.o dct64.o audio_alsa.o term.o' \
@@ -232,8 +232,28 @@
 +			-Wall -DUSE_MMAP' \
  		mpg123-make
  
++linux-amd64:
++	$(MAKE) CC=gcc LDFLAGS= OBJECTS='decode.o dct64.o audio_oss.o' \
++		CFLAGS='$(CFLAGS) $(OPT_FLAGS) -DLINUX -DOSS -Wall \
++		       	-funroll-all-loops \
++			-finline-functions -ffast-math \
++			-DUSE_MMAP' \
++		mpg123-make
++		
++linux-amd64-esd:
++	$(MAKE) CC=gcc LDFLAGS= \
++		AUDIO_LIB='-lesd -laudiofile' \
++		OBJECTS='decode.o dct64.o audio_esd.o' \
++		CFLAGS='$(CFLAGS) $(OPT_FLAGS) -DLINUX -DOSS -DUSE_ESD -Wall \
++		       	-funroll-all-loops \
++			-finline-functions -ffast-math \
++			-DUSE_MMAP' \
++		mpg123-make
++		
  #linux-ppc:
-@@ -340,9 +359,9 @@
+ #	$(MAKE) CC=gcc  LDFLAGS= \
+ #		OBJECTS='decode.o dct64.o audio_oss.o' \
+@@ -340,9 +377,9 @@
  linux-ppc:
  	$(MAKE) CC=gcc  LDFLAGS= \
  		OBJECTS='decode.o dct64.o audio_oss.o' \
@@ -245,7 +265,7 @@
  			-finline-functions -ffast-math' \
  		mpg123-make
  
-@@ -350,17 +369,17 @@
+@@ -350,17 +387,17 @@
  	$(MAKE) CC=gcc  LDFLAGS= \
  		AUDIO_LIB='-lesd -laudiofile' \
  		OBJECTS='decode.o dct64.o audio_esd.o' \
@@ -267,7 +287,7 @@
  			-finline-functions -ffast-math' \
  		mpg123-make
  
-@@ -368,34 +387,34 @@
+@@ -368,34 +405,34 @@
  	$(MAKE) CC=gcc  LDFLAGS= \
  		AUDIO_LIB='-lesd -laudiofile' \
  		OBJECTS='decode.o dct64.o audio_esd.o' \
@@ -314,7 +334,7 @@
  			-finline-functions -ffast-math' \
  		mpg123-make
  
-@@ -415,9 +434,9 @@
+@@ -415,9 +452,9 @@
  	$(MAKE) CC=gcc LDFLAGS= \
  		OBJECTS='decode_i386.o dct64_i386.o decode_i586.o \
  			control_sajber.o control_tk3play.o audio_oss.o' \
@@ -327,7 +347,7 @@
  			-finline-functions -ffast-math' \
  		$(FRONTEND)
  
-@@ -425,10 +444,10 @@
+@@ -425,10 +462,10 @@
  	$(MAKE) CC=gcc LDFLAGS='-L/usr/X11R6/lib' \
  		AUDIO_LIB='-laudio -lXau' \
  		OBJECTS='decode_i386.o dct64_i386.o audio_nas.o' \
