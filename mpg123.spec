@@ -7,7 +7,7 @@ Group:		Applications/Sound
 Group(pl):	Aplikacje/D¼wiêk
 Copyright:	Freely distributable for non-commercial use
 Source:		http://www.mpg123.de/mpg123/%{name}-%{version}.tar.gz
-Patch0:		mpg123-059r-v6-19991007a.diff.gz
+Patch0:		ftp://ftp.kame.net/pub/kame/misc/mpg123-059r-v6-19991007a.diff.gz
 Patch1:		mpg123-makefile.patch
 URL:		http://www.mpg123.de/
 Buildroot:	/tmp/%{name}-%{version}-root
