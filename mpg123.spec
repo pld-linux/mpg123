@@ -43,9 +43,9 @@ make linux-%{_target_cpu}
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/usr/{bin,share/man/man1}
 install mpg123 $RPM_BUILD_ROOT/usr/bin
-install mpg123.1 $RPM_BUILD_ROOT/usr/share/man/man1
+install mpg123.1 $RPM_BUILD_ROOT%{_mandir}/man1
 
-gzip -9nf $RPM_BUILD_ROOT/usr/share/man/man1/* \
+gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man1/* \
 	BUGS COPYING CHANGES JUKEBOX README
 
 %clean
@@ -56,7 +56,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc {BUGS,COPYING,CHANGES,JUKEBOX,README}.gz
 
 %attr(755,root,root) /usr/bin/mpg123
-/usr/share/man/man1/mpg123.1.gz
+%{_mandir}/man1/mpg123.1.gz
 
 %changelog
 * Sun May  9 1999 Piotr Czerwiñski <pius@pld.org.pl>
