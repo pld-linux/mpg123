@@ -1,0 +1,24 @@
+--- mpg123/common.c.orig	Wed May 16 18:56:56 2001
++++ mpg123/common.c	Tue Feb  4 22:28:25 2003
+@@ -140,7 +140,7 @@
+  *       -1: giving up
+  *        1: synched
+  */
+-#define MAX_INPUT_FRAMESIZE 1920
++#define MAX_INPUT_FRAMESIZE 4096
+ #define SYNC_HEAD_MASK    0xffff0000
+ #define SYNC_HEAD_MASK_FF 0x0000f000
+ #define LOOK_AHEAD_NUM 3
+@@ -583,7 +583,12 @@
+     if(!fr->bitrate_index) {
+         /* fprintf(stderr,"Warning, Free format not heavily tested: (head %08lx)\n",newhead); */
+         fr->framesize = 0;
++    } else if(fr->framesize > MAX_INPUT_FRAMESIZE) {
++	fprintf(stderr,"Frame size too big: %d\n", fr->framesize);
++	fr->framesize = MAX_INPUT_FRAMESIZE;
++	return 0;
+     }
++
+     fr->thishead = newhead;
+ 
+     return 1;

@@ -1,123 +1,231 @@
-diff -urN mpg123-0.59r.orig/Makefile mpg123-0.59r/Makefile
---- mpg123-0.59r.orig/Makefile	Fri Mar  3 12:59:29 2000
-+++ mpg123-0.59r/Makefile	Fri Mar  3 13:04:39 2000
-@@ -104,7 +104,7 @@
+--- mpg123/Makefile.orig	Tue Jan 23 19:00:46 2001
++++ mpg123/Makefile	Tue Feb  4 23:03:44 2003
+@@ -152,7 +152,7 @@
  linux-devel:
  	$(MAKE) OBJECTS='decode_i386.o dct64_i386.o audio_oss.o' \
          CC=gcc LDFLAGS= \
 -        CFLAGS='$(CFLAGS) -DREAL_IS_FLOAT -DLINUX -Wall -g -m486 \
-+        CFLAGS='$(CFLAGS) $(OPT_FLAGS) -DREAL_IS_FLOAT -DLINUX -Wall -g \
- 		-DREAD_MMAP -DOSS -funroll-all-loops \
++        CFLAGS='$(CFLAGS) $(OPT_FLAGS) -DREAL_IS_FLOAT -DLINUX -Wall \
+ 		-DOSS -funroll-all-loops \
  		-finline-functions -ffast-math' \
          mpg123-make
-@@ -112,7 +112,7 @@
+@@ -160,7 +160,7 @@
  linux-profile:
  	$(MAKE) OBJECTS='decode_i386.o dct64_i386.o audio_oss.o' \
          CC=gcc LDFLAGS='-pg' \
 -        CFLAGS='$(CFLAGS) -DREAL_IS_FLOAT -DLINUX -Wall -pg -m486 \
 +        CFLAGS='$(CFLAGS) $(OPT_FLAGS) -DREAL_IS_FLOAT -DLINUX -Wall -pg \
- 		-DREAD_MMAP -DOSS -funroll-all-loops \
+ 		-DOSS -funroll-all-loops \
  		-finline-functions -ffast-math' \
          mpg123-make
-@@ -121,9 +121,9 @@
+@@ -169,10 +169,10 @@
  	$(MAKE) CC=gcc LDFLAGS= \
  		OBJECTS='decode_i386.o dct64_i386.o decode_i586.o \
  			audio_oss.o term.o' \
 -		CFLAGS='$(CFLAGS) -DI386_ASSEM -DPENTIUM_OPT -DREAL_IS_FLOAT -DLINUX \
 +		CFLAGS='$(CFLAGS) $(OPT_FLAGS) -DI386_ASSEM -DPENTIUM_OPT -DREAL_IS_FLOAT -DLINUX \
- 			-DREAD_MMAP -DOSS -DTERM_CONTROL\
+ 			-DOSS -DTERM_CONTROL\
 -			-Wall -O2 -m486 \
+-			-fomit-frame-pointer -funroll-all-loops \
 +			-Wall \
- 			-fomit-frame-pointer -funroll-all-loops \
++			-funroll-all-loops \
  			-finline-functions -ffast-math' \
  		mpg123-make
-@@ -132,9 +132,9 @@
- 	$(MAKE) CC=gcc LDFLAGS= \
- 		OBJECTS='decode_i386.o dct64_3dnow.o \
- 			decode_3dnow.o audio_oss.o term.o' \
--		CFLAGS='$(CFLAGS) -DI386_ASSEM -DREAL_IS_FLOAT -DPENTIUM_OPT -DLINUX \
-+		CFLAGS='$(CFLAGS) $(OPT_FLAGS) -DI386_ASSEM -DREAL_IS_FLOAT -DPENTIUM_OPT -DLINUX \
- 			-DUSE_3DNOW -DREAD_MMAP -DOSS -DTERM_CONTROL\
--			-Wall -O2 -m486 \
-+			-Wall \
- 			-fomit-frame-pointer -funroll-all-loops \
- 			-finline-functions -ffast-math' \
- 		mpg123-make
-@@ -143,9 +143,9 @@
+ 
+@@ -180,10 +180,10 @@
  	$(MAKE) CC=gcc LDFLAGS= \
  		OBJECTS='decode_i386.o dct64_i386.o decode_i586.o \
- 			decode_i486.o dct64_i486.o audio_oss.o term.o' \
--		CFLAGS='$(CFLAGS) -DI386_ASSEM -DREAL_IS_FLOAT -DI486_OPT -DLINUX \
-+		CFLAGS='$(CFLAGS) $(OPT_FLAGS) -DI386_ASSEM -DREAL_IS_FLOAT -DI486_OPT -DLINUX \
- 			-DREAD_MMAP -DOSS -DTERM_CONTROL\
--			-Wall -O2 -m486 \
+ 			audio_oss.o term.o' \
+-		CFLAGS='$(CFLAGS) -DI386_ASSEM -DPENTIUM_OPT -DREAL_IS_FLOAT -DLINUX \
++		CFLAGS='$(CFLAGS) $(OPT_FLAGS) -DI386_ASSEM -DPENTIUM_OPT -DREAL_IS_FLOAT -DLINUX \
+ 			-DOSS -DTERM_CONTROL\
+-			-Wall -O2 -mpentium \
+-			-fomit-frame-pointer -funroll-all-loops \
 +			-Wall \
- 			-fomit-frame-pointer -funroll-all-loops \
++			-funroll-all-loops \
  			-finline-functions -ffast-math' \
  		mpg123-make
-@@ -155,12 +155,11 @@
+ 
+@@ -191,10 +191,10 @@
+ 	$(MAKE) CC=gcc LDFLAGS= \
+ 		OBJECTS='decode_i386.o dct64_MMX.o tabinit_MMX.o decode_MMX.o \
+ 			audio_oss.o term.o' \
+-		CFLAGS='-DUSE_MMX -DI386_ASSEM -DPENTIUM_OPT -DREAL_IS_FLOAT \
++		CFLAGS='$(OPT_FLAGS) -DUSE_MMX -DI386_ASSEM -DPENTIUM_OPT -DREAL_IS_FLOAT \
+ 			-DLINUX -DOSS -DTERM_CONTROL\
+-			-Wall -O2 -m486 \
+-			-fomit-frame-pointer -funroll-all-loops \
++			-Wall \
++			-funroll-all-loops \
+ 			-finline-functions -ffast-math' \
+ 		mpg123-make
+ 
+@@ -203,10 +203,10 @@
+ 		OBJECTS='decode_i386.o decode_3dnow.o dct64_3dnow.o \
+ 			dct64_i386.o dct36_3dnow.o getcpuflags.o \
+ 			equalizer_3dnow.o decode_i586.o audio_oss.o term.o' \
+-		CFLAGS='$(CFLAGS) -DI386_ASSEM -DREAL_IS_FLOAT -DPENTIUM_OPT -DLINUX \
++		CFLAGS='$(CFLAGS) $(OPT_FLAGS) -DI386_ASSEM -DREAL_IS_FLOAT -DPENTIUM_OPT -DLINUX \
+ 			-DUSE_3DNOW -DOSS -DTERM_CONTROL\
+-			-Wall -O2 -m486 \
+-			-fomit-frame-pointer -funroll-all-loops \
++			-Wall \
++			-funroll-all-loops \
+ 			-finline-functions -ffast-math' \
+ 		mpg123-make
+ 
+@@ -216,10 +216,10 @@
+ 		OBJECTS='decode_i386.o dct64_i386.o decode_i586.o \
+ 			decode_i486.o audio_oss.o term.o \
+ 			dct64_i486-a.o dct64_i486-b.o ' \
+-		CFLAGS='$(CFLAGS) -DI386_ASSEM -DREAL_IS_FLOAT -DI486_OPT -DLINUX \
++		CFLAGS='$(CFLAGS) $(OPT_FLAGS) -DI386_ASSEM -DREAL_IS_FLOAT -DI486_OPT -DLINUX \
+ 			-DOSS -DTERM_CONTROL\
+-			-Wall -O2 -m486 \
+-			-fomit-frame-pointer -funroll-all-loops \
++			-Wall \
++			-funroll-all-loops \
+ 			-finline-functions -ffast-math' \
+ 		mpg123-make
+ 
+@@ -228,12 +228,11 @@
  		AUDIO_LIB='-lesd -laudiofile' \
  		OBJECTS='decode_i386.o dct64_i386.o decode_i586.o \
  			audio_esd.o' \
 -		CFLAGS='$(CFLAGS) -DI386_ASSEM -DREAL_IS_FLOAT -DPENTIUM_OPT -DLINUX \
 +		CFLAGS='$(CFLAGS) $(OPT_FLAGS) -DI386_ASSEM -DREAL_IS_FLOAT -DPENTIUM_OPT -DLINUX \
- 			-DREAD_MMAP -DOSS -DUSE_ESD \
+ 			-DOSS -DUSE_ESD \
 -			-Wall  -O2 -m486 \
-+			-Wall \
- 			-fomit-frame-pointer -funroll-all-loops \
+-			-fomit-frame-pointer -funroll-all-loops \
 -			-finline-functions -ffast-math \
 -			$(RPM_OPT_FLAGS)' \
++			-Wall \
++			-funroll-all-loops \
 +			-finline-functions -ffast-math' \
  		mpg123-make
  
  linux-alsa:
-@@ -168,43 +167,39 @@
+@@ -241,12 +240,36 @@
  		AUDIO_LIB='-lasound' \
  		OBJECTS='decode_i386.o dct64_i386.o decode_i586.o \
  			audio_alsa.o term.o' \
 -		CFLAGS='$(CFLAGS) -DI386_ASSEM -DREAL_IS_FLOAT -DPENTIUM_OPT -DLINUX \
 +		CFLAGS='$(CFLAGS) $(OPT_FLAGS) -DI386_ASSEM -DREAL_IS_FLOAT -DPENTIUM_OPT -DLINUX \
- 			-DREAD_MMAP -DALSA -DTERM_CONTROL\
+ 			-DALSA -DTERM_CONTROL\
 -			-Wall  -O2 -m486 \
-+			-Wall \
- 			-fomit-frame-pointer -funroll-all-loops \
+-			-fomit-frame-pointer -funroll-all-loops \
 -			-finline-functions -ffast-math \
 -			$(RPM_OPT_FLAGS)' \
++			-Wall \
++			-funroll-all-loops \
++			-finline-functions -ffast-math' \
++		mpg123-make
++
++linux-i486-esd:
++	$(MAKE) CC=gcc LDFLAGS= \
++		AUDIO_LIB='-lesd -laudiofile' \
++		OBJECTS='decode_i386.o dct64_i386.o decode_i586.o \
++			decode_i486.o audio_esd.o \
++			dct64_i486-a.o dct64_i486-b.o ' \
++		CFLAGS='$(CFLAGS) $(OPT_FLAGS) -DI386_ASSEM -DREAL_IS_FLOAT -DI486_OPT -DLINUX \
++			-DOSS -DUSE_ESD \
++			-Wall \
++			-funroll-all-loops \
++			-finline-functions -ffast-math' \
++		mpg123-make
++
++linux-mmx-esd:
++	$(MAKE) CC=gcc LDFLAGS= \
++		AUDIO_LIB='-lesd -laudiofile' \
++		OBJECTS='decode_i386.o dct64_MMX.o tabinit_MMX.o decode_MMX.o \
++			audio_esd.o' \
++		CFLAGS='$(OPT_FLAGS) -DUSE_MMX -DI386_ASSEM -DPENTIUM_OPT -DREAL_IS_FLOAT \
++			-DLINUX -DOSS -DUSE_ESD \
++			-Wall \
++			-funroll-all-loops \
 +			-finline-functions -ffast-math' \
  		mpg123-make
  
- linux-mips-alsa:
+ linux-3dnow-alsa:
+@@ -255,10 +278,10 @@
+ 		OBJECTS='decode_i386.o decode_3dnow.o dct64_3dnow.o \
+ 			dct64_i386.o dct36_3dnow.o getcpuflags.o \
+ 			equalizer_3dnow.o decode_i586.o audio_alsa.o term.o' \
+-		CFLAGS='-DI386_ASSEM -DREAL_IS_FLOAT -DPENTIUM_OPT -DLINUX \
++		CFLAGS='$(OPT_FLAGS) -DI386_ASSEM -DREAL_IS_FLOAT -DPENTIUM_OPT -DLINUX \
+ 			-DUSE_3DNOW -DALSA -DTERM_CONTROL\
+-			-Wall -O2 -m486 \
+-			-fomit-frame-pointer -funroll-all-loops \
++			-Wall \
++			-funroll-all-loops \
+ 			-finline-functions -ffast-math' \
+ 		mpg123-make
+ 
+@@ -268,10 +291,10 @@
+ 		OBJECTS='decode_i386.o decode_3dnow.o dct64_3dnow.o \
+ 			dct64_i386.o dct36_3dnow.o getcpuflags.o \
+ 			equalizer_3dnow.o decode_i586.o audio_esd.o' \
+-		CFLAGS='-DI386_ASSEM -DREAL_IS_FLOAT -DPENTIUM_OPT -DLINUX \
++		CFLAGS='$(OPT_FLAGS) -DI386_ASSEM -DREAL_IS_FLOAT -DPENTIUM_OPT -DLINUX \
+ 			-DUSE_3DNOW -DUSE_ESD \
+-			-Wall -O2 -m486 \
+-			-fomit-frame-pointer -funroll-all-loops \
++			-Wall \
++			-funroll-all-loops \
+ 			-finline-functions -ffast-math' \
+ 		mpg123-make
+ 
+@@ -279,43 +302,39 @@
  	$(MAKE) CC=gcc LDFLAGS= \
  		AUDIO_LIB='-lasound' \
  		OBJECTS='decode.o dct64.o audio_alsa.o term.o' \
--		CFLAGS='$(CFLAGS) -DREAL_IS_FLOAT -DLINUX -DREAD_MMAP -DALSA \
+-		CFLAGS='$(CFLAGS) -DREAL_IS_FLOAT -DLINUX -DALSA \
 -			-DTERM_CONTROL -Wall  -O2 \
-+		CFLAGS='$(CFLAGS) $(OPT_FLAGS) -DREAL_IS_FLOAT -DLINUX -DREAD_MMAP -DALSA \
-+			-DTERM_CONTROL -Wall \
- 			-fomit-frame-pointer -funroll-all-loops \
+-			-fomit-frame-pointer -funroll-all-loops \
 -			-finline-functions -ffast-math \
 -			$(RPM_OPT_FLAGS)' \
++		CFLAGS='$(CFLAGS) $(OPT_FLAGS) -DREAL_IS_FLOAT -DLINUX -DALSA \
++			-DTERM_CONTROL -Wall \
++			-funroll-all-loops \
 +			-finline-functions -ffast-math' \
  		mpg123-make
  
  linux-alpha:
  	$(MAKE) CC=gcc LDFLAGS= OBJECTS='decode.o dct64.o audio_oss.o' \
 -		CFLAGS='$(CFLAGS) -DLINUX -DOSS -Wall -O2 \
+-			-fomit-frame-pointer -funroll-all-loops \
 +		CFLAGS='$(CFLAGS) $(OPT_FLAGS) -DLINUX -DOSS -Wall \
- 			-fomit-frame-pointer -funroll-all-loops \
++			-funroll-all-loops \
  			-finline-functions -ffast-math \
 -			-Wall -O6 -DUSE_MMAP \
 -			$(RPM_OPT_FLAGS)' \
 +			-Wall -DUSE_MMAP' \
  		mpg123-make
  
+ linux-alpha-alsa:
+ 	$(MAKE) CC=gcc LDFLAGS= \
+ 		AUDIO_LIB='-lasound' \
+ 		OBJECTS='decode.o dct64.o audio_alsa.o term.o' \
+-		CFLAGS='-DLINUX \
++		CFLAGS='$(OPT_FLAGS) -DLINUX \
+ 			-DALSA -DTERM_CONTROL\
+-			-DUSE_MMAP  -O6 \
+-			-fomit-frame-pointer -funroll-all-loops \
+-			-finline-functions -ffast-math \
+-			$(RPM_OPT_FLAGS)' \
++			-DUSE_MMAP \
++			-funroll-all-loops \
++			-finline-functions -ffast-math' \
+ 		mpg123-make
+ 
  linux-alpha-esd:
  	$(MAKE) CC=gcc LDFLAGS= \
  		AUDIO_LIB='-lesd -laudiofile' \
  		OBJECTS='decode.o dct64.o audio_esd.o' \
--		CFLAGS='$(CFLAGS) -DLINUX -DOSS -Wall -O2 \
-+		CFLAGS='$(CFLAGS) $(OPT_FLAGS) -DLINUX -DOSS -Wall \
- 			-fomit-frame-pointer -funroll-all-loops \
+-		CFLAGS='$(CFLAGS) -DLINUX -DOSS -DUSE_ESD -Wall -O2 \
+-			-fomit-frame-pointer -funroll-all-loops \
++		CFLAGS='$(CFLAGS) $(OPT_FLAGS) -DLINUX -DOSS -DUSE_ESD -Wall \
++			-funroll-all-loops \
  			-finline-functions -ffast-math \
 -			-Wall -O6 -DUSE_MMAP \
 -			$(RPM_OPT_FLAGS)' \
@@ -125,55 +233,101 @@ diff -urN mpg123-0.59r.orig/Makefile mpg123-0.59r/Makefile
  		mpg123-make
  
  #linux-ppc:
-@@ -229,7 +224,7 @@
+@@ -340,9 +359,9 @@
  linux-ppc:
  	$(MAKE) CC=gcc  LDFLAGS= \
  		OBJECTS='decode.o dct64.o audio_oss.o' \
 -		CFLAGS='$(CFLAGS) -DREAL_IS_FLOAT -DLINUX -Wall -O2 -mcpu=ppc \
 +		CFLAGS='$(CFLAGS) $(OPT_FLAGS) -DREAL_IS_FLOAT -DLINUX -Wall \
  			-DOSS \
- 			-fomit-frame-pointer -funroll-all-loops \
+-			-fomit-frame-pointer -funroll-all-loops \
++			-funroll-all-loops \
  			-finline-functions -ffast-math' \
-@@ -239,7 +234,7 @@
+ 		mpg123-make
+ 
+@@ -350,17 +369,17 @@
  	$(MAKE) CC=gcc  LDFLAGS= \
  		AUDIO_LIB='-lesd -laudiofile' \
  		OBJECTS='decode.o dct64.o audio_esd.o' \
 -		CFLAGS='$(CFLAGS) -DREAL_IS_FLOAT -DLINUX -Wall -O2 -mcpu=ppc \
 +		CFLAGS='$(CFLAGS) $(OPT_FLAGS) -DREAL_IS_FLOAT -DLINUX -Wall \
- 			-DOSS  \
- 			-fomit-frame-pointer -funroll-all-loops \
+ 			-DOSS -DUSE_ESD \
+-			-fomit-frame-pointer -funroll-all-loops \
++			-funroll-all-loops \
  			-finline-functions -ffast-math' \
-@@ -248,15 +243,15 @@
+ 		mpg123-make
+ 
  linux-sparc:
  	$(MAKE) CC=gcc  LDFLAGS= \
  		OBJECTS='decode.o dct64.o audio_sun.o' \
 -		CFLAGS='$(CFLAGS) -DREAL_IS_FLOAT -DUSE_MMAP -DSPARCLINUX -Wall -O2 \
+-			-fomit-frame-pointer -funroll-all-loops \
 +		CFLAGS='$(CFLAGS) $(OPT_FLAGS) -DREAL_IS_FLOAT -DUSE_MMAP -DSPARCLINUX -Wall \
- 			-fomit-frame-pointer -funroll-all-loops \
++			-funroll-all-loops \
  			-finline-functions -ffast-math' \
  		mpg123-make
  
- linux-m68k:
+@@ -368,34 +387,34 @@
+ 	$(MAKE) CC=gcc  LDFLAGS= \
+ 		AUDIO_LIB='-lesd -laudiofile' \
+ 		OBJECTS='decode.o dct64.o audio_esd.o' \
+-		CFLAGS='-DREAL_IS_FLOAT -DUSE_MMAP -DOSS -DUSE_ESD -DSPARCLINUX -Wall -O2 \
+-			-fomit-frame-pointer -funroll-all-loops \
+-			-finline-functions -ffast-math \
++		CFLAGS='$(OPT_FLAGS) -DREAL_IS_FLOAT -DUSE_MMAP -DOSS -DUSE_ESD -DSPARCLINUX -Wall \
++			-funroll-all-loops \
++			-finline-functions -ffast-math' \
+ 		mpg123-make
+ 
+ 
+ linux-armv4l:
  	$(MAKE) CC=gcc LDFLAGS= OBJECTS='decode.o dct64.o audio_oss.o' \
--		CFLAGS='$(CFLAGS) -DREAL_IS_FLOAT -DLINUX -DREAD_MMAP \
--			-DOSS -DOSS_BIG_ENDIAN -Wall -O2 -m68040 \
-+		CFLAGS='$(CFLAGS) $(OPT_FLAGS) -DREAL_IS_FLOAT -DLINUX -DREAD_MMAP \
-+			-DOSS -DOSS_BIG_ENDIAN -Wall \
- 			-fomit-frame-pointer -funroll-loops \
+-		CFLAGS='-DLINUX -DOSS -Wall -O2 \
+-			-fomit-frame-pointer -funroll-all-loops \
++		CFLAGS='$(OPT_FLAGS) -DLINUX -DOSS -Wall \
++			-funroll-all-loops \
+ 			-finline-functions -ffast-math \
+-			-Wall -O6 -DUSE_MMAP \
++			-Wall -DUSE_MMAP \
+                 mpg123-make
+ 
+ linux-arm:
+ 	$(MAKE) CC=gcc LDFLAGS= OBJECTS='decode.o dct64.o audio_oss.o' \
+-		CFLAGS='-DREAL_IS_FIXED -DLINUX \
+-			-DOSS -Wall -O6 -march=armv4 \
+-			-fomit-frame-pointer -funroll-all-loops \
++		CFLAGS='$(OPT_FLAGS) -DREAL_IS_FIXED -DLINUX \
++			-DOSS -Wall \
++			-funroll-all-loops \
  			-finline-functions -ffast-math' \
  		mpg123-make
-@@ -277,8 +272,8 @@
+  
+ 
+ linux-m68k:
+ 	$(MAKE) CC=gcc LDFLAGS= OBJECTS='decode.o dct64.o audio_oss.o' \
+-		CFLAGS='$(CFLAGS) -DREAL_IS_FLOAT -DLINUX \
+-			-DOSS -DOSS_BIG_ENDIAN -Wall -O2 -m68040 \
+-			-fomit-frame-pointer -funroll-loops \
++		CFLAGS='$(CFLAGS) $(OPT_FLAGS) -DREAL_IS_FLOAT -DLINUX \
++			-DOSS -DOSS_BIG_ENDIAN -Wall \
++			-funroll-loops \
+ 			-finline-functions -ffast-math' \
+ 		mpg123-make
+ 
+@@ -415,9 +434,9 @@
  	$(MAKE) CC=gcc LDFLAGS= \
  		OBJECTS='decode_i386.o dct64_i386.o decode_i586.o \
  			control_sajber.o control_tk3play.o audio_oss.o' \
 -		CFLAGS='$(CFLAGS) -DFRONTEND -DOSS -DI386_ASSEM -DREAL_IS_FLOAT \
 -			-DPENTIUM_OPT -DLINUX -Wall -O2 -m486 \
+-			-fomit-frame-pointer -funroll-all-loops \
 +		CFLAGS='$(CFLAGS) $(OPT_FLAGS) -DFRONTEND -DOSS -DI386_ASSEM -DREAL_IS_FLOAT \
 +			-DPENTIUM_OPT -DLINUX -Wall \
- 			-fomit-frame-pointer -funroll-all-loops \
++			-funroll-all-loops \
  			-finline-functions -ffast-math' \
  		$(FRONTEND)
-@@ -287,9 +282,9 @@
+ 
+@@ -425,10 +444,10 @@
  	$(MAKE) CC=gcc LDFLAGS='-L/usr/X11R6/lib' \
  		AUDIO_LIB='-laudio -lXau' \
  		OBJECTS='decode_i386.o dct64_i386.o audio_nas.o' \
@@ -181,34 +335,9 @@ diff -urN mpg123-0.59r.orig/Makefile mpg123-0.59r/Makefile
 +		CFLAGS='$(CFLAGS) $(OPT_FLAGS) -I/usr/X11R6/include \
  			-DI386_ASSEM -DREAL_IS_FLOAT -DLINUX -DNAS \
 -			-Wall -O2 -m486 \
+-			-fomit-frame-pointer -funroll-all-loops \
 +			-Wall \
- 			-fomit-frame-pointer -funroll-all-loops \
- 			-finline-functions -ffast-math' \
- 		mpg123-make
---- mpg123-0.59r/Makefile~	Fri Dec  7 12:42:58 2001
-+++ mpg123-0.59r/Makefile	Fri Dec  7 12:42:58 2001
-@@ -82,6 +82,7 @@
- 	@echo ""
- 	@echo "make linux-esd      Linux, output to EsounD"
- 	@echo "make linux-alpha-esd Linux/Alpha, output to EsounD"
-+	@echo "make linux-sparc-esd Linux, output to EsounD"
- 	@echo "make linux-ppc-esd  Linux/PPC, output to EsounD"
- 	@echo "    NOTE: esd flavours require libaudiofile, available from: "
- 	@echo "          http://www.68k.org/~michael/audiofile/"
-@@ -248,6 +249,16 @@
++			-funroll-all-loops \
  			-finline-functions -ffast-math' \
  		mpg123-make
  
-+linux-sparc-esd:
-+	$(MAKE) CC=gcc LDFLAGS= \
-+		AUDIO_LIB='-lesd -laudiofile' \
-+		OBJECTS='decode.o dct64.o audio_esd.o' \
-+		CFLAGS='$(CFLAGS) $(OPT_FLAGS) -DREAL_IS_FLOAT -DUSE_MMAP -DSPARCLINUX -DLINUX -Wall \
-+			-fomit-frame-pointer -funroll-all-loops \
-+			-finline-functions -ffast-math \
-+			-Wall -DUSE_MMAP' \
-+		mpg123-make
-+
- linux-m68k:
- 	$(MAKE) CC=gcc LDFLAGS= OBJECTS='decode.o dct64.o audio_oss.o' \
- 		CFLAGS='$(CFLAGS) $(OPT_FLAGS) -DREAL_IS_FLOAT -DLINUX -DREAD_MMAP \

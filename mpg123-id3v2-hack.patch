@@ -1,0 +1,33 @@
+--- mpg123/buffer.c.orig	Thu Jan 18 15:00:34 2001
++++ mpg123/buffer.c	Tue Feb  4 23:41:34 2003
+@@ -16,6 +16,8 @@
+ static int intflag = FALSE;
+ static int usr1flag = FALSE;
+ 
++static int bufinitialized = FALSE;
++
+ static void catch_interrupt (void)
+ {
+ 	intflag = TRUE;
+@@ -47,11 +49,13 @@
+ 
+ void buffer_resync(void)
+ {
++	if(bufinitialized)
+ 	buffer_sig(SIGINT, TRUE);
+ }
+ 
+ void buffer_reset(void)
+ {
++	if(bufinitialized)
+ 	buffer_sig(SIGUSR1, TRUE);
+ }
+ 
+@@ -96,6 +100,7 @@
+ 	catchsignal (SIGINT, catch_interrupt);
+ 	catchsignal (SIGUSR1, catch_usr1);
+ 	sigprocmask (SIG_SETMASK, oldsigset, NULL);
++	bufinitialized = TRUE;
+ 	if (param.outmode == DECODE_AUDIO) {
+ 		if (audio_open(ai) < 0) {
+ 			perror("audio");

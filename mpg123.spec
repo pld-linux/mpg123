@@ -1,20 +1,39 @@
+#
+# Conditional build:
+# _with_mmx	- use MMX to decode stream (won't run without MMX)
+#
 Summary:	MPEG audio player
 Summary(es):	Ejecuta archivos MP3
 Summary(pl):	Odtwarzacz plików audio MPEG
 Summary(pt_BR):	Tocador de arquivos MP3
 Name:		mpg123
-Version:	0.59r
-Release:	7
+Version:	0.59s
+Release:	0.pre.1
 Group:		Applications/Sound
 License:	freely distributable for non-commercial use, GPL (mpglib)
-Source0:	http://www.mpg123.de/mpg123/%{name}-%{version}.tar.gz
-Patch0:		ftp://ftp.kame.net/pub/kame/misc/%{name}-059r-v6-20000111.diff.gz
-Patch1:		%{name}-makefile.patch
-Patch2:		%{name}-esd.patch
-Patch3:		%{name}-audio_sun.patch
+Source0:	http://www.mpg123.de/mpg123/%{name}-pre%{version}.tar.gz
+Patch0:		%{name}-makefile.patch
+Patch1:		%{name}-esd.patch
+Patch2:		%{name}-audio_sun.patch
+Patch3:		%{name}-security.patch
+Patch4:		%{name}-id3v2-hack.patch
 URL:		http://www.mpg123.de/
 BuildRequires:	esound-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+%ifarch %{ix86}
+%ifarch athlon
+%define		trgt	linux-3dnow
+%else
+%ifarch i586 i686
+%define		trgt	linux%{?_with_mmx:-mmx}
+%else
+%define		trgt	linux-i486
+%endif
+%endif
+%else
+%define		trgt	linux-%{_target_cpu}
+%endif
 
 %description
 Mpg123 is a fast, free(for non-commercial use) and portable MPEG audio
@@ -65,27 +84,22 @@ mo¿na uzyskaæ ju¿ na procesorach 486.
 Wersja z wyj¶ciem na ESD.
 
 %prep
-%setup -q
-%patch0 -p0
-%patch1 -p1
+%setup -q -n %{name}
+%patch0 -p1
+#%patch1 -p1	-- unneeded?
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
-%ifarch %{ix86}
-%{__make} OPT_FLAGS="%{rpmcflags} -DINET6" linux
-%else
-%{__make} OPT_FLAGS="%{rpmcflags} -DINET6" linux-%{_target_cpu}
-%endif
+%{__make} %{trgt} \
+	OPT_FLAGS="%{rpmcflags} %{!?debug:-fomit-frame-pointer} -DINET6"
 
 mv -f mpg123 mpg123.base
 
 %{__make} clean
-%ifarch %{ix86}
-%{__make} OPT_FLAGS="%{rpmcflags} -DINET6" linux-esd
-%else
-%{__make} OPT_FLAGS="%{rpmcflags} -DINET6" linux-%{_target_cpu}-esd
-%endif
+%{__make} %{trgt}-esd \
+	OPT_FLAGS="%{rpmcflags} %{!?debug:-fomit-frame-pointer} -DINET6"
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -100,8 +114,10 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc BUGS COPYING CHANGES JUKEBOX README BENCHMARKING README.remote TODO
-
+%doc BENCHMARKING BUGS CHANGES COPYING JUKEBOX README README.remote TODO
+%ifarch athlon
+%doc README.3DNOW
+%endif
 %attr(755,root,root) %{_bindir}/%{name}
 %{_mandir}/man1/*
 
