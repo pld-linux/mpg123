@@ -1,5 +1,3 @@
-# TODO:
-# - SECURITY: http://securitytracker.com/alerts/2004/Sep/1011170.html 
 #
 # Conditional build:
 %bcond_with	mmx	# use MMX to decode stream (won't run without MMX)
@@ -13,7 +11,7 @@ Summary(ru):	Проигрыватель MPEG аудиофайлов
 Summary(uk):	Програвач MPEG ауд╕офайл╕в
 Name:		mpg123
 Version:	0.59s
-Release:	0.pre.6
+Release:	0.pre.7
 Group:		Applications/Sound
 License:	freely distributable for non-commercial use, GPL (mpglib)
 Source0:	http://www.mpg123.de/mpg123/%{name}-pre%{version}.tar.gz
@@ -24,6 +22,7 @@ Patch2:		%{name}-audio_sun.patch
 Patch3:		%{name}-security.patch
 Patch4:		%{name}-id3v2-hack.patch
 Patch5:		%{name}-http-overflow.patch
+Patch6:		%{name}-layer2-overflow.patch
 URL:		http://www.mpg123.de/
 %{?with_esd:BuildRequires:	esound-devel}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -114,6 +113,7 @@ Wersja z wyj╤ciem na ESD.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p0
 
 %build
 %{__make} %{trgt} \
