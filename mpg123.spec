@@ -35,9 +35,9 @@ mo¿na uzyskaæ ju¿ na procesorach 486.
 
 %build
 %ifarch i386 i586 i686
-make OPT_FLAGS="$RPM_OPT_FLAGS -DINET6" linux 
+%{__make} OPT_FLAGS="$RPM_OPT_FLAGS -DINET6" linux 
 %else
-make OPT_FLAGS="$RPM_OPT_FLAGS -DINET6" linux-%{_target_cpu}
+%{__make} OPT_FLAGS="$RPM_OPT_FLAGS -DINET6" linux-%{_target_cpu}
 %endif
 
 %install
