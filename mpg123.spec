@@ -59,11 +59,3 @@ rm -rf $RPM_BUILD_ROOT
 
 %attr(755,root,root) %{_bindir}/%{name}
 %{_mandir}/man1/*
-
-%changelog
-* Fri May 21 1999 Piotr Czerwiñski <pius@pld.org.pl>
-  [0.59q-1] 
-- package is FHS 2.0 compliant,
-- based on spec file written by Karsten Weiss <karsten@addx.au.s.shuttle.de>,
-  modified for PLD use by me and Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>,
-- pl translation by Marek Obuchowicz <elephant@shadow.eu.org>.  
