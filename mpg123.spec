@@ -44,7 +44,7 @@ make linux-%{_target_cpu}
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_mandir}/man1}
-install %{name} $RPM_BUILD_ROOT%{_bindir}
+install -s %{name} $RPM_BUILD_ROOT%{_bindir}
 install %{name}.1 $RPM_BUILD_ROOT%{_mandir}/man1
 
 gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man1/* \
