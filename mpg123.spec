@@ -6,7 +6,7 @@ Name:		mpg123
 Version:	0.59r
 Release:	6
 Group:		Applications/Sound
-License:	Freely distributable for non-commercial use, GPL (mpglib)
+License:	freely distributable for non-commercial use, GPL (mpglib)
 Source0:	http://www.mpg123.de/mpg123/%{name}-%{version}.tar.gz
 Patch0:		ftp://ftp.kame.net/pub/kame/misc/%{name}-059r-v6-20000111.diff.gz
 Patch1:		%{name}-makefile.patch
