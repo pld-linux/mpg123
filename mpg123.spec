@@ -57,6 +57,9 @@ SPARCstation10, DEC Alpha lub podobny). Ni©sz╠ jako╤Ф (22 lub 11 kHz)
 mo©na uzyskaФ ju© na procesorach i486.
 
 %description -l pt_BR
+O mpg123 И um tocador de Аudio MPEG para o Unix. Ele suporta MPEG
+1.0/2.0 camadas 1, 2 e 3 (Arquivos .mp3).
+
 %description -l ru
 Mpg123 - это быстрый, свободный и переносимый проигрыватель MPEG
 аудиофайлов. он поддерживает MPEG 1.0/2.0 уровней 1, 2 и 3 ("mp3"
@@ -99,7 +102,7 @@ Wersja z wyj╤ciem na ESD.
 %prep
 %setup -q -n %{name}
 %patch0 -p1
-#%patch1 -p1	-- unneeded?
+%patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
