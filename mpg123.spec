@@ -1,3 +1,5 @@
+# TODO:
+# - SECURITY: http://securitytracker.com/alerts/2004/Sep/1011170.html 
 #
 # Conditional build:
 %bcond_with	mmx	# use MMX to decode stream (won't run without MMX)
