@@ -1,16 +1,15 @@
 Summary:	MPEG audio player
 Summary(pl):	Odtwarzacz plików audio MPEG
 Name:		mpg123
-Version:	0.59q
+Version:	0.59r
 Release:	1
 Group:		Applications/Sound
 Group(pl):	Aplikacje/D¼wiêk
 Copyright:	Freely distributable for non-commercial use
-Source:		http://www-ti.informatik.uni-tuebingen.de/~hippm/mpg123/%{name}-%{version}.tar.gz
+Source:		http://www.mpg123.de/mpg123/%{name}-%{version}.tar.gz
 Patch0:		mpg123-makefile.patch
-Patch1:		mpg123-8bit.patch
-Patch2:		mpg123-059q-v6-19990422a.diff
-URL:		http://www-ti.informatik.uni-tuebingen.de/~hippm/mpg123.html
+Patch1:		mpg123-0.59r-ipv6.patch
+URL:		http://www.mpg123.de/
 Buildroot:	/tmp/%{name}-%{version}-root
 
 %description
@@ -21,18 +20,17 @@ Pentium, SPARCstation10, DEC Alpha or similar CPU is required. Mono and/or
 reduced quality playback (22 kHz or 11 kHz) is even possible on 486 CPUs.
 
 %description -l pl
-Mpg123 jest szybkim, darmowym (przy u¿ytku niekomercyjnym) oraz uniwersalnym
-dekoderem plików d¼wiêkowych MPEG dla systemów Unixowych.  Obs³uguje
+Mpg123 jest szybkim, darmowym (do celów niekomercyjnych) oraz uniwersalnym
+dekoderem plików d¼wiêkowych MPEG dla systemów unixowych.  Obs³uguje
 standart MPEG 1.0/2.0 warstwy 1, 2 oraz 3 (s³ynne "mp3").  Do uzyskania
-pe³nej jako¶ci CD wymagany jest sliny procesor (Pentium, SPARCstation10, DEC
+pe³nej jako¶ci CD wymagany jest silny procesor (Pentium, SPARCstation10, DEC
 Alpha lub podobny). Ni¿sz± jako¶æ (22 lub 11 kHz) mo¿na uzyskaæ ju¿ na
 procesorach 486.
 
 %prep
 %setup -q
-%patch0 -p0
+%patch0 -p1
 %patch1 -p1
-%patch2 -p1
 
 %build
 %ifarch i386 i586 i686
