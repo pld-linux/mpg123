@@ -11,7 +11,7 @@ Summary(ru):	Проигрыватель MPEG аудиофайлов
 Summary(uk):	Програвач MPEG ауд╕офайл╕в
 Name:		mpg123
 Version:	0.59s
-Release:	0.pre.4
+Release:	0.pre.3
 Group:		Applications/Sound
 License:	freely distributable for non-commercial use, GPL (mpglib)
 Source0:	http://www.mpg123.de/mpg123/%{name}-pre%{version}.tar.gz
@@ -39,8 +39,6 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %else
 %define		trgt	linux-%{_target_cpu}
 %endif
-
-%define		specflags	-fomit-frame-pointer
 
 %description
 Mpg123 is a fast, free(for non-commercial use) and portable MPEG audio
@@ -115,13 +113,13 @@ Wersja z wyj╤ciem na ESD.
 
 %build
 %{__make} %{trgt} \
-	OPT_FLAGS="%{rpmcflags} -DINET6"
+	OPT_FLAGS="%{rpmcflags} %{!?debug:-fomit-frame-pointer} -DINET6"
 
 mv -f mpg123 mpg123.base
 %if %{with esd}
 %{__make} clean
 %{__make} %{trgt}-esd \
-	OPT_FLAGS="%{rpmcflags} -DINET6"
+	OPT_FLAGS="%{rpmcflags} %{!?debug:-fomit-frame-pointer} -DINET6"
 %endif
 
 %install
