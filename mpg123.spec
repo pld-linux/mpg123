@@ -2,11 +2,11 @@ Summary:	MPEG audio player
 Summary(pl):	Odtwarzacz plików audio MPEG
 Name:		mpg123
 Version:	0.59r
-Release:	4
+Release:	5
 Group:		Applications/Sound
 Group(de):	Applikationen/Laut
 Group(pl):	Aplikacje/D¼wiêk
-Copyright:	Freely distributable for non-commercial use
+Copyright:	Freely distributable for non-commercial use, GPL (mpglib)
 Source0:	http://www.mpg123.de/mpg123/%{name}-%{version}.tar.gz
 Patch0:		ftp://ftp.kame.net/pub/kame/misc/%{name}-059r-v6-20000111.diff.gz
 Patch1:		%{name}-makefile.patch
