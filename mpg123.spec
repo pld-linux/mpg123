@@ -1,16 +1,21 @@
 Summary:	MPEG audio player
+Summary(es):	Ejecuta archivos MP3
 Summary(pl):	Odtwarzacz plików audio MPEG
+Summary(pt_BR):	Tocador de arquivos MP3
 Name:		mpg123
 Version:	0.59r
 Release:	5
 Group:		Applications/Sound
 Group(de):	Applikationen/Laut
+Group(es):	Aplicaciones/Sonido
 Group(pl):	Aplikacje/D¼wiêk
+Group(pt_BR):	Aplicações/Som
 License:	Freely distributable for non-commercial use, GPL (mpglib)
 Source0:	http://www.mpg123.de/mpg123/%{name}-%{version}.tar.gz
 Patch0:		ftp://ftp.kame.net/pub/kame/misc/%{name}-059r-v6-20000111.diff.gz
 Patch1:		%{name}-makefile.patch
 Patch2:		%{name}-esd.patch
+Patch3:		%{name}-audio_sun.patch
 URL:		http://www.mpg123.de/
 BuildRequires:	esound-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -23,6 +28,9 @@ stereo) a Pentium, SPARCstation10, DEC Alpha or similar CPU is
 required. Mono and/or reduced quality playback (22 kHz or 11 kHz) is
 even possible on 486 CPUs.
 
+%description -l es
+Ejecuta archivos MP3.
+
 %description -l pl
 Mpg123 jest szybkim, darmowym (do celów niekomercyjnych) oraz
 uniwersalnym dekoderem plików d¼wiêkowych MPEG dla systemów unixowych.
@@ -31,12 +39,18 @@ uzyskania pe³nej jako¶ci CD wymagany jest silny procesor (Pentium,
 SPARCstation10, DEC Alpha lub podobny). Ni¿sz± jako¶æ (22 lub 11 kHz)
 mo¿na uzyskaæ ju¿ na procesorach 486.
 
+%description -l pt_BR
+O mpg123 é um tocador de áudio MPEG para o Unix. Ele suporta MPEG
+1.0/2.0 camadas 1, 2 e 3 (Arquivos .mp3).
+
 %package esd
 Summary:	mpg123 for ESD
 Summary(pl):	mpg123 dla ESD
 Group:		Applications/Sound
 Group(de):	Applikationen/Laut
+Group(es):	Aplicaciones/Sonido
 Group(pl):	Aplikacje/D¼wiêk
+Group(pt_BR):	Aplicações/Som
 
 %description esd
 Mpg123 is a fast, free(for non-commercial use) and portable MPEG audio
@@ -63,6 +77,7 @@ Wersja z wyj¶ciem na ESD.
 %patch0 -p0
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %ifarch i386 i586 i686
