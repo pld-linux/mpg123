@@ -56,7 +56,7 @@ Ejecuta archivos MP3.
 %description -l pl
 Mpg123 jest szybkim, darmowym (do celów niekomercyjnych) oraz
 uniwersalnym dekoderem plików d¼wiêkowych MPEG dla systemów unixowych.
-Obs³uguje standart MPEG 1.0/2.0 warstwy 1, 2 oraz 3 (s³ynne "mp3"). Do
+Obs³uguje standard MPEG 1.0/2.0 warstwy 1, 2 oraz 3 (s³ynne "mp3"). Do
 uzyskania pe³nej jako¶ci CD wymagany jest silny procesor (Pentium,
 SPARCstation10, DEC Alpha lub podobny). Ni¿sz± jako¶æ (22 lub 11 kHz)
 mo¿na uzyskaæ ju¿ na procesorach i486.
@@ -97,7 +97,7 @@ Version for ESD output.
 %description esd -l pl
 Mpg123 jest szybkim, darmowym (do celów niekomercyjnych) oraz
 uniwersalnym dekoderem plików d¼wiêkowych MPEG dla systemów unixowych.
-Obs³uguje standart MPEG 1.0/2.0 warstwy 1, 2 oraz 3 (s³ynne "mp3"). Do
+Obs³uguje standard MPEG 1.0/2.0 warstwy 1, 2 oraz 3 (s³ynne "mp3"). Do
 uzyskania pe³nej jako¶ci CD wymagany jest silny procesor (Pentium,
 SPARCstation10, DEC Alpha lub podobny). Ni¿sz± jako¶æ (22 lub 11 kHz)
 mo¿na uzyskaæ ju¿ na procesorach 486.
