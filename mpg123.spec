@@ -9,6 +9,7 @@ Copyright:	Freely distributable for non-commercial use
 Source:		http://www-ti.informatik.uni-tuebingen.de/~hippm/mpg123/%{name}-%{version}.tar.gz
 Patch0:		mpg123-makefile.patch
 Patch1:		mpg123-8bit.patch
+Patch2:		mpg123-059q-v6-19990422a.diff
 URL:		http://www-ti.informatik.uni-tuebingen.de/~hippm/mpg123.html
 Buildroot:	/tmp/%{name}-%{version}-root
 
@@ -31,6 +32,7 @@ procesorach 486.
 %setup -q
 %patch0 -p0
 %patch1 -p1
+%patch2 -p1
 
 %build
 %ifarch i386 i586 i686
