@@ -82,7 +82,7 @@ mv -f mpg123 mpg123.base
 
 %{__make} clean
 %ifarch %{ix86}
-%{__make} OPT_FLAGS="%{rpmcflags} -DINET6" linux -esd
+%{__make} OPT_FLAGS="%{rpmcflags} -DINET6" linux-esd
 %else
 %{__make} OPT_FLAGS="%{rpmcflags} -DINET6" linux-%{_target_cpu}-esd
 %endif
