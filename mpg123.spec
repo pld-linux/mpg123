@@ -39,6 +39,8 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		trgt	linux-%{_target_cpu}
 %endif
 
+%define		specflags	-fomit-frame-pointer
+
 %description
 Mpg123 is a fast, free(for non-commercial use) and portable MPEG audio
 player for Unix. It supports MPEG 1.0/2.0 layers 1, 2 and 3 (those
@@ -111,13 +113,13 @@ Wersja z wyj¶ciem na ESD.
 
 %build
 %{__make} %{trgt} \
-	OPT_FLAGS="%{rpmcflags} %{!?debug:-fomit-frame-pointer} -DINET6"
+	OPT_FLAGS="%{rpmcflags} -DINET6"
 
 mv -f mpg123 mpg123.base
 %if %{!?_without_esd:1}%{?_without_esd:0}
 %{__make} clean
 %{__make} %{trgt}-esd \
-	OPT_FLAGS="%{rpmcflags} %{!?debug:-fomit-frame-pointer} -DINET6"
+	OPT_FLAGS="%{rpmcflags} -DINET6"
 %endif
 
 %install
