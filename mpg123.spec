@@ -6,6 +6,8 @@ Summary:	MPEG audio player
 Summary(es):	Ejecuta archivos MP3
 Summary(pl):	Odtwarzacz plikСw audio MPEG
 Summary(pt_BR):	Tocador de arquivos MP3
+Summary(ru):	Проигрыватель MPEG аудиофайлов
+Summary(uk):	Програвач MPEG ауд╕офайл╕в
 Name:		mpg123
 Version:	0.59s
 Release:	0.pre.1
@@ -41,7 +43,7 @@ player for Unix. It supports MPEG 1.0/2.0 layers 1, 2 and 3 (those
 famous "mp3" files). For full CD quality playback (44 kHz, 16 bit,
 stereo) a Pentium, SPARCstation10, DEC Alpha or similar CPU is
 required. Mono and/or reduced quality playback (22 kHz or 11 kHz) is
-even possible on 486 CPUs.
+even possible on i486 CPUs.
 
 %description -l es
 Ejecuta archivos MP3.
@@ -52,11 +54,22 @@ uniwersalnym dekoderem plikСw d╪wiЙkowych MPEG dla systemСw unixowych.
 ObsЁuguje standart MPEG 1.0/2.0 warstwy 1, 2 oraz 3 (sЁynne "mp3"). Do
 uzyskania peЁnej jako╤ci CD wymagany jest silny procesor (Pentium,
 SPARCstation10, DEC Alpha lub podobny). Ni©sz╠ jako╤Ф (22 lub 11 kHz)
-mo©na uzyskaФ ju© na procesorach 486.
+mo©na uzyskaФ ju© na procesorach i486.
 
 %description -l pt_BR
-O mpg123 И um tocador de Аudio MPEG para o Unix. Ele suporta MPEG
-1.0/2.0 camadas 1, 2 e 3 (Arquivos .mp3).
+%description -l ru
+Mpg123 - это быстрый, свободный и переносимый проигрыватель MPEG
+аудиофайлов. он поддерживает MPEG 1.0/2.0 уровней 1, 2 и 3 ("mp3"
+файлы). Для получения качества звучания компакт-диска (44 kHz, 16 бит,
+стерео) ноеобходим процессор Pentium. Монозвук или звук худшего
+качества (22 kHz или 11 kHz) возможен и на процессорах класса i486.
+
+%description -l uk
+Mpg123 - це швидкий, в╕льний та переносимий програвач MPEG
+ауд╕офайл╕в. В╕н п╕дтриму╓ MPEG 1.0/2.0 р╕вн╕в 1, 2 та 3 ("mp3"
+файли). Для отримання якост╕ звучання компакт-диску (44 kHz, 16 б╕т,
+стерео) необх╕дний процесор Pentium. Монозвук чи звук г╕ршо╖ якост╕
+(22 kHz чи 11 kHz) можливий ╕ на процесорах класу i486.
 
 %package esd
 Summary:	mpg123 for ESD
