@@ -84,14 +84,14 @@ install %{name}.base	$RPM_BUILD_ROOT%{_bindir}/%{name}
 install %{name}		$RPM_BUILD_ROOT%{_bindir}/%{name}-esd
 install %{name}.1	$RPM_BUILD_ROOT%{_mandir}/man1
 
-gzip -9nf BUGS COPYING CHANGES JUKEBOX README
+gzip -9nf BUGS COPYING CHANGES JUKEBOX README BENCHMARKING README.remote TODO
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc {BUGS,COPYING,CHANGES,JUKEBOX,README}.gz
+%doc *.gz
 
 %attr(755,root,root) %{_bindir}/%{name}
 %{_mandir}/man1/*
