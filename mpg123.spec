@@ -1,9 +1,8 @@
 #
 # Conditional build:
-# _with_mmx	- use MMX to decode stream (won't run without MMX)
+# _with_mmx		- use MMX to decode stream (won't run without MMX)
+# _without_esound	- don't build esd subpackage
 #
-# _without_esound	-  enable ESD support
-
 Summary:	MPEG audio player
 Summary(es):	Ejecuta archivos MP3
 Summary(pl):	Odtwarzacz plików audio MPEG
@@ -104,7 +103,7 @@ Wersja z wyj¶ciem na ESD.
 %prep
 %setup -q -n %{name}
 %patch0 -p1
-%{!?_without_esound:%patch1 -p1}
+%patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
@@ -142,8 +141,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/%{name}
 %{_mandir}/man1/*
 
+%if 0%{!?_without_esound:1}
 %files esd
 %defattr(644,root,root,755)
-%if %{!?_without_esound:1}%{?_without_esound:0}
 %attr(755,root,root) %{_bindir}/%{name}-esd
 %endif
