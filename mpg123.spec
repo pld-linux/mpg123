@@ -15,7 +15,7 @@ Release:	0.pre.7
 Group:		Applications/Sound
 License:	freely distributable for non-commercial use, GPL (mpglib)
 Source0:	http://www.mpg123.de/mpg123/%{name}-pre%{version}.tar.gz
-# Source0-md5: a63675b0ea7990d4a7d7e7e14f23a3e4
+# Source0-md5:	a63675b0ea7990d4a7d7e7e14f23a3e4
 Patch0:		%{name}-makefile.patch
 Patch1:		%{name}-esd.patch
 Patch2:		%{name}-audio_sun.patch
