@@ -2,13 +2,13 @@ Summary:	MPEG audio player
 Summary(pl):	Odtwarzacz plików audio MPEG
 Name:		mpg123
 Version:	0.59r
-Release:	1
+Release:	2
 Group:		Applications/Sound
 Group(pl):	Aplikacje/D¼wiêk
 Copyright:	Freely distributable for non-commercial use
 Source:		http://www.mpg123.de/mpg123/%{name}-%{version}.tar.gz
-Patch0:		mpg123-makefile.patch
-Patch1:		mpg123-0.59r-ipv6.patch
+Patch0:		mpg123-059r-v6-19991007a.diff.gz
+Patch1:		mpg123-makefile.patch
 URL:		http://www.mpg123.de/
 Buildroot:	/tmp/%{name}-%{version}-root
 
@@ -34,9 +34,9 @@ procesorach 486.
 
 %build
 %ifarch i386 i586 i686
-make linux
+make OPT_FLAGS="$RPM_OPT_FLAGS" linux 
 %else
-make linux-%{_target_cpu}
+make OPT_FLAGS="$RPM_OPT_FLAGS" linux-%{_target_cpu}
 %endif
 
 %install
