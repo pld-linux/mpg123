@@ -6,10 +6,6 @@ Name:		mpg123
 Version:	0.59r
 Release:	6
 Group:		Applications/Sound
-Group(de):	Applikationen/Laut
-Group(es):	Aplicaciones/Sonido
-Group(pl):	Aplikacje/D¼wiêk
-Group(pt_BR):	Aplicações/Som
 License:	Freely distributable for non-commercial use, GPL (mpglib)
 Source0:	http://www.mpg123.de/mpg123/%{name}-%{version}.tar.gz
 Patch0:		ftp://ftp.kame.net/pub/kame/misc/%{name}-059r-v6-20000111.diff.gz
@@ -47,10 +43,6 @@ O mpg123 é um tocador de áudio MPEG para o Unix. Ele suporta MPEG
 Summary:	mpg123 for ESD
 Summary(pl):	mpg123 dla ESD
 Group:		Applications/Sound
-Group(de):	Applikationen/Laut
-Group(es):	Aplicaciones/Sonido
-Group(pl):	Aplikacje/D¼wiêk
-Group(pt_BR):	Aplicações/Som
 
 %description esd
 Mpg123 is a fast, free(for non-commercial use) and portable MPEG audio
