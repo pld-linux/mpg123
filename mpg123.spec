@@ -89,7 +89,11 @@ Wersja z wyj¶ciem na ESD.
 mv -f mpg123 mpg123.base
 
 %{__make} clean
-%{__make} OPT_FLAGS="%{rpmcflags} -DINET6" linux-esd
+%ifarch i386 i586 i686
+%{__make} OPT_FLAGS="%{rpmcflags} -DINET6" linux -esd
+%else
+%{__make} OPT_FLAGS="%{rpmcflags} -DINET6" linux-%{_target_cpu}-esd
+%endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
