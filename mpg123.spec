@@ -80,7 +80,7 @@ Wersja z wyj¶ciem na ESD.
 %patch3 -p1
 
 %build
-%ifarch i386 i586 i686
+%ifarch %{ix86}
 %{__make} OPT_FLAGS="%{rpmcflags} -DINET6" linux 
 %else
 %{__make} OPT_FLAGS="%{rpmcflags} -DINET6" linux-%{_target_cpu}
@@ -89,7 +89,7 @@ Wersja z wyj¶ciem na ESD.
 mv -f mpg123 mpg123.base
 
 %{__make} clean
-%ifarch i386 i586 i686
+%ifarch %{ix86}
 %{__make} OPT_FLAGS="%{rpmcflags} -DINET6" linux -esd
 %else
 %{__make} OPT_FLAGS="%{rpmcflags} -DINET6" linux-%{_target_cpu}-esd
