@@ -4,11 +4,12 @@ Name:		mpg123
 Version:	0.59r
 Release:	3
 Group:		Applications/Sound
+Group(de):	Applikationen/Laut
 Group(pl):	Aplikacje/D¼wiêk
 Copyright:	Freely distributable for non-commercial use
 Source0:	http://www.mpg123.de/mpg123/%{name}-%{version}.tar.gz
-Patch0:		ftp://ftp.kame.net/pub/kame/misc/mpg123-059r-v6-20000111.diff.gz
-Patch1:		mpg123-makefile.patch
+Patch0:		ftp://ftp.kame.net/pub/kame/misc/%{name}-059r-v6-20000111.diff.gz
+Patch1:		%{name}-makefile.patch
 URL:		http://www.mpg123.de/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -35,20 +36,19 @@ mo¿na uzyskaæ ju¿ na procesorach 486.
 
 %build
 %ifarch i386 i586 i686
-%{__make} OPT_FLAGS="$RPM_OPT_FLAGS -DINET6" linux 
+%{__make} OPT_FLAGS="%{rpmcflags} -DINET6" linux 
 %else
-%{__make} OPT_FLAGS="$RPM_OPT_FLAGS -DINET6" linux-%{_target_cpu}
+%{__make} OPT_FLAGS="%{rpmcflags} -DINET6" linux-%{_target_cpu}
 %endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_mandir}/man1}
 
-install -s %{name} $RPM_BUILD_ROOT%{_bindir}
+install %{name} $RPM_BUILD_ROOT%{_bindir}
 install %{name}.1 $RPM_BUILD_ROOT%{_mandir}/man1
 
-gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man1/* \
-	BUGS COPYING CHANGES JUKEBOX README
+gzip -9nf BUGS COPYING CHANGES JUKEBOX README
 
 %clean
 rm -rf $RPM_BUILD_ROOT
