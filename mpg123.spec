@@ -41,9 +41,9 @@ make linux-%{_target_cpu}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT/usr/{bin,share/man/man1}
-install mpg123 $RPM_BUILD_ROOT%{_bindir}
-install mpg123.1 $RPM_BUILD_ROOT%{_mandir}/man1
+install -d $RPM_BUILD_ROOT{%{_bindir},%{_mandir}/man1}
+install %{name} $RPM_BUILD_ROOT%{_bindir}
+install %{name}.1 $RPM_BUILD_ROOT%{_mandir}/man1
 
 gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man1/* \
 	BUGS COPYING CHANGES JUKEBOX README
@@ -55,40 +55,13 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc {BUGS,COPYING,CHANGES,JUKEBOX,README}.gz
 
-%attr(755,root,root) %{_bindir}/mpg123
-%{_mandir}/man1/mpg123.1.gz
+%attr(755,root,root) %{_bindir}/%{name}
+%{_mandir}/man1/*
 
 %changelog
-* Sun May  9 1999 Piotr Czerwiñski <pius@pld.org.pl>
-  [0.59q-1]
-- updated to 0.59q,
-- removed mpg123-opts.patch, mpg123-sparc.patch,
-- added mpg123-makefile.patch and mpg123-8bit.patch,
-- minor modifications to the spec file,
-- FHS 2.0 compliant changes.
-
-* Fri Nov 27 1998 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
-  [0.59o-5]
-- updated URL and Source,
-- added support for more architectures (modified mpg123-opts.patch
-  and added mpg123-sparc.patch).
-
-* Mon Sep 14 1998 Marek Obuchowicz <elephant@shadow.eu.org>
-  [0.59o-4]
-- added pl translation.
-
-* Mon Feb 16 1998 Karsten Weiss <karsten@addx.au.s.shuttle.de>
-- Upgraded to 0.59o
-
-* Sun Feb 15 1998 Karsten Weiss <karsten@addx.au.s.shuttle.de>
-- Upgraded to 0.59n
-- Fixed absolute paths in spec file
-
-* Tue Dec 02 1997 Trond Eivind Glomsrød <teg@pvv.ntnu.no>
-- Corrected the copyright
-- The binary is now compiled for pentium (with egcs-971201)
-- Compiled with Red Hat 5.0
-- a little patch to make it respect RPM_OPT_FLAGS
-
-* Thu Nov 20 1997 Greg Boehnlein <damin@nacs.net>
-- Rebuilt for RedHat Mustang using Glibc
+* Fri May 21 1999 Piotr Czerwiñski <pius@pld.org.pl>
+  [0.59q-1] 
+- package is FHS 2.0 compliant,
+- based on spec file written by Karsten Weiss <karsten@addx.au.s.shuttle.de>,
+  modified for PLD use by me and Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>,
+- pl translation by Marek Obuchowicz <elephant@shadow.eu.org>.  
