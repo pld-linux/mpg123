@@ -11,7 +11,7 @@ Summary(ru):	Проигрыватель MPEG аудиофайлов
 Summary(uk):	Програвач MPEG ауд╕офайл╕в
 Name:		mpg123
 Version:	0.59s
-Release:	0.pre.8
+Release:	0.pre.9
 Group:		Applications/Sound
 License:	freely distributable for non-commercial use, GPL (mpglib)
 Source0:	http://www.mpg123.de/mpg123/%{name}-pre%{version}.tar.gz
@@ -24,6 +24,7 @@ Patch4:		%{name}-id3v2-hack.patch
 Patch5:		%{name}-http-overflow.patch
 Patch6:		%{name}-layer2-overflow.patch
 Patch7:		%{name}-bufoverflow.patch
+Patch8:		%{name}-CAN-2004-1284.patch
 URL:		http://www.mpg123.de/
 %{?with_esd:BuildRequires:	esound-devel}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -116,6 +117,7 @@ Wersja z wyj╤ciem na ESD.
 %patch5 -p1
 %patch6 -p0
 %patch7 -p1
+%patch8 -p1
 
 %build
 %{__make} %{trgt} \
