@@ -1,0 +1,59 @@
+--- Makefile	Tue Jan 26 15:35:18 1999
++++ Makefile.new	Sun May  9 11:31:03 1999
+@@ -100,7 +100,7 @@
+ 			audio_oss.o term.o' \
+ 		CFLAGS='-DI386_ASSEM -DREAL_IS_FLOAT -DPENTIUM_OPT -DLINUX \
+ 			-DREAD_MMAP -DOSS \
+-			-Wall -O2 -m486 \
++			-Wall $(RPM_OPT_FLAGS) \
+ 			-fomit-frame-pointer -funroll-all-loops \
+ 			-finline-functions -ffast-math' \
+ 		mpg123-make
+@@ -111,7 +111,7 @@
+ 			audio_oss.o' \
+ 		CFLAGS='-DI386_ASSEM -DREAL_IS_FLOAT -DPENTIUM_OPT -DLINUX \
+ 			-DUSE_3DNOW -DREAD_MMAP -DOSS \
+-			-Wall -O2 -m486 \
++			-Wall $(RPM_OPT_FLAGS) \
+ 			-fomit-frame-pointer -funroll-all-loops \
+ 			-finline-functions -ffast-math' \
+ 		mpg123-make
+@@ -122,7 +122,7 @@
+ 			audio_oss.o' \
+ 		CFLAGS='-DI386_ASSEM -DREAL_IS_FLOAT -DI486_OPT -DLINUX \
+ 			-DREAD_MMAP -DOSS \
+-			-Wall -O2 -m486 \
++			-Wall $(RPM_OPT_FLAGS) \
+ 			-fomit-frame-pointer -funroll-all-loops \
+ 			-finline-functions -ffast-math' \
+ 		mpg123-make
+@@ -185,10 +185,27 @@
+ linux-sparc:
+ 	$(MAKE) CC=gcc  LDFLAGS= \
+ 		OBJECTS='decode.o dct64.o audio_sun.o' \
+-		CFLAGS='-DREAL_IS_FLOAT -DUSE_MMAP -DSPARCLINUX -Wall -O2 \
++		CFLAGS='-DREAL_IS_FLOAT -DUSE_MMAP -DSPARCLINUX -Wall \
+ 			-fomit-frame-pointer -funroll-all-loops \
+-			-finline-functions -ffast-math' \
++			-finline-functions -ffast-math $(RPM_OPT_FLAGS)' \
+ 		mpg123-make
++
++linux-sparc-esd:
++       $(MAKE) CC=gcc  LDFLAGS= \
++               AUDIO_LIB='-lesd -laudiofile' \
++               OBJECTS='decode.o dct64.o audio_esd.o' \
++               CFLAGS='-DREAL_IS_FLOAT -DUSE_MMAP -DSPARCLINUX -Wall \
++			-fomit-frame-pointer -funroll-all-loops \
++			-finline-functions -ffast-math $(RPM_OPT_FLAGS)' \
++               mpg123-make
++
++linux-armv4l:
++       $(MAKE) CC=gcc LDFLAGS= OBJECTS='decode.o dct64.o audio_oss.o' \
++               CFLAGS='-DLINUX -DOSS -Wall \
++                       -fomit-frame-pointer -funroll-all-loops \
++                       -finline-functions -ffast-math \
++                       -Wall -DUSE_MMAP $(RPM_OPT_FLAGS)' \
++                mpg123-make
+ 
+ linux-ppc-esd:
+ 	$(MAKE) CC=gcc  LDFLAGS= \
