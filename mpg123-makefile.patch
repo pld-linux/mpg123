@@ -1,5 +1,5 @@
---- mpg123/Makefile.orig	2001-01-23 19:00:46.000000000 +0100
-+++ mpg123/Makefile	2004-08-11 22:12:56.477514479 +0200
+--- mpg123/Makefile.orig	2001-01-23 18:00:46.000000000 +0000
++++ mpg123/Makefile	2006-06-21 21:43:03.085885864 +0000
 @@ -152,7 +152,7 @@
  linux-devel:
  	$(MAKE) OBJECTS='decode_i386.o dct64_i386.o audio_oss.o' \
@@ -9,7 +9,7 @@
  		-DOSS -funroll-all-loops \
  		-finline-functions -ffast-math' \
          mpg123-make
-@@ -160,7 +160,7 @@
+@@ -160,118 +160,141 @@
  linux-profile:
  	$(MAKE) OBJECTS='decode_i386.o dct64_i386.o audio_oss.o' \
          CC=gcc LDFLAGS='-pg' \
@@ -18,11 +18,14 @@
  		-DOSS -funroll-all-loops \
  		-finline-functions -ffast-math' \
          mpg123-make
-@@ -169,10 +169,10 @@
+ 
+ linux:
  	$(MAKE) CC=gcc LDFLAGS= \
- 		OBJECTS='decode_i386.o dct64_i386.o decode_i586.o \
- 			audio_oss.o term.o' \
+-		OBJECTS='decode_i386.o dct64_i386.o decode_i586.o \
+-			audio_oss.o term.o' \
 -		CFLAGS='$(CFLAGS) -DI386_ASSEM -DPENTIUM_OPT -DREAL_IS_FLOAT -DLINUX \
++		OBJECTS="decode_i386.o dct64_i386.o decode_i586.o \
++			audio_oss.o term.o" \
 +		CFLAGS='$(CFLAGS) $(OPT_FLAGS) -DI386_ASSEM -DPENTIUM_OPT -DREAL_IS_FLOAT -DLINUX \
  			-DOSS -DTERM_CONTROL\
 -			-Wall -O2 -m486 \
@@ -32,11 +35,13 @@
  			-finline-functions -ffast-math' \
  		mpg123-make
  
-@@ -180,10 +180,10 @@
+ linux-pentium:
  	$(MAKE) CC=gcc LDFLAGS= \
- 		OBJECTS='decode_i386.o dct64_i386.o decode_i586.o \
- 			audio_oss.o term.o' \
+-		OBJECTS='decode_i386.o dct64_i386.o decode_i586.o \
+-			audio_oss.o term.o' \
 -		CFLAGS='$(CFLAGS) -DI386_ASSEM -DPENTIUM_OPT -DREAL_IS_FLOAT -DLINUX \
++		OBJECTS="decode_i386.o dct64_i386.o decode_i586.o \
++			audio_oss.o term.o" \
 +		CFLAGS='$(CFLAGS) $(OPT_FLAGS) -DI386_ASSEM -DPENTIUM_OPT -DREAL_IS_FLOAT -DLINUX \
  			-DOSS -DTERM_CONTROL\
 -			-Wall -O2 -mpentium \
@@ -46,11 +51,13 @@
  			-finline-functions -ffast-math' \
  		mpg123-make
  
-@@ -191,10 +191,10 @@
+ linux-mmx:
  	$(MAKE) CC=gcc LDFLAGS= \
- 		OBJECTS='decode_i386.o dct64_MMX.o tabinit_MMX.o decode_MMX.o \
- 			audio_oss.o term.o' \
+-		OBJECTS='decode_i386.o dct64_MMX.o tabinit_MMX.o decode_MMX.o \
+-			audio_oss.o term.o' \
 -		CFLAGS='-DUSE_MMX -DI386_ASSEM -DPENTIUM_OPT -DREAL_IS_FLOAT \
++		OBJECTS="decode_i386.o dct64_MMX.o tabinit_MMX.o decode_MMX.o \
++			audio_oss.o term.o" \
 +		CFLAGS='$(OPT_FLAGS) -DUSE_MMX -DI386_ASSEM -DPENTIUM_OPT -DREAL_IS_FLOAT \
  			-DLINUX -DOSS -DTERM_CONTROL\
 -			-Wall -O2 -m486 \
@@ -60,11 +67,14 @@
  			-finline-functions -ffast-math' \
  		mpg123-make
  
-@@ -203,10 +203,10 @@
- 		OBJECTS='decode_i386.o decode_3dnow.o dct64_3dnow.o \
+ linux-3dnow:
+ 	$(MAKE) CC=gcc LDFLAGS= \
+-		OBJECTS='decode_i386.o decode_3dnow.o dct64_3dnow.o \
++		OBJECTS="decode_i386.o decode_3dnow.o dct64_3dnow.o \
  			dct64_i386.o dct36_3dnow.o getcpuflags.o \
- 			equalizer_3dnow.o decode_i586.o audio_oss.o term.o' \
+-			equalizer_3dnow.o decode_i586.o audio_oss.o term.o' \
 -		CFLAGS='$(CFLAGS) -DI386_ASSEM -DREAL_IS_FLOAT -DPENTIUM_OPT -DLINUX \
++			equalizer_3dnow.o decode_i586.o audio_oss.o term.o" \
 +		CFLAGS='$(CFLAGS) $(OPT_FLAGS) -DI386_ASSEM -DREAL_IS_FLOAT -DPENTIUM_OPT -DLINUX \
  			-DUSE_3DNOW -DOSS -DTERM_CONTROL\
 -			-Wall -O2 -m486 \
@@ -74,11 +84,15 @@
  			-finline-functions -ffast-math' \
  		mpg123-make
  
-@@ -216,10 +216,10 @@
- 		OBJECTS='decode_i386.o dct64_i386.o decode_i586.o \
+ 
+ linux-i486:
+ 	$(MAKE) CC=gcc LDFLAGS= \
+-		OBJECTS='decode_i386.o dct64_i386.o decode_i586.o \
++		OBJECTS="decode_i386.o dct64_i386.o decode_i586.o \
  			decode_i486.o audio_oss.o term.o \
- 			dct64_i486-a.o dct64_i486-b.o ' \
+-			dct64_i486-a.o dct64_i486-b.o ' \
 -		CFLAGS='$(CFLAGS) -DI386_ASSEM -DREAL_IS_FLOAT -DI486_OPT -DLINUX \
++			dct64_i486-a.o dct64_i486-b.o" \
 +		CFLAGS='$(CFLAGS) $(OPT_FLAGS) -DI386_ASSEM -DREAL_IS_FLOAT -DI486_OPT -DLINUX \
  			-DOSS -DTERM_CONTROL\
 -			-Wall -O2 -m486 \
@@ -88,11 +102,14 @@
  			-finline-functions -ffast-math' \
  		mpg123-make
  
-@@ -228,12 +228,11 @@
+ linux-esd:
+ 	$(MAKE) CC=gcc LDFLAGS= \
  		AUDIO_LIB='-lesd -laudiofile' \
- 		OBJECTS='decode_i386.o dct64_i386.o decode_i586.o \
- 			audio_esd.o' \
+-		OBJECTS='decode_i386.o dct64_i386.o decode_i586.o \
+-			audio_esd.o' \
 -		CFLAGS='$(CFLAGS) -DI386_ASSEM -DREAL_IS_FLOAT -DPENTIUM_OPT -DLINUX \
++		OBJECTS="decode_i386.o dct64_i386.o decode_i586.o \
++			audio_esd.o" \
 +		CFLAGS='$(CFLAGS) $(OPT_FLAGS) -DI386_ASSEM -DREAL_IS_FLOAT -DPENTIUM_OPT -DLINUX \
  			-DOSS -DUSE_ESD \
 -			-Wall  -O2 -m486 \
@@ -105,11 +122,13 @@
  		mpg123-make
  
  linux-alsa:
-@@ -241,12 +240,36 @@
+ 	$(MAKE) CC=gcc LDFLAGS= \
  		AUDIO_LIB='-lasound' \
- 		OBJECTS='decode_i386.o dct64_i386.o decode_i586.o \
- 			audio_alsa.o term.o' \
+-		OBJECTS='decode_i386.o dct64_i386.o decode_i586.o \
+-			audio_alsa.o term.o' \
 -		CFLAGS='$(CFLAGS) -DI386_ASSEM -DREAL_IS_FLOAT -DPENTIUM_OPT -DLINUX \
++		OBJECTS="decode_i386.o dct64_i386.o decode_i586.o \
++			audio_alsa.o term.o" \
 +		CFLAGS='$(CFLAGS) $(OPT_FLAGS) -DI386_ASSEM -DREAL_IS_FLOAT -DPENTIUM_OPT -DLINUX \
  			-DALSA -DTERM_CONTROL\
 -			-Wall  -O2 -m486 \
@@ -124,9 +143,9 @@
 +linux-i486-esd:
 +	$(MAKE) CC=gcc LDFLAGS= \
 +		AUDIO_LIB='-lesd -laudiofile' \
-+		OBJECTS='decode_i386.o dct64_i386.o decode_i586.o \
++		OBJECTS="decode_i386.o dct64_i386.o decode_i586.o \
 +			decode_i486.o audio_esd.o \
-+			dct64_i486-a.o dct64_i486-b.o ' \
++			dct64_i486-a.o dct64_i486-b.o" \
 +		CFLAGS='$(CFLAGS) $(OPT_FLAGS) -DI386_ASSEM -DREAL_IS_FLOAT -DI486_OPT -DLINUX \
 +			-DOSS -DUSE_ESD \
 +			-Wall \
@@ -137,8 +156,8 @@
 +linux-mmx-esd:
 +	$(MAKE) CC=gcc LDFLAGS= \
 +		AUDIO_LIB='-lesd -laudiofile' \
-+		OBJECTS='decode_i386.o dct64_MMX.o tabinit_MMX.o decode_MMX.o \
-+			audio_esd.o' \
++		OBJECTS="decode_i386.o dct64_MMX.o tabinit_MMX.o decode_MMX.o \
++			audio_esd.o" \
 +		CFLAGS='$(OPT_FLAGS) -DUSE_MMX -DI386_ASSEM -DPENTIUM_OPT -DREAL_IS_FLOAT \
 +			-DLINUX -DOSS -DUSE_ESD \
 +			-Wall \
@@ -147,11 +166,14 @@
  		mpg123-make
  
  linux-3dnow-alsa:
-@@ -255,10 +278,10 @@
- 		OBJECTS='decode_i386.o decode_3dnow.o dct64_3dnow.o \
+ 	$(MAKE) CC=gcc LDFLAGS= \
+ 		AUDIO_LIB='-lasound' \
+-		OBJECTS='decode_i386.o decode_3dnow.o dct64_3dnow.o \
++		OBJECTS="decode_i386.o decode_3dnow.o dct64_3dnow.o \
  			dct64_i386.o dct36_3dnow.o getcpuflags.o \
- 			equalizer_3dnow.o decode_i586.o audio_alsa.o term.o' \
+-			equalizer_3dnow.o decode_i586.o audio_alsa.o term.o' \
 -		CFLAGS='-DI386_ASSEM -DREAL_IS_FLOAT -DPENTIUM_OPT -DLINUX \
++			equalizer_3dnow.o decode_i586.o audio_alsa.o term.o" \
 +		CFLAGS='$(OPT_FLAGS) -DI386_ASSEM -DREAL_IS_FLOAT -DPENTIUM_OPT -DLINUX \
  			-DUSE_3DNOW -DALSA -DTERM_CONTROL\
 -			-Wall -O2 -m486 \
@@ -161,11 +183,15 @@
  			-finline-functions -ffast-math' \
  		mpg123-make
  
-@@ -268,10 +291,10 @@
- 		OBJECTS='decode_i386.o decode_3dnow.o dct64_3dnow.o \
+ linux-3dnow-esd:
+ 	$(MAKE) CC=gcc LDFLAGS= \
+ 		AUDIO_LIB='-lesd -laudiofile' \
+-		OBJECTS='decode_i386.o decode_3dnow.o dct64_3dnow.o \
++		OBJECTS="decode_i386.o decode_3dnow.o dct64_3dnow.o \
  			dct64_i386.o dct36_3dnow.o getcpuflags.o \
- 			equalizer_3dnow.o decode_i586.o audio_esd.o' \
+-			equalizer_3dnow.o decode_i586.o audio_esd.o' \
 -		CFLAGS='-DI386_ASSEM -DREAL_IS_FLOAT -DPENTIUM_OPT -DLINUX \
++			equalizer_3dnow.o decode_i586.o audio_esd.o" \
 +		CFLAGS='$(OPT_FLAGS) -DI386_ASSEM -DREAL_IS_FLOAT -DPENTIUM_OPT -DLINUX \
  			-DUSE_3DNOW -DUSE_ESD \
 -			-Wall -O2 -m486 \
@@ -334,13 +360,17 @@
  			-finline-functions -ffast-math' \
  		mpg123-make
  
-@@ -415,9 +452,9 @@
+@@ -413,11 +450,11 @@
+ 
+ linux-frontend:
  	$(MAKE) CC=gcc LDFLAGS= \
- 		OBJECTS='decode_i386.o dct64_i386.o decode_i586.o \
- 			control_sajber.o control_tk3play.o audio_oss.o' \
+-		OBJECTS='decode_i386.o dct64_i386.o decode_i586.o \
+-			control_sajber.o control_tk3play.o audio_oss.o' \
 -		CFLAGS='$(CFLAGS) -DFRONTEND -DOSS -DI386_ASSEM -DREAL_IS_FLOAT \
 -			-DPENTIUM_OPT -DLINUX -Wall -O2 -m486 \
 -			-fomit-frame-pointer -funroll-all-loops \
++		OBJECTS="decode_i386.o dct64_i386.o decode_i586.o \
++			control_sajber.o control_tk3play.o audio_oss.o" \
 +		CFLAGS='$(CFLAGS) $(OPT_FLAGS) -DFRONTEND -DOSS -DI386_ASSEM -DREAL_IS_FLOAT \
 +			-DPENTIUM_OPT -DLINUX -Wall \
 +			-funroll-all-loops \
