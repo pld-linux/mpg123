@@ -40,7 +40,11 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %endif
 %endif
 %else
+%ifarch %{x8664}
+%define		trgt	linux-amd64
+%else
 %define		trgt	linux-%{_target_cpu}
+%endif
 %endif
 
 %define		specflags	-fomit-frame-pointer
