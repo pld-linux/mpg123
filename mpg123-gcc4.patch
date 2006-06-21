@@ -1,0 +1,17 @@
+--- mpg123/term.h.orig	2000-10-30 17:45:14.000000000 +0000
++++ mpg123/term.h	2006-06-21 21:44:33.304170600 +0000
+@@ -44,12 +44,12 @@
+  * be #ifdef'ed TERM_CONTROL anyway but here for completeness. */
+ #define term_control(x)		0
+ 
+-void INLINE term_init(void)
++static void INLINE term_init(void)
+ {
+ 	return;
+ }
+ 
+-void INLINE term_restore(void)
++static void INLINE term_restore(void)
+ {
+ 	return;
+ }
