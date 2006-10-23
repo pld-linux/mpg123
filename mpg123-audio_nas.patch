@@ -1,0 +1,11 @@
+--- src/audio_nas.c	2006-10-23 15:01:04.892202480 +0200
++++ src/audio_nas.c-new	2006-10-23 15:01:19.124038912 +0200
+@@ -189,7 +189,7 @@
+     info.buf_size = buf_samples * ai->channels * AuSizeofFormat(format);
+     info.buf = (char *) malloc(info.buf_size);
+     if (info.buf == NULL) {
+-        error("Unable to allocate input/output buffer of size %ld",
++        error1("Unable to allocate input/output buffer of size %ld",
+              info.buf_size);
+         return 0;
+     }
