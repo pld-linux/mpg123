@@ -16,7 +16,7 @@ Summary(uk):	Програвач MPEG ауд╕офайл╕в
 Name:		mpg123
 Version:	0.61
 Release:	0.3
-License:	freely distributable for non-commercial use, GPL (mpglib)
+License:	LGPL, GPL (mpglib)
 Group:		Applications/Sound
 Source0:	http://dl.sourceforge.net/mpg123/%{name}-%{version}.tar.bz2
 # Source0-md5:	13b505ec04e5afb10399c89f24e99f0e
