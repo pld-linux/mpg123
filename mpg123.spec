@@ -174,6 +174,7 @@ Wersja z wyj¶ciem na SDL.
 mv -f src/mpg123 src/mpg123.base
 
 %if %{with alsa}
+%{__make} clean
 %configure \
 	%{?with_alsa:--with-audio=alsa} \
 	%{?with_mmx:--with-cpu=mmx}
@@ -182,6 +183,7 @@ mv -f src/mpg123 src/mpg123-alsa
 %endif
 
 %if %{with esd}
+%{__make} clean
 %configure \
 	%{?with_esd:--with-audio=esd} \
 	%{?with_mmx:--with-cpu=mmx}
@@ -190,6 +192,7 @@ mv -f src/mpg123 src/mpg123-esd
 %endif
 
 %if %{with jack}
+%{__make} clean
 %configure \
 	%{?with_jack:--with-audio=jack} \
 	%{?with_mmx:--with-cpu=mmx}
@@ -198,6 +201,7 @@ mv -f src/mpg123 src/mpg123-jack
 %endif
 
 %if %{with sdl}
+%{__make} clean
 %configure \
 	%{?with_sdl:--with-audio=sdl} \
 	%{?with_mmx:--with-cpu=mmx}
