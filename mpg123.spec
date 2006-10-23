@@ -15,15 +15,15 @@ Summary(uk):	Програвач MPEG ауд╕офайл╕в
 Name:		mpg123
 Version:	0.61
 Release:	0.1
-Group:		Applications/Sound
 License:	freely distributable for non-commercial use, GPL (mpglib)
+Group:		Applications/Sound
 Source0:	http://dl.sourceforge.net/mpg123/%{name}-%{version}.tar.bz2
 # Source0-md5:	13b505ec04e5afb10399c89f24e99f0e
 URL:		http://www.mpg123.de/
+%{?with_sdl:BuildRequires:	SDL_sound-devel}
 %{?with_alsa:BuildRequires:	alsa-lib-devel}
 %{?with_esd:BuildRequires:	esound-devel}
 %{?with_jack:BuildRequires:	jack-audio-connection-kit-devel}
-%{?with_sdl:BuildRequires:	SDL_sound-devel}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
