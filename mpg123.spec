@@ -14,7 +14,7 @@ Summary(ru):	Проигрыватель MPEG аудиофайлов
 Summary(uk):	Програвач MPEG ауд╕офайл╕в
 Name:		mpg123
 Version:	0.61
-Release:	0.1
+Release:	0.2
 License:	freely distributable for non-commercial use, GPL (mpglib)
 Group:		Applications/Sound
 Source0:	http://dl.sourceforge.net/mpg123/%{name}-%{version}.tar.bz2
@@ -168,7 +168,7 @@ Wersja z wyj╤ciem na SDL.
 
 %build
 %configure \
-	%{?with_oss:--with-audio=oss} \
+	--with-audio=oss \
 	%{?with_mmx:--with-cpu=mmx}
 %{__make}
 mv -f src/mpg123 src/mpg123.base
