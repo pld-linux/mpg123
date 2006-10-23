@@ -4,6 +4,7 @@
 %bcond_without	esd	# disable esound supprot
 %bcond_without	alsa	# disable alsa support
 %bcond_without	jack	# disable jack support
+%bcond_without	nas	# diasble nas support
 %bcond_with	sdl	# disable sdl support
 #
 Summary:	MPEG audio player
@@ -14,16 +15,18 @@ Summary(ru):	ðÒÏÉÇÒÙ×ÁÔÅÌØ MPEG ÁÕÄÉÏÆÁÊÌÏ×
 Summary(uk):	ðÒÏÇÒÁ×ÁÞ MPEG ÁÕÄ¦ÏÆÁÊÌ¦×
 Name:		mpg123
 Version:	0.61
-Release:	0.2
+Release:	0.3
 License:	freely distributable for non-commercial use, GPL (mpglib)
 Group:		Applications/Sound
 Source0:	http://dl.sourceforge.net/mpg123/%{name}-%{version}.tar.bz2
 # Source0-md5:	13b505ec04e5afb10399c89f24e99f0e
+Patch0:		%{name}-audio_nas.patch
 URL:		http://www.mpg123.de/
 %{?with_sdl:BuildRequires:	SDL_sound-devel}
 %{?with_alsa:BuildRequires:	alsa-lib-devel}
 %{?with_esd:BuildRequires:	esound-devel}
 %{?with_jack:BuildRequires:	jack-audio-connection-kit-devel}
+%{?with_nas:BuildRequires:	nas-devel}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -138,6 +141,31 @@ jako¶æ (22 lub 11 kHz) mo¿na uzyskaæ ju¿ na procesorach 486.
 
 Wersja z wyj¶ciem na Jack.
 
+%package nas
+Summary:        mpg123 for NAS
+Summary(pl):    mpg123 dla NAS
+Group:          Applications/Sound
+
+%description nas
+Mpg123 is a fast, free(for non-commercial use) and portable MPEG audio
+player for Unix. It supports MPEG 1.0/2.0 layers 1, 2 and 3 (those
+famous "MP3" files). For full CD quality playback (44 kHz, 16 bit,
+stereo) a Pentium, SPARCstation10, DEC Alpha or similar CPU is
+required. Mono and/or reduced quality playback (22 kHz or 11 kHz) is
+even possible on 486 CPUs.
+
+Version for NAS output.
+
+%description nas -l pl
+Mpg123 jest szybkim, darmowym (do celów niekomercyjnych) oraz
+uniwersalnym dekoderem plików d¼wiêkowych MPEG dla systemów
+uniksowych. Obs³uguje standard MPEG 1.0/2.0 warstwy 1, 2 oraz 3
+(s³ynne "MP3"). Do uzyskania pe³nej jako¶ci CD wymagany jest silny
+procesor (Pentium, SPARCstation10, DEC Alpha lub podobny). Ni¿sz±
+jako¶æ (22 lub 11 kHz) mo¿na uzyskaæ ju¿ na procesorach 486.
+
+Wersja z wyj¶ciem na NAS.
+
 %package sdl
 Summary:	mpg123 for SDL
 Summary(pl):	mpg123 dla SDL
@@ -165,6 +193,7 @@ Wersja z wyj¶ciem na SDL.
 
 %prep
 %setup -q
+%patch0 -p0
 
 %build
 %configure \
@@ -200,6 +229,15 @@ mv -f src/mpg123 src/mpg123-esd
 mv -f src/mpg123 src/mpg123-jack
 %endif
 
+%if %{with nas}
+%{__make} clean
+%configure \
+	%{?with_nas:--with-audio=nas} \
+	%{?with_mmx:--with-cpu=mmx}
+%{__make}
+mv -f src/mpg123 src/mpg123-nas
+%endif
+
 %if %{with sdl}
 %{__make} clean
 %configure \
@@ -225,6 +263,10 @@ install src/%{name}-esd		$RPM_BUILD_ROOT%{_bindir}/
 
 %if %{with jack}
 install src/%{name}-jack	$RPM_BUILD_ROOT%{_bindir}/
+%endif
+
+%if %{with nas}
+install src/%{name}-nas		$RPM_BUILD_ROOT%{_bindir}/
 %endif
 
 %if %{with sdl}
@@ -261,6 +303,12 @@ rm -rf $RPM_BUILD_ROOT
 %files jack
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/%{name}-jack
+%endif
+
+%if %{with nas}
+%files nas
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/%{name}-nas
 %endif
 
 %if %{with sdl}
