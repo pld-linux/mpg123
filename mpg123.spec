@@ -1,4 +1,6 @@
 #
+# TODO: check why SDL still doesn't work :/
+#
 # Conditional build:
 %bcond_with	mmx	# use MMX to decode stream (won't run without MMX)
 %bcond_without	esd	# disable esound supprot
@@ -21,8 +23,11 @@ Group:		Applications/Sound
 Source0:	http://dl.sourceforge.net/mpg123/%{name}-%{version}.tar.bz2
 # Source0-md5:	13b505ec04e5afb10399c89f24e99f0e
 Patch0:		%{name}-audio_nas.patch
+Patch1:		%{name}-audio_sdl.patch
 URL:		http://www.mpg123.de/
-%{?with_sdl:BuildRequires:	SDL_sound-devel}
+BuildRequires:	autoconf
+BuildRequires:	automake
+%{?with_sdl:BuildRequires:	SDL-devel}
 %{?with_alsa:BuildRequires:	alsa-lib-devel}
 %{?with_esd:BuildRequires:	esound-devel}
 %{?with_jack:BuildRequires:	jack-audio-connection-kit-devel}
@@ -194,8 +199,13 @@ Wersja z wyj¶ciem na SDL.
 %prep
 %setup -q
 %patch0 -p0
+%patch1 -p0
 
 %build
+%{__aclocal}
+%{__autoconf}
+%{__autoheader}
+%{__automake}
 %configure \
 	--with-audio=oss \
 	%{?with_mmx:--with-cpu=mmx}
