@@ -25,13 +25,14 @@ Source0:	http://dl.sourceforge.net/mpg123/%{name}-%{version}.tar.bz2
 Patch0:		%{name}-audio_nas.patch
 Patch1:		%{name}-audio_sdl.patch
 URL:		http://www.mpg123.de/
-BuildRequires:	autoconf
-BuildRequires:	automake
 %{?with_sdl:BuildRequires:	SDL-devel}
 %{?with_alsa:BuildRequires:	alsa-lib-devel}
+BuildRequires:	autoconf
+BuildRequires:	automake
 %{?with_esd:BuildRequires:	esound-devel}
 %{?with_jack:BuildRequires:	jack-audio-connection-kit-devel}
 %{?with_nas:BuildRequires:	nas-devel}
+BuildRequires:	pkgconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -147,9 +148,9 @@ jako¶æ (22 lub 11 kHz) mo¿na uzyskaæ ju¿ na procesorach 486.
 Wersja z wyj¶ciem na Jack.
 
 %package nas
-Summary:        mpg123 for NAS
-Summary(pl):    mpg123 dla NAS
-Group:          Applications/Sound
+Summary:	mpg123 for NAS
+Summary(pl):	mpg123 dla NAS
+Group:		Applications/Sound
 
 %description nas
 Mpg123 is a fast, free(for non-commercial use) and portable MPEG audio
