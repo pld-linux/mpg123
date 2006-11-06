@@ -9,6 +9,9 @@
 %bcond_without	nas	# diasble nas support
 %bcond_with	sdl	# disable sdl support
 #
+%ifarch pentium3 pentium4 athlon
+%define		with_mmx	1
+%endif
 Summary:	MPEG audio player
 Summary(es):	Ejecuta archivos MP3
 Summary(pl):	Odtwarzacz plików audio MPEG
@@ -36,10 +39,10 @@ BuildRequires:	pkgconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-Mpg123 is a fast, free(for non-commercial use) and portable MPEG audio
-player for Unix. It supports MPEG 1.0/2.0 layers 1, 2 and 3 (those
-famous "MP3" files). For full CD quality playback (44 kHz, 16 bit,
-stereo) a Pentium, SPARCstation10, DEC Alpha or similar CPU is
+Mpg123 is a fast, free (for non-commercial use) and portable MPEG
+audio player for Unix. It supports MPEG 1.0/2.0 layers 1, 2 and 3
+(those famous "MP3" files). For full CD quality playback (44 kHz, 16
+bit, stereo) a Pentium, SPARCstation10, DEC Alpha or similar CPU is
 required. Mono and/or reduced quality playback (22 kHz or 11 kHz) is
 even possible on i486 CPUs.
 
@@ -78,14 +81,14 @@ Summary(pl):	mpg123 dla ESD
 Group:		Applications/Sound
 
 %description esd
-Mpg123 is a fast, free(for non-commercial use) and portable MPEG audio
-player for Unix. It supports MPEG 1.0/2.0 layers 1, 2 and 3 (those
-famous "MP3" files). For full CD quality playback (44 kHz, 16 bit,
-stereo) a Pentium, SPARCstation10, DEC Alpha or similar CPU is
+Mpg123 is a fast, free (for non-commercial use) and portable MPEG
+audio player for Unix. It supports MPEG 1.0/2.0 layers 1, 2 and 3
+(those famous "MP3" files). For full CD quality playback (44 kHz, 16
+bit, stereo) a Pentium, SPARCstation10, DEC Alpha or similar CPU is
 required. Mono and/or reduced quality playback (22 kHz or 11 kHz) is
 even possible on 486 CPUs.
 
-Version for ESD output.
+Version for ESD audio output.
 
 %description esd -l pl
 Mpg123 jest szybkim, darmowym (do celów niekomercyjnych) oraz
@@ -95,7 +98,7 @@ uniksowych. Obs³uguje standard MPEG 1.0/2.0 warstwy 1, 2 oraz 3
 procesor (Pentium, SPARCstation10, DEC Alpha lub podobny). Ni¿sz±
 jako¶æ (22 lub 11 kHz) mo¿na uzyskaæ ju¿ na procesorach 486.
 
-Wersja z wyj¶ciem na ESD.
+Wersja z wyj¶ciem d¼wiêku przez ESD.
 
 %package alsa
 Summary:	mpg123 for ALSA
@@ -103,14 +106,14 @@ Summary(pl):	mpg123 dla ALSA
 Group:		Applications/Sound
 
 %description alsa
-Mpg123 is a fast, free(for non-commercial use) and portable MPEG audio
-player for Unix. It supports MPEG 1.0/2.0 layers 1, 2 and 3 (those
-famous "MP3" files). For full CD quality playback (44 kHz, 16 bit,
-stereo) a Pentium, SPARCstation10, DEC Alpha or similar CPU is
+Mpg123 is a fast, free (for non-commercial use) and portable MPEG
+audio player for Unix. It supports MPEG 1.0/2.0 layers 1, 2 and 3
+(those famous "MP3" files). For full CD quality playback (44 kHz, 16
+bit, stereo) a Pentium, SPARCstation10, DEC Alpha or similar CPU is
 required. Mono and/or reduced quality playback (22 kHz or 11 kHz) is
 even possible on 486 CPUs.
 
-Version for ALSA output.
+Version for ALSA audio output.
 
 %description alsa -l pl
 Mpg123 jest szybkim, darmowym (do celów niekomercyjnych) oraz
@@ -120,22 +123,22 @@ uniksowych. Obs³uguje standard MPEG 1.0/2.0 warstwy 1, 2 oraz 3
 procesor (Pentium, SPARCstation10, DEC Alpha lub podobny). Ni¿sz±
 jako¶æ (22 lub 11 kHz) mo¿na uzyskaæ ju¿ na procesorach 486.
 
-Wersja z wyj¶ciem na ALSA.
+Wersja z wyj¶ciem d¼wiêku ALSA.
 
 %package jack
-Summary:	mpg123 for Jack
-Summary(pl):	mpg123 dla Jack
+Summary:	mpg123 for JACK
+Summary(pl):	mpg123 dla JACK
 Group:		Applications/Sound
 
 %description jack
-Mpg123 is a fast, free(for non-commercial use) and portable MPEG audio
-player for Unix. It supports MPEG 1.0/2.0 layers 1, 2 and 3 (those
-famous "MP3" files). For full CD quality playback (44 kHz, 16 bit,
-stereo) a Pentium, SPARCstation10, DEC Alpha or similar CPU is
+Mpg123 is a fast, free (for non-commercial use) and portable MPEG
+audio player for Unix. It supports MPEG 1.0/2.0 layers 1, 2 and 3
+(those famous "MP3" files). For full CD quality playback (44 kHz, 16
+bit, stereo) a Pentium, SPARCstation10, DEC Alpha or similar CPU is
 required. Mono and/or reduced quality playback (22 kHz or 11 kHz) is
 even possible on 486 CPUs.
 
-Version for Jack output.
+Version for JACK audio output.
 
 %description jack -l pl
 Mpg123 jest szybkim, darmowym (do celów niekomercyjnych) oraz
@@ -145,7 +148,7 @@ uniksowych. Obs³uguje standard MPEG 1.0/2.0 warstwy 1, 2 oraz 3
 procesor (Pentium, SPARCstation10, DEC Alpha lub podobny). Ni¿sz±
 jako¶æ (22 lub 11 kHz) mo¿na uzyskaæ ju¿ na procesorach 486.
 
-Wersja z wyj¶ciem na Jack.
+Wersja z wyj¶ciem d¼wiêku przez JACK.
 
 %package nas
 Summary:	mpg123 for NAS
@@ -153,14 +156,14 @@ Summary(pl):	mpg123 dla NAS
 Group:		Applications/Sound
 
 %description nas
-Mpg123 is a fast, free(for non-commercial use) and portable MPEG audio
-player for Unix. It supports MPEG 1.0/2.0 layers 1, 2 and 3 (those
-famous "MP3" files). For full CD quality playback (44 kHz, 16 bit,
-stereo) a Pentium, SPARCstation10, DEC Alpha or similar CPU is
+Mpg123 is a fast, free (for non-commercial use) and portable MPEG
+audio player for Unix. It supports MPEG 1.0/2.0 layers 1, 2 and 3
+(those famous "MP3" files). For full CD quality playback (44 kHz, 16
+bit, stereo) a Pentium, SPARCstation10, DEC Alpha or similar CPU is
 required. Mono and/or reduced quality playback (22 kHz or 11 kHz) is
 even possible on 486 CPUs.
 
-Version for NAS output.
+Version for NAS audio output.
 
 %description nas -l pl
 Mpg123 jest szybkim, darmowym (do celów niekomercyjnych) oraz
@@ -170,7 +173,7 @@ uniksowych. Obs³uguje standard MPEG 1.0/2.0 warstwy 1, 2 oraz 3
 procesor (Pentium, SPARCstation10, DEC Alpha lub podobny). Ni¿sz±
 jako¶æ (22 lub 11 kHz) mo¿na uzyskaæ ju¿ na procesorach 486.
 
-Wersja z wyj¶ciem na NAS.
+Wersja z wyj¶ciem d¼wiêku przez NAS.
 
 %package sdl
 Summary:	mpg123 for SDL
@@ -178,10 +181,10 @@ Summary(pl):	mpg123 dla SDL
 Group:		Applications/Sound
 
 %description sdl
-Mpg123 is a fast, free(for non-commercial use) and portable MPEG audio
-player for Unix. It supports MPEG 1.0/2.0 layers 1, 2 and 3 (those
-famous "MP3" files). For full CD quality playback (44 kHz, 16 bit,
-stereo) a Pentium, SPARCstation10, DEC Alpha or similar CPU is
+Mpg123 is a fast, free (for non-commercial use) and portable MPEG
+audio player for Unix. It supports MPEG 1.0/2.0 layers 1, 2 and 3
+(those famous "MP3" files). For full CD quality playback (44 kHz, 16
+bit, stereo) a Pentium, SPARCstation10, DEC Alpha or similar CPU is
 required. Mono and/or reduced quality playback (22 kHz or 11 kHz) is
 even possible on 486 CPUs.
 
@@ -195,7 +198,7 @@ uniksowych. Obs³uguje standard MPEG 1.0/2.0 warstwy 1, 2 oraz 3
 procesor (Pentium, SPARCstation10, DEC Alpha lub podobny). Ni¿sz±
 jako¶æ (22 lub 11 kHz) mo¿na uzyskaæ ju¿ na procesorach 486.
 
-Wersja z wyj¶ciem na SDL.
+Wersja z wyj¶ciem d¼wiêku przez SDL.
 
 %prep
 %setup -q
