@@ -27,6 +27,7 @@ Source0:	http://dl.sourceforge.net/mpg123/%{name}-%{version}.tar.bz2
 # Source0-md5:	13b505ec04e5afb10399c89f24e99f0e
 Patch0:		%{name}-audio_nas.patch
 Patch1:		%{name}-audio_sdl.patch
+Patch2:		%{name}-am.patch
 URL:		http://www.mpg123.de/
 %{?with_sdl:BuildRequires:	SDL-devel}
 %{?with_alsa:BuildRequires:	alsa-lib-devel}
@@ -204,6 +205,7 @@ Wersja z wyj¶ciem d¼wiêku przez SDL.
 %setup -q
 %patch0 -p0
 %patch1 -p0
+%patch2 -p0
 
 %build
 %{__aclocal}
