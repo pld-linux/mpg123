@@ -1,5 +1,5 @@
 --- configure.ac	2006-10-21 00:08:34.000000000 +0200
-+++ configure.ac-new	2006-10-25 02:45:07.530865360 +0200
++++ configure.ac-new	2006-11-26 01:41:40.274624688 +0100
 @@ -144,7 +144,12 @@
  PKG_CHECK_MODULES(ESOUND, esound, HAVE_ESOUND=yes, HAVE_ESOUND=no)
  
@@ -14,8 +14,19 @@
  
  # Check for NAS
  AC_CHECK_LIB( [audio], [AuOpenServer],
+@@ -493,8 +498,8 @@
+   	if test "x$HAVE_SDL" != "xyes" ; then
+   		AC_MSG_ERROR( SDL is not available for audio output subsystem. )
+   	fi
+-    AUDIO_CFLAGS=$SDL_CFLAGS
+-    AUDIO_LIBS=$SDL_LIBS
++    AUDIO_CFLAGS=""
++    AUDIO_LIBS="-lSDL"
+   ;;
+   sgi)
+     # Currently unsupported in the new build system
 --- src/audio_sdl.c	2006-10-21 00:08:33.000000000 +0200
-+++ src/audio_sdl.c-new	2006-10-25 02:46:06.681873040 +0200
++++ src/audio_sdl.c-new	2006-11-26 01:44:21.132170624 +0100
 @@ -10,7 +10,7 @@
  #include <stdio.h>
  #include <math.h>
