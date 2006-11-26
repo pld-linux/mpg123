@@ -1,0 +1,13 @@
+--- src/Makefile.am	2006-10-21 00:08:33.000000000 +0200
++++ src/Makefile.am-new	2006-11-26 02:11:03.000000000 +0100
+@@ -5,8 +5,8 @@
+ ## initially written by Nicholas J. Humfrey
+ 
+ AM_CFLAGS = @AUDIO_CFLAGS@
+-AM_LDFLAGS = @AUDIO_LIBS@
+-mpg123_LDADD = @AUDIO_OBJ@ @CPU_TYPE_LIB@
++AM_LDFLAGS =
++mpg123_LDADD = @AUDIO_OBJ@ @CPU_TYPE_LIB@ @AUDIO_LIBS@
+ mpg123_DEPENDENCIES = @AUDIO_OBJ@ @CPU_TYPE_LIB@
+ 
+ EXTRA_DIST = Makefile.legacy config.h.legacy
