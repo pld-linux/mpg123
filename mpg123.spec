@@ -7,7 +7,7 @@
 %bcond_without	alsa	# disable alsa support
 %bcond_without	jack	# disable jack support
 %bcond_without	nas	# diasble nas support
-%bcond_with	sdl	# disable sdl support
+%bcond_without	sdl	# disable sdl support
 #
 %ifarch pentium3 pentium4 athlon
 %define		with_mmx	1
@@ -257,7 +257,8 @@ mv -f src/mpg123 src/mpg123-nas
 %configure \
 	%{?with_sdl:--with-audio=sdl} \
 	%{?with_mmx:--with-cpu=mmx}
-%{__make}
+%{__make} \
+	LDFLAGS="%{rpmldflags} -lSDL"
 mv -f src/mpg123 src/mpg123-sdl
 %endif
 
