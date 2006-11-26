@@ -257,8 +257,7 @@ mv -f src/mpg123 src/mpg123-nas
 %configure \
 	%{?with_sdl:--with-audio=sdl} \
 	%{?with_mmx:--with-cpu=mmx}
-%{__make} \
-	LDFLAGS="%{rpmldflags} -lSDL"
+%{__make}
 mv -f src/mpg123 src/mpg123-sdl
 %endif
 
