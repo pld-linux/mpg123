@@ -13,11 +13,11 @@
 %define		with_mmx	1
 %endif
 Summary:	MPEG audio player
-Summary(es):	Ejecuta archivos MP3
-Summary(pl):	Odtwarzacz plikСw audio MPEG
-Summary(pt_BR):	Tocador de arquivos MP3
-Summary(ru):	Проигрыватель MPEG аудиофайлов
-Summary(uk):	Програвач MPEG ауд╕офайл╕в
+Summary(es.UTF-8):   Ejecuta archivos MP3
+Summary(pl.UTF-8):   Odtwarzacz plikцЁw audio MPEG
+Summary(pt_BR.UTF-8):   Tocador de arquivos MP3
+Summary(ru.UTF-8):   п÷я─п╬п╦пЁя─я▀п╡п╟я┌п╣п╩я▄ MPEG п╟я┐п╢п╦п╬я└п╟п╧п╩п╬п╡
+Summary(uk.UTF-8):   п÷я─п╬пЁя─п╟п╡п╟я┤ MPEG п╟я┐п╢я√п╬я└п╟п╧п╩я√п╡
 Name:		mpg123
 Version:	0.63
 Release:	1
@@ -47,38 +47,38 @@ bit, stereo) a Pentium, SPARCstation10, DEC Alpha or similar CPU is
 required. Mono and/or reduced quality playback (22 kHz or 11 kHz) is
 even possible on i486 CPUs.
 
-%description -l es
+%description -l es.UTF-8
 Ejecuta archivos MP3.
 
-%description -l pl
-Mpg123 jest szybkim, darmowym (do celСw niekomercyjnych) oraz
-uniwersalnym dekoderem plikСw d╪wiЙkowych MPEG dla systemСw
-uniksowych. ObsЁuguje standard MPEG 1.0/2.0 warstwy 1, 2 oraz 3
-(sЁynne "MP3"). Do uzyskania peЁnej jako╤ci CD wymagany jest silny
-procesor (Pentium, SPARCstation10, DEC Alpha lub podobny). Ni©sz╠
-jako╤Ф (22 lub 11 kHz) mo©na uzyskaФ ju© na procesorach i486.
+%description -l pl.UTF-8
+Mpg123 jest szybkim, darmowym (do celцЁw niekomercyjnych) oraz
+uniwersalnym dekoderem plikцЁw dе╨wiд≥kowych MPEG dla systemцЁw
+uniksowych. Obsе┌uguje standard MPEG 1.0/2.0 warstwy 1, 2 oraz 3
+(sе┌ynne "MP3"). Do uzyskania peе┌nej jakoе⌡ci CD wymagany jest silny
+procesor (Pentium, SPARCstation10, DEC Alpha lub podobny). Niе╪szд┘
+jakoе⌡д┤ (22 lub 11 kHz) moе╪na uzyskaд┤ juе╪ na procesorach i486.
 
-%description -l pt_BR
-O mpg123 И um tocador de Аudio MPEG para o Unix. Ele suporta MPEG
+%description -l pt_BR.UTF-8
+O mpg123 ц╘ um tocador de ц║udio MPEG para o Unix. Ele suporta MPEG
 1.0/2.0 camadas 1, 2 e 3 (Arquivos "MP3").
 
-%description -l ru
-Mpg123 - это быстрый, свободный и переносимый проигрыватель MPEG
-аудиофайлов. он поддерживает MPEG 1.0/2.0 уровней 1, 2 и 3 ("MP3"
-файлы). Для получения качества звучания компакт-диска (44 kHz, 16 бит,
-стерео) ноеобходим процессор Pentium. Монозвук или звук худшего
-качества (22 kHz или 11 kHz) возможен и на процессорах класса i486.
+%description -l ru.UTF-8
+Mpg123 - я█я┌п╬ п╠я▀я│я┌я─я▀п╧, я│п╡п╬п╠п╬п╢п╫я▀п╧ п╦ п©п╣я─п╣п╫п╬я│п╦п╪я▀п╧ п©я─п╬п╦пЁя─я▀п╡п╟я┌п╣п╩я▄ MPEG
+п╟я┐п╢п╦п╬я└п╟п╧п╩п╬п╡. п╬п╫ п©п╬п╢п╢п╣я─п╤п╦п╡п╟п╣я┌ MPEG 1.0/2.0 я┐я─п╬п╡п╫п╣п╧ 1, 2 п╦ 3 ("MP3"
+я└п╟п╧п╩я▀). п■п╩я▐ п©п╬п╩я┐я┤п╣п╫п╦я▐ п╨п╟я┤п╣я│я┌п╡п╟ п╥п╡я┐я┤п╟п╫п╦я▐ п╨п╬п╪п©п╟п╨я┌-п╢п╦я│п╨п╟ (44 kHz, 16 п╠п╦я┌,
+я│я┌п╣я─п╣п╬) п╫п╬п╣п╬п╠я┘п╬п╢п╦п╪ п©я─п╬я├п╣я│я│п╬я─ Pentium. п°п╬п╫п╬п╥п╡я┐п╨ п╦п╩п╦ п╥п╡я┐п╨ я┘я┐п╢я┬п╣пЁп╬
+п╨п╟я┤п╣я│я┌п╡п╟ (22 kHz п╦п╩п╦ 11 kHz) п╡п╬п╥п╪п╬п╤п╣п╫ п╦ п╫п╟ п©я─п╬я├п╣я│я│п╬я─п╟я┘ п╨п╩п╟я│я│п╟ i486.
 
-%description -l uk
-Mpg123 - це швидкий, в╕льний та переносимий програвач MPEG
-ауд╕офайл╕в. В╕н п╕дтриму╓ MPEG 1.0/2.0 р╕вн╕в 1, 2 та 3 ("MP3"
-файли). Для отримання якост╕ звучання компакт-диску (44 kHz, 16 б╕т,
-стерео) необх╕дний процесор Pentium. Монозвук чи звук г╕ршо╖ якост╕
-(22 kHz чи 11 kHz) можливий ╕ на процесорах класу i486.
+%description -l uk.UTF-8
+Mpg123 - я├п╣ я┬п╡п╦п╢п╨п╦п╧, п╡я√п╩я▄п╫п╦п╧ я┌п╟ п©п╣я─п╣п╫п╬я│п╦п╪п╦п╧ п©я─п╬пЁя─п╟п╡п╟я┤ MPEG
+п╟я┐п╢я√п╬я└п╟п╧п╩я√п╡. п▓я√п╫ п©я√п╢я┌я─п╦п╪я┐я■ MPEG 1.0/2.0 я─я√п╡п╫я√п╡ 1, 2 я┌п╟ 3 ("MP3"
+я└п╟п╧п╩п╦). п■п╩я▐ п╬я┌я─п╦п╪п╟п╫п╫я▐ я▐п╨п╬я│я┌я√ п╥п╡я┐я┤п╟п╫п╫я▐ п╨п╬п╪п©п╟п╨я┌-п╢п╦я│п╨я┐ (44 kHz, 16 п╠я√я┌,
+я│я┌п╣я─п╣п╬) п╫п╣п╬п╠я┘я√п╢п╫п╦п╧ п©я─п╬я├п╣я│п╬я─ Pentium. п°п╬п╫п╬п╥п╡я┐п╨ я┤п╦ п╥п╡я┐п╨ пЁя√я─я┬п╬я≈ я▐п╨п╬я│я┌я√
+(22 kHz я┤п╦ 11 kHz) п╪п╬п╤п╩п╦п╡п╦п╧ я√ п╫п╟ п©я─п╬я├п╣я│п╬я─п╟я┘ п╨п╩п╟я│я┐ i486.
 
 %package esd
 Summary:	mpg123 for ESD
-Summary(pl):	mpg123 dla ESD
+Summary(pl.UTF-8):   mpg123 dla ESD
 Group:		Applications/Sound
 
 %description esd
@@ -91,19 +91,19 @@ even possible on 486 CPUs.
 
 Version for ESD audio output.
 
-%description esd -l pl
-Mpg123 jest szybkim, darmowym (do celСw niekomercyjnych) oraz
-uniwersalnym dekoderem plikСw d╪wiЙkowych MPEG dla systemСw
-uniksowych. ObsЁuguje standard MPEG 1.0/2.0 warstwy 1, 2 oraz 3
-(sЁynne "MP3"). Do uzyskania peЁnej jako╤ci CD wymagany jest silny
-procesor (Pentium, SPARCstation10, DEC Alpha lub podobny). Ni©sz╠
-jako╤Ф (22 lub 11 kHz) mo©na uzyskaФ ju© na procesorach 486.
+%description esd -l pl.UTF-8
+Mpg123 jest szybkim, darmowym (do celцЁw niekomercyjnych) oraz
+uniwersalnym dekoderem plikцЁw dе╨wiд≥kowych MPEG dla systemцЁw
+uniksowych. Obsе┌uguje standard MPEG 1.0/2.0 warstwy 1, 2 oraz 3
+(sе┌ynne "MP3"). Do uzyskania peе┌nej jakoе⌡ci CD wymagany jest silny
+procesor (Pentium, SPARCstation10, DEC Alpha lub podobny). Niе╪szд┘
+jakoе⌡д┤ (22 lub 11 kHz) moе╪na uzyskaд┤ juе╪ na procesorach 486.
 
-Wersja z wyj╤ciem d╪wiЙku przez ESD.
+Wersja z wyjе⌡ciem dе╨wiд≥ku przez ESD.
 
 %package alsa
 Summary:	mpg123 for ALSA
-Summary(pl):	mpg123 dla ALSA
+Summary(pl.UTF-8):   mpg123 dla ALSA
 Group:		Applications/Sound
 
 %description alsa
@@ -116,19 +116,19 @@ even possible on 486 CPUs.
 
 Version for ALSA audio output.
 
-%description alsa -l pl
-Mpg123 jest szybkim, darmowym (do celСw niekomercyjnych) oraz
-uniwersalnym dekoderem plikСw d╪wiЙkowych MPEG dla systemСw
-uniksowych. ObsЁuguje standard MPEG 1.0/2.0 warstwy 1, 2 oraz 3
-(sЁynne "MP3"). Do uzyskania peЁnej jako╤ci CD wymagany jest silny
-procesor (Pentium, SPARCstation10, DEC Alpha lub podobny). Ni©sz╠
-jako╤Ф (22 lub 11 kHz) mo©na uzyskaФ ju© na procesorach 486.
+%description alsa -l pl.UTF-8
+Mpg123 jest szybkim, darmowym (do celцЁw niekomercyjnych) oraz
+uniwersalnym dekoderem plikцЁw dе╨wiд≥kowych MPEG dla systemцЁw
+uniksowych. Obsе┌uguje standard MPEG 1.0/2.0 warstwy 1, 2 oraz 3
+(sе┌ynne "MP3"). Do uzyskania peе┌nej jakoе⌡ci CD wymagany jest silny
+procesor (Pentium, SPARCstation10, DEC Alpha lub podobny). Niе╪szд┘
+jakoе⌡д┤ (22 lub 11 kHz) moе╪na uzyskaд┤ juе╪ na procesorach 486.
 
-Wersja z wyj╤ciem d╪wiЙku ALSA.
+Wersja z wyjе⌡ciem dе╨wiд≥ku ALSA.
 
 %package jack
 Summary:	mpg123 for JACK
-Summary(pl):	mpg123 dla JACK
+Summary(pl.UTF-8):   mpg123 dla JACK
 Group:		Applications/Sound
 
 %description jack
@@ -141,19 +141,19 @@ even possible on 486 CPUs.
 
 Version for JACK audio output.
 
-%description jack -l pl
-Mpg123 jest szybkim, darmowym (do celСw niekomercyjnych) oraz
-uniwersalnym dekoderem plikСw d╪wiЙkowych MPEG dla systemСw
-uniksowych. ObsЁuguje standard MPEG 1.0/2.0 warstwy 1, 2 oraz 3
-(sЁynne "MP3"). Do uzyskania peЁnej jako╤ci CD wymagany jest silny
-procesor (Pentium, SPARCstation10, DEC Alpha lub podobny). Ni©sz╠
-jako╤Ф (22 lub 11 kHz) mo©na uzyskaФ ju© na procesorach 486.
+%description jack -l pl.UTF-8
+Mpg123 jest szybkim, darmowym (do celцЁw niekomercyjnych) oraz
+uniwersalnym dekoderem plikцЁw dе╨wiд≥kowych MPEG dla systemцЁw
+uniksowych. Obsе┌uguje standard MPEG 1.0/2.0 warstwy 1, 2 oraz 3
+(sе┌ynne "MP3"). Do uzyskania peе┌nej jakoе⌡ci CD wymagany jest silny
+procesor (Pentium, SPARCstation10, DEC Alpha lub podobny). Niе╪szд┘
+jakoе⌡д┤ (22 lub 11 kHz) moе╪na uzyskaд┤ juе╪ na procesorach 486.
 
-Wersja z wyj╤ciem d╪wiЙku przez JACK.
+Wersja z wyjе⌡ciem dе╨wiд≥ku przez JACK.
 
 %package nas
 Summary:	mpg123 for NAS
-Summary(pl):	mpg123 dla NAS
+Summary(pl.UTF-8):   mpg123 dla NAS
 Group:		Applications/Sound
 
 %description nas
@@ -166,19 +166,19 @@ even possible on 486 CPUs.
 
 Version for NAS audio output.
 
-%description nas -l pl
-Mpg123 jest szybkim, darmowym (do celСw niekomercyjnych) oraz
-uniwersalnym dekoderem plikСw d╪wiЙkowych MPEG dla systemСw
-uniksowych. ObsЁuguje standard MPEG 1.0/2.0 warstwy 1, 2 oraz 3
-(sЁynne "MP3"). Do uzyskania peЁnej jako╤ci CD wymagany jest silny
-procesor (Pentium, SPARCstation10, DEC Alpha lub podobny). Ni©sz╠
-jako╤Ф (22 lub 11 kHz) mo©na uzyskaФ ju© na procesorach 486.
+%description nas -l pl.UTF-8
+Mpg123 jest szybkim, darmowym (do celцЁw niekomercyjnych) oraz
+uniwersalnym dekoderem plikцЁw dе╨wiд≥kowych MPEG dla systemцЁw
+uniksowych. Obsе┌uguje standard MPEG 1.0/2.0 warstwy 1, 2 oraz 3
+(sе┌ynne "MP3"). Do uzyskania peе┌nej jakoе⌡ci CD wymagany jest silny
+procesor (Pentium, SPARCstation10, DEC Alpha lub podobny). Niе╪szд┘
+jakoе⌡д┤ (22 lub 11 kHz) moе╪na uzyskaд┤ juе╪ na procesorach 486.
 
-Wersja z wyj╤ciem d╪wiЙku przez NAS.
+Wersja z wyjе⌡ciem dе╨wiд≥ku przez NAS.
 
 %package sdl
 Summary:	mpg123 for SDL
-Summary(pl):	mpg123 dla SDL
+Summary(pl.UTF-8):   mpg123 dla SDL
 Group:		Applications/Sound
 
 %description sdl
@@ -191,15 +191,15 @@ even possible on 486 CPUs.
 
 Version for SDL output.
 
-%description sdl -l pl
-Mpg123 jest szybkim, darmowym (do celСw niekomercyjnych) oraz
-uniwersalnym dekoderem plikСw d╪wiЙkowych MPEG dla systemСw
-uniksowych. ObsЁuguje standard MPEG 1.0/2.0 warstwy 1, 2 oraz 3
-(sЁynne "MP3"). Do uzyskania peЁnej jako╤ci CD wymagany jest silny
-procesor (Pentium, SPARCstation10, DEC Alpha lub podobny). Ni©sz╠
-jako╤Ф (22 lub 11 kHz) mo©na uzyskaФ ju© na procesorach 486.
+%description sdl -l pl.UTF-8
+Mpg123 jest szybkim, darmowym (do celцЁw niekomercyjnych) oraz
+uniwersalnym dekoderem plikцЁw dе╨wiд≥kowych MPEG dla systemцЁw
+uniksowych. Obsе┌uguje standard MPEG 1.0/2.0 warstwy 1, 2 oraz 3
+(sе┌ynne "MP3"). Do uzyskania peе┌nej jakoе⌡ci CD wymagany jest silny
+procesor (Pentium, SPARCstation10, DEC Alpha lub podobny). Niе╪szд┘
+jakoе⌡д┤ (22 lub 11 kHz) moе╪na uzyskaд┤ juе╪ na procesorach 486.
 
-Wersja z wyj╤ciem d╪wiЙku przez SDL.
+Wersja z wyjе⌡ciem dе╨wiд≥ku przez SDL.
 
 %prep
 %setup -q
