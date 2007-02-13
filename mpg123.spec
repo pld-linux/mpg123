@@ -13,11 +13,11 @@
 %define		with_mmx	1
 %endif
 Summary:	MPEG audio player
-Summary(es.UTF-8):   Ejecuta archivos MP3
-Summary(pl.UTF-8):   Odtwarzacz plików audio MPEG
-Summary(pt_BR.UTF-8):   Tocador de arquivos MP3
-Summary(ru.UTF-8):   Проигрыватель MPEG аудиофайлов
-Summary(uk.UTF-8):   Програвач MPEG аудіофайлів
+Summary(es.UTF-8):	Ejecuta archivos MP3
+Summary(pl.UTF-8):	Odtwarzacz plików audio MPEG
+Summary(pt_BR.UTF-8):	Tocador de arquivos MP3
+Summary(ru.UTF-8):	Проигрыватель MPEG аудиофайлов
+Summary(uk.UTF-8):	Програвач MPEG аудіофайлів
 Name:		mpg123
 Version:	0.63
 Release:	1
@@ -78,7 +78,7 @@ Mpg123 - це швидкий, вільний та переносимий про�
 
 %package esd
 Summary:	mpg123 for ESD
-Summary(pl.UTF-8):   mpg123 dla ESD
+Summary(pl.UTF-8):	mpg123 dla ESD
 Group:		Applications/Sound
 
 %description esd
@@ -103,7 +103,7 @@ Wersja z wyjściem dźwięku przez ESD.
 
 %package alsa
 Summary:	mpg123 for ALSA
-Summary(pl.UTF-8):   mpg123 dla ALSA
+Summary(pl.UTF-8):	mpg123 dla ALSA
 Group:		Applications/Sound
 
 %description alsa
@@ -128,7 +128,7 @@ Wersja z wyjściem dźwięku ALSA.
 
 %package jack
 Summary:	mpg123 for JACK
-Summary(pl.UTF-8):   mpg123 dla JACK
+Summary(pl.UTF-8):	mpg123 dla JACK
 Group:		Applications/Sound
 
 %description jack
@@ -153,7 +153,7 @@ Wersja z wyjściem dźwięku przez JACK.
 
 %package nas
 Summary:	mpg123 for NAS
-Summary(pl.UTF-8):   mpg123 dla NAS
+Summary(pl.UTF-8):	mpg123 dla NAS
 Group:		Applications/Sound
 
 %description nas
@@ -178,7 +178,7 @@ Wersja z wyjściem dźwięku przez NAS.
 
 %package sdl
 Summary:	mpg123 for SDL
-Summary(pl.UTF-8):   mpg123 dla SDL
+Summary(pl.UTF-8):	mpg123 dla SDL
 Group:		Applications/Sound
 
 %description sdl
