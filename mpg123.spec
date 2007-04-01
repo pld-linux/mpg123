@@ -19,12 +19,12 @@ Summary(pt_BR.UTF-8):	Tocador de arquivos MP3
 Summary(ru.UTF-8):	Проигрыватель MPEG аудиофайлов
 Summary(uk.UTF-8):	Програвач MPEG аудіофайлів
 Name:		mpg123
-Version:	0.63
+Version:	0.65
 Release:	1
 License:	LGPL, GPL (mpglib)
 Group:		Applications/Sound
 Source0:	http://dl.sourceforge.net/mpg123/%{name}-%{version}.tar.bz2
-# Source0-md5:	781eb8a6c0726da55171cc18256e0756
+# Source0-md5:	b15d3e442dcf86133df70f1f3eff7c59
 Patch0:		%{name}-audio_sdl.patch
 Patch1:		%{name}-audio_nas.patch
 Patch2:		%{name}-am.patch
