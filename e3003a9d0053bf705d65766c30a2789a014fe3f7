@@ -1,0 +1,6 @@
+- up to 0.61 stable [fixes CVE-2006-1655]
+- new Source0
+- now we use autotools to configure the programm
+- added alsa,jack and sdl sound support (sdl detection doesn't seem to work properly at the moment so it's off by default)
+- removed all patches (they all seem to be obsolete)
+- rel 0.1
