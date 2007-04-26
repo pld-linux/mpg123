@@ -296,7 +296,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc doc/BENCHMARKING doc/BUGS ChangeLog README doc/README.remote doc/TODO
+%doc AUTHORS ChangeLog NEWS README doc/{BENCHMARKING,BUGS,README.remote,TODO}
 %ifarch athlon
 %doc doc/README.3DNOW
 %endif
