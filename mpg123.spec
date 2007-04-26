@@ -221,7 +221,7 @@ mv -f src/mpg123 src/mpg123.base
 %if %{with alsa}
 %{__make} clean
 %configure \
-	%{?with_alsa:--with-audio=alsa} \
+	--with-audio=alsa \
 	%{?with_mmx:--with-cpu=mmx}
 %{__make}
 mv -f src/mpg123 src/mpg123-alsa
@@ -230,7 +230,7 @@ mv -f src/mpg123 src/mpg123-alsa
 %if %{with esd}
 %{__make} clean
 %configure \
-	%{?with_esd:--with-audio=esd} \
+	--with-audio=esd \
 	%{?with_mmx:--with-cpu=mmx}
 %{__make}
 mv -f src/mpg123 src/mpg123-esd
@@ -239,7 +239,7 @@ mv -f src/mpg123 src/mpg123-esd
 %if %{with jack}
 %{__make} clean
 %configure \
-	%{?with_jack:--with-audio=jack} \
+	--with-audio=jack \
 	%{?with_mmx:--with-cpu=mmx}
 %{__make}
 mv -f src/mpg123 src/mpg123-jack
@@ -248,7 +248,7 @@ mv -f src/mpg123 src/mpg123-jack
 %if %{with nas}
 %{__make} clean
 %configure \
-	%{?with_nas:--with-audio=nas} \
+	--with-audio=nas \
 	%{?with_mmx:--with-cpu=mmx}
 %{__make}
 mv -f src/mpg123 src/mpg123-nas
@@ -257,7 +257,7 @@ mv -f src/mpg123 src/mpg123-nas
 %if %{with sdl}
 %{__make} clean
 %configure \
-	%{?with_sdl:--with-audio=sdl} \
+	--with-audio=sdl \
 	%{?with_mmx:--with-cpu=mmx}
 %{__make}
 mv -f src/mpg123 src/mpg123-sdl
