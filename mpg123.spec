@@ -19,20 +19,17 @@ Summary(pt_BR.UTF-8):	Tocador de arquivos MP3
 Summary(ru.UTF-8):	Проигрыватель MPEG аудиофайлов
 Summary(uk.UTF-8):	Програвач MPEG аудіофайлів
 Name:		mpg123
-Version:	0.65
+Version:	0.66
 Release:	1
 License:	LGPL, GPL (mpglib)
 Group:		Applications/Sound
 Source0:	http://dl.sourceforge.net/mpg123/%{name}-%{version}.tar.bz2
-# Source0-md5:	b15d3e442dcf86133df70f1f3eff7c59
-Patch0:		%{name}-audio_sdl.patch
-Patch1:		%{name}-audio_nas.patch
-Patch2:		%{name}-am.patch
+# Source0-md5:	6753c7ce5bb35bd65c535b2b6322a9aa
 URL:		http://www.mpg123.de/
-%{?with_sdl:BuildRequires:	SDL-devel}
+%{?with_sdl:BuildRequires:	SDL-devel >= 1.2.11}
 %{?with_alsa:BuildRequires:	alsa-lib-devel}
-BuildRequires:	autoconf
-BuildRequires:	automake
+BuildRequires:	autoconf >= 2.57
+BuildRequires:	automake >= 1:1.7
 %{?with_esd:BuildRequires:	esound-devel}
 %{?with_jack:BuildRequires:	jack-audio-connection-kit-devel}
 %{?with_nas:BuildRequires:	nas-devel}
@@ -203,9 +200,6 @@ Wersja z wyjściem dźwięku przez SDL.
 
 %prep
 %setup -q
-%patch0 -p0
-%patch1 -p0
-%patch2 -p0
 
 %build
 %{__aclocal}
@@ -289,7 +283,7 @@ install src/%{name}-nas		$RPM_BUILD_ROOT%{_bindir}/
 install src/%{name}-sdl		$RPM_BUILD_ROOT%{_bindir}/
 %endif
 
-install %{name}.1	$RPM_BUILD_ROOT%{_mandir}/man1
+install man1/%{name}.1	$RPM_BUILD_ROOT%{_mandir}/man1
 
 %clean
 rm -rf $RPM_BUILD_ROOT
