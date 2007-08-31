@@ -1,0 +1,38 @@
+--- configure.ac	2006-10-21 00:08:34.000000000 +0200
++++ configure.ac-new	2006-11-26 01:41:40.274624688 +0100
+@@ -144,7 +144,12 @@
+ PKG_CHECK_MODULES(ESOUND, esound, HAVE_ESOUND=yes, HAVE_ESOUND=no)
+ 
+ # Check for SDL
+-PKG_CHECK_MODULES(SDL, sdl, HAVE_SDL=yes, HAVE_SDL=no)
++AC_CHECK_LIB( [SDL], [SDL_OpenAudio],
++		[ AC_CHECK_HEADER( [SDL/SDL.h],
++		[ HAVE_SDL="yes" ],
++		[ AC_MSG_WARN([Found SDL library but NOT header files on your system]) ] )
++	]
++)
+ 
+ # Check for NAS
+ AC_CHECK_LIB( [audio], [AuOpenServer],
+@@ -493,8 +498,8 @@
+   	if test "x$HAVE_SDL" != "xyes" ; then
+   		AC_MSG_ERROR( SDL is not available for audio output subsystem. )
+   	fi
+-    AUDIO_CFLAGS=$SDL_CFLAGS
+-    AUDIO_LIBS=$SDL_LIBS
++    AUDIO_CFLAGS=""
++    AUDIO_LIBS="-lSDL"
+   ;;
+   sgi)
+     # Currently unsupported in the new build system
+--- src/audio_sdl.c	2006-10-21 00:08:33.000000000 +0200
++++ src/audio_sdl.c-new	2006-11-26 01:44:21.132170624 +0100
+@@ -10,7 +10,7 @@
+ #include <stdio.h>
+ #include <math.h>
+ 
+-#include <SDL.h>
++#include <SDL/SDL.h>
+ 
+ #include "config.h"
+ #include "debug.h"
