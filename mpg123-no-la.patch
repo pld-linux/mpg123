@@ -1,0 +1,11 @@
+--- mpg123-1.1.0/src/module.c.orig	2008-01-15 03:27:32.000000000 +0100
++++ mpg123-1.1.0/src/module.c	2008-01-23 23:58:43.093716521 +0100
+@@ -19,7 +19,7 @@
+ #error Cannot build without LTDL library support
+ #endif
+ 
+-#define MODULE_FILE_SUFFIX		".la"
++#define MODULE_FILE_SUFFIX		".so"
+ #define MODULE_SYMBOL_PREFIX 	"mpg123_"
+ #define MODULE_SYMBOL_SUFFIX 	"_module_info"
+ 
