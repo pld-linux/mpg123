@@ -1,10 +1,12 @@
 #
-# TODO: check why SDL still doesn't work :/
+# TODO: fix dlopen (in progress)
+# TODO: recheck SDL ("still didn't work :/" before)
 #
 # Conditional build:
-%bcond_with	mmx	# use MMX to decode stream (won't run without MMX)
+%bcond_with	mmx	# use MMX-only code to decode stream instead of runtime detection
 %bcond_without	esd	# disable esound supprot
 %bcond_without	alsa	# disable alsa support
+%bcond_without	arts	# disable aRts support
 %bcond_without	jack	# disable jack support
 %bcond_without	nas	# diasble nas support
 %bcond_without	sdl	# disable sdl support
@@ -20,20 +22,30 @@ Summary(ru.UTF-8):	Проигрыватель MPEG аудиофайлов
 Summary(uk.UTF-8):	Програвач MPEG аудіофайлів
 Name:		mpg123
 Version:	1.1.0
-Release:	1
-License:	LGPL, GPL (mpglib)
+Release:	0.1
+# some old parts are GPLed, but they are not included in package
+License:	LGPL v2.1
 Group:		Applications/Sound
 Source0:	http://dl.sourceforge.net/mpg123/%{name}-%{version}.tar.bz2
 # Source0-md5:	4a200fd83ad1e64b34d711349cd65f23
+Patch0:		%{name}-am.patch
+Patch1:		%{name}-no-la.patch
 URL:		http://www.mpg123.de/
 %{?with_sdl:BuildRequires:	SDL-devel >= 1.2.11}
 %{?with_alsa:BuildRequires:	alsa-lib-devel}
+%{?with_arts:BuildRequires:	artsc-devel}
 BuildRequires:	autoconf >= 2.57
 BuildRequires:	automake >= 1:1.7
 %{?with_esd:BuildRequires:	esound-devel}
 %{?with_jack:BuildRequires:	jack-audio-connection-kit-devel}
+BuildRequires:	libltdl-devel
+BuildRequires:	libtool >= 2:1.5
 %{?with_nas:BuildRequires:	nas-devel}
+BuildRequires:	portaudio-devel >= 18
+BuildRequires:	pulseaudio-devel
 BuildRequires:	pkgconfig
+Requires:	libmpg123 = %{version}-%{release}
+Suggests:	%{name}-alsa = %{version}-%{release}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -73,256 +85,238 @@ Mpg123 - це швидкий, вільний та переносимий про�
 стерео) необхідний процесор Pentium. Монозвук чи звук гіршої якості
 (22 kHz чи 11 kHz) можливий і на процесорах класу i486.
 
-%package esd
-Summary:	mpg123 for ESD
-Summary(pl.UTF-8):	mpg123 dla ESD
-Group:		Applications/Sound
-
-%description esd
-Mpg123 is a fast, free (for non-commercial use) and portable MPEG
-audio player for Unix. It supports MPEG 1.0/2.0 layers 1, 2 and 3
-(those famous "MP3" files). For full CD quality playback (44 kHz, 16
-bit, stereo) a Pentium, SPARCstation10, DEC Alpha or similar CPU is
-required. Mono and/or reduced quality playback (22 kHz or 11 kHz) is
-even possible on 486 CPUs.
-
-Version for ESD audio output.
-
-%description esd -l pl.UTF-8
-Mpg123 jest szybkim, darmowym (do celów niekomercyjnych) oraz
-uniwersalnym dekoderem plików dźwiękowych MPEG dla systemów
-uniksowych. Obsługuje standard MPEG 1.0/2.0 warstwy 1, 2 oraz 3
-(słynne "MP3"). Do uzyskania pełnej jakości CD wymagany jest silny
-procesor (Pentium, SPARCstation10, DEC Alpha lub podobny). Niższą
-jakość (22 lub 11 kHz) można uzyskać już na procesorach 486.
-
-Wersja z wyjściem dźwięku przez ESD.
-
 %package alsa
-Summary:	mpg123 for ALSA
-Summary(pl.UTF-8):	mpg123 dla ALSA
+Summary:	ALSA audio output plugin for mpg123
+Summary(pl.UTF-8):	Wtyczka wyjścia dźwięku ALSA dla mpg123
 Group:		Applications/Sound
+Requires:	%{name} = %{version}-%{release}
 
 %description alsa
-Mpg123 is a fast, free (for non-commercial use) and portable MPEG
-audio player for Unix. It supports MPEG 1.0/2.0 layers 1, 2 and 3
-(those famous "MP3" files). For full CD quality playback (44 kHz, 16
-bit, stereo) a Pentium, SPARCstation10, DEC Alpha or similar CPU is
-required. Mono and/or reduced quality playback (22 kHz or 11 kHz) is
-even possible on 486 CPUs.
-
-Version for ALSA audio output.
+ALSA audio output plugin for mpg123.
 
 %description alsa -l pl.UTF-8
-Mpg123 jest szybkim, darmowym (do celów niekomercyjnych) oraz
-uniwersalnym dekoderem plików dźwiękowych MPEG dla systemów
-uniksowych. Obsługuje standard MPEG 1.0/2.0 warstwy 1, 2 oraz 3
-(słynne "MP3"). Do uzyskania pełnej jakości CD wymagany jest silny
-procesor (Pentium, SPARCstation10, DEC Alpha lub podobny). Niższą
-jakość (22 lub 11 kHz) można uzyskać już na procesorach 486.
+Wtyczka wyjścia dźwięku ALSA dla mpg123.
 
-Wersja z wyjściem dźwięku ALSA.
+%package arts
+Summary:	aRts audio output plugin for mpg123
+Summary(pl.UTF-8):	Wtyczka wyjścia dźwięku aRts dla mpg123
+Group:		Applications/Sound
+Requires:	%{name} = %{version}-%{release}
+
+%description arts
+aRts audio output plugin for mpg123.
+
+%description arts -l pl.UTF-8
+Wtyczka wyjścia dźwięku aRts dla mpg123.
+
+%package esd
+Summary:	EsounD audio output plugin for mpg123
+Summary(pl.UTF-8):	Wtyczka wyjścia dźwięku EsounD dla mpg123
+Group:		Applications/Sound
+Requires:	%{name} = %{version}-%{release}
+
+%description esd
+EsounD audio output plugin for mpg123.
+
+%description esd -l pl.UTF-8
+Wtyczka wyjścia dźwięku EsounD dla mpg123.
 
 %package jack
-Summary:	mpg123 for JACK
-Summary(pl.UTF-8):	mpg123 dla JACK
+Summary:	JACK audio output plugin for mpg123
+Summary(pl.UTF-8):	Wtyczka wyjścia dźwięku JACK dla mpg123
 Group:		Applications/Sound
+Requires:	%{name} = %{version}-%{release}
 
 %description jack
-Mpg123 is a fast, free (for non-commercial use) and portable MPEG
-audio player for Unix. It supports MPEG 1.0/2.0 layers 1, 2 and 3
-(those famous "MP3" files). For full CD quality playback (44 kHz, 16
-bit, stereo) a Pentium, SPARCstation10, DEC Alpha or similar CPU is
-required. Mono and/or reduced quality playback (22 kHz or 11 kHz) is
-even possible on 486 CPUs.
-
-Version for JACK audio output.
+JACK audio output plugin for mpg123.
 
 %description jack -l pl.UTF-8
-Mpg123 jest szybkim, darmowym (do celów niekomercyjnych) oraz
-uniwersalnym dekoderem plików dźwiękowych MPEG dla systemów
-uniksowych. Obsługuje standard MPEG 1.0/2.0 warstwy 1, 2 oraz 3
-(słynne "MP3"). Do uzyskania pełnej jakości CD wymagany jest silny
-procesor (Pentium, SPARCstation10, DEC Alpha lub podobny). Niższą
-jakość (22 lub 11 kHz) można uzyskać już na procesorach 486.
-
-Wersja z wyjściem dźwięku przez JACK.
+Wtyczka wyjścia dźwięku JACK dla mpg123.
 
 %package nas
-Summary:	mpg123 for NAS
-Summary(pl.UTF-8):	mpg123 dla NAS
+Summary:	NAS audio output plugin for mpg123
+Summary(pl.UTF-8):	Wtyczka wyjścia dźwięku NAS dla mpg123
 Group:		Applications/Sound
+Requires:	%{name} = %{version}-%{release}
 
 %description nas
-Mpg123 is a fast, free (for non-commercial use) and portable MPEG
-audio player for Unix. It supports MPEG 1.0/2.0 layers 1, 2 and 3
-(those famous "MP3" files). For full CD quality playback (44 kHz, 16
-bit, stereo) a Pentium, SPARCstation10, DEC Alpha or similar CPU is
-required. Mono and/or reduced quality playback (22 kHz or 11 kHz) is
-even possible on 486 CPUs.
-
-Version for NAS audio output.
+NAS audio output plugin for mpg123.
 
 %description nas -l pl.UTF-8
-Mpg123 jest szybkim, darmowym (do celów niekomercyjnych) oraz
-uniwersalnym dekoderem plików dźwiękowych MPEG dla systemów
-uniksowych. Obsługuje standard MPEG 1.0/2.0 warstwy 1, 2 oraz 3
-(słynne "MP3"). Do uzyskania pełnej jakości CD wymagany jest silny
-procesor (Pentium, SPARCstation10, DEC Alpha lub podobny). Niższą
-jakość (22 lub 11 kHz) można uzyskać już na procesorach 486.
+Wtyczka wyjścia dźwięku NAS dla mpg123.
 
-Wersja z wyjściem dźwięku przez NAS.
+%package portaudio
+Summary:	PortAudio audio output plugin for mpg123
+Summary(pl.UTF-8):	Wtyczka wyjścia dźwięku PortAudio dla mpg123
+Group:		Applications/Sound
+Requires:	%{name} = %{version}-%{release}
+
+%description portaudio
+PortAudio audio output plugin for mpg123.
+
+%description portaudio -l pl.UTF-8
+Wtyczka wyjścia dźwięku PortAudio dla mpg123.
+
+%package pulseaudio
+Summary:	PulseAudio audio output plugin for mpg123
+Summary(pl.UTF-8):	Wtyczka wyjścia dźwięku PulseAudio dla mpg123
+Group:		Applications/Sound
+Requires:	%{name} = %{version}-%{release}
+
+%description pulseaudio
+PulseAudio audio output plugin for mpg123.
+
+%description pulseaudio -l pl.UTF-8
+Wtyczka wyjścia dźwięku PulseAudio dla mpg123.
 
 %package sdl
-Summary:	mpg123 for SDL
-Summary(pl.UTF-8):	mpg123 dla SDL
+Summary:	SDL audio output plugin for mpg123
+Summary(pl.UTF-8):	Wtyczka wyjścia dźwięku SDL dla mpg123
 Group:		Applications/Sound
+Requires:	%{name} = %{version}-%{release}
 
 %description sdl
-Mpg123 is a fast, free (for non-commercial use) and portable MPEG
-audio player for Unix. It supports MPEG 1.0/2.0 layers 1, 2 and 3
-(those famous "MP3" files). For full CD quality playback (44 kHz, 16
-bit, stereo) a Pentium, SPARCstation10, DEC Alpha or similar CPU is
-required. Mono and/or reduced quality playback (22 kHz or 11 kHz) is
-even possible on 486 CPUs.
-
-Version for SDL output.
+SDL audio output plugin for mpg123.
 
 %description sdl -l pl.UTF-8
-Mpg123 jest szybkim, darmowym (do celów niekomercyjnych) oraz
-uniwersalnym dekoderem plików dźwiękowych MPEG dla systemów
-uniksowych. Obsługuje standard MPEG 1.0/2.0 warstwy 1, 2 oraz 3
-(słynne "MP3"). Do uzyskania pełnej jakości CD wymagany jest silny
-procesor (Pentium, SPARCstation10, DEC Alpha lub podobny). Niższą
-jakość (22 lub 11 kHz) można uzyskać już na procesorach 486.
+Wtyczka wyjścia dźwięku SDL dla mpg123.
 
-Wersja z wyjściem dźwięku przez SDL.
+%package -n libmpg123
+Summary:	An optimized MPEG Audio decoder library
+Summary(pl.UTF-8):	Zoptymalizowana biblioteka dekodera dźwięku MPEG
+Group:		Libraries
+
+%description -n libmpg123
+An optimized MPEG Audio decoder library.
+
+%description -n libmpg123 -l pl.UTF-8
+Zoptymalizowana biblioteka dekodera dźwięku MPEG.
+
+%package -n libmpg123-devel
+Summary:	Header file for mpg123 library
+Summary(pl.UTF-8):	Plik nagłówkowy biblioteki mpg123
+Group:		Development/Libraries
+Requires:	libmpg123 = %{version}-%{release}
+
+%description -n libmpg123-devel
+Header file for mpg123 library.
+
+%description -n libmpg123-devel -l pl.UTF-8
+Plik nagłówkowy biblioteki mpg123.
+
+%package -n libmpg123-static
+Summary:	Static mpg123 library
+Summary(pl.UTF-8):	Statyczna biblioteka mpg123
+Group:		Development/Libraries
+Requires:	libmpg123-static = %{version}-%{release}
+
+%description -n libmpg123-static
+Static mpg123 library.
+
+%description -n libmpg123-static -l pl.UTF-8
+Statyczna biblioteka mpg123.
 
 %prep
 %setup -q
+%patch0 -p1
+%patch1 -p1
 
 %build
+%{__libtoolize}
 %{__aclocal}
 %{__autoconf}
 %{__autoheader}
 %{__automake}
+# select "0" optimization, which doesn't add any -O to CFLAGS
 %configure \
-	--with-audio=oss \
-	%{?with_mmx:--with-cpu=mmx}
+	--enable-modules \
+	--enable-static \
+	%{?with_mmx:--with-cpu=mmx} \
+	--with-optimization=0
 %{__make}
-mv -f src/mpg123 src/mpg123.base
-
-%if %{with alsa}
-%{__make} clean
-%configure \
-	--with-audio=alsa \
-	%{?with_mmx:--with-cpu=mmx}
-%{__make}
-mv -f src/mpg123 src/mpg123-alsa
-%endif
-
-%if %{with esd}
-%{__make} clean
-%configure \
-	--with-audio=esd \
-	%{?with_mmx:--with-cpu=mmx}
-%{__make}
-mv -f src/mpg123 src/mpg123-esd
-%endif
-
-%if %{with jack}
-%{__make} clean
-%configure \
-	--with-audio=jack \
-	%{?with_mmx:--with-cpu=mmx}
-%{__make}
-mv -f src/mpg123 src/mpg123-jack
-%endif
-
-%if %{with nas}
-%{__make} clean
-%configure \
-	--with-audio=nas \
-	%{?with_mmx:--with-cpu=mmx}
-%{__make}
-mv -f src/mpg123 src/mpg123-nas
-%endif
-
-%if %{with sdl}
-%{__make} clean
-%configure \
-	--with-audio=sdl \
-	%{?with_mmx:--with-cpu=mmx}
-%{__make}
-mv -f src/mpg123 src/mpg123-sdl
-%endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_bindir},%{_mandir}/man1}
 
-install src/%{name}.base	$RPM_BUILD_ROOT%{_bindir}/%{name}
+%{__make} install \
+	DESTDIR=$RPM_BUILD_ROOT
 
-%if %{with alsa}
-install src/%{name}-alsa		$RPM_BUILD_ROOT%{_bindir}/
-%endif
-
-%if %{with esd}
-install src/%{name}-esd		$RPM_BUILD_ROOT%{_bindir}/
-%endif
-
-%if %{with jack}
-install src/%{name}-jack	$RPM_BUILD_ROOT%{_bindir}/
-%endif
-
-%if %{with nas}
-install src/%{name}-nas		$RPM_BUILD_ROOT%{_bindir}/
-%endif
-
-%if %{with sdl}
-install src/%{name}-sdl		$RPM_BUILD_ROOT%{_bindir}/
-%endif
-
-install man1/%{name}.1	$RPM_BUILD_ROOT%{_mandir}/man1
+rm -f $RPM_BUILD_ROOT%{_libdir}/mpg123/*.{la,a}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
+%post	-n libmpg123 -p /sbin/ldconfig
+%postun	-n libmpg123 -p /sbin/ldconfig
+
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog NEWS README doc/{BENCHMARKING,BUGS,README.remote,TODO}
+%doc AUTHORS COPYING ChangeLog NEWS README TODO doc/{ACCURACY,BENCHMARKING,BUGS,CONTACT,LICENSE,PATENTS,README.gain,README.remote,ROAD_TO_LGPL,THANKS}
 %ifarch athlon
 %doc doc/README.3DNOW
 %endif
-%attr(755,root,root) %{_bindir}/%{name}
-%{_mandir}/man1/*
+%attr(755,root,root) %{_bindir}/mpg123
+%dir %{_libdir}/mpg123
+%attr(755,root,root) %{_libdir}/mpg123/output_dummy.so
+%attr(755,root,root) %{_libdir}/mpg123/output_oss.so
+%{_mandir}/man1/mpg123.1*
 
 %if %{with alsa}
 %files alsa
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/%{name}-alsa
+%attr(755,root,root) %{_libdir}/mpg123/output_alsa.so
+%endif
+
+%if %{with arts}
+%files arts
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/mpg123/output_arts.so
 %endif
 
 %if %{with esd}
 %files esd
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/%{name}-esd
+%attr(755,root,root) %{_libdir}/mpg123/output_esd.so
 %endif
 
 %if %{with jack}
 %files jack
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/%{name}-jack
+%attr(755,root,root) %{_libdir}/mpg123/output_jack.so
 %endif
 
 %if %{with nas}
 %files nas
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/%{name}-nas
+%attr(755,root,root) %{_libdir}/mpg123/output_nas.so
 %endif
+
+%files portaudio
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/mpg123/output_portaudio.so
+
+%files pulseaudio
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/mpg123/output_pulse.so
 
 %if %{with sdl}
 %files sdl
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/%{name}-sdl
+%attr(755,root,root) %{_libdir}/mpg123/output_sdl.so
 %endif
+
+%files -n libmpg123
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libmpg123.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libmpg123.so.0
+
+%files -n libmpg123-devel
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libmpg123.so
+%{_libdir}/libmpg123.la
+%{_includedir}/mpg123.h
+%{_pkgconfigdir}/libmpg123.pc
+
+%files -n libmpg123-static
+%defattr(644,root,root,755)
+%{_libdir}/libmpg123.a
