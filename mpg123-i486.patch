@@ -1,0 +1,621 @@
+diff -urN mpg123-1.1.0.org/src/libmpg123/dct64_i486.c mpg123-1.1.0/src/libmpg123/dct64_i486.c
+--- mpg123-1.1.0.org/src/libmpg123/dct64_i486.c	1970-01-01 01:00:00.000000000 +0100
++++ mpg123-1.1.0/src/libmpg123/dct64_i486.c	2008-01-24 22:26:40.614820365 +0100
+@@ -0,0 +1,342 @@
++/*
++	dct64_i486.c: DCT64, a plain C variant for i486
++
++	copyright 1998-2006 by the mpg123 project - free software under the terms of the LGPL 2.1
++	see COPYING and AUTHORS files in distribution or http://mpg123.org
++	initially written by Fabrice Bellard
++*/
++
++/* Discrete Cosine Tansform (DCT) for subband synthesis.
++ *
++ * This code is optimized for 80486. It should be compiled with gcc
++ * 2.7.2 or higher.
++ *
++ * Note: This code does not give the necessary accuracy. Moreover, no
++ * overflow test are done.
++ *
++ * (c) 1998 Fabrice Bellard.  
++ */
++
++#include "mpg123lib_intern.h"
++
++#define COS_0_0 16403
++#define COS_0_1 16563
++#define COS_0_2 16890
++#define COS_0_3 17401
++#define COS_0_4 18124
++#define COS_0_5 19101
++#define COS_0_6 20398
++#define COS_0_7 22112
++#define COS_0_8 24396
++#define COS_0_9 27503
++#define COS_0_10 31869
++#define COS_0_11 38320
++#define COS_0_12 48633
++#define COS_0_13 67429
++#define COS_0_14 111660
++#define COS_0_15 333906
++#define COS_1_0 16463
++#define COS_1_1 17121
++#define COS_1_2 18577
++#define COS_1_3 21195
++#define COS_1_4 25826
++#define COS_1_5 34756
++#define COS_1_6 56441
++#define COS_1_7 167154
++#define COS_2_0 16704
++#define COS_2_1 19704
++#define COS_2_2 29490
++#define COS_2_3 83981
++#define COS_3_0 17733
++#define COS_3_1 42813
++#define COS_4_0 23170         
++
++#define SETOUT(out,n,expr) out[FIR_BUFFER_SIZE*(n)]=(expr)
++#define MULL(a,b) (((long long)(a)*(long long)(b)) >> 15)
++#define MUL(a,b) \
++(\
++       ((!(b & 0x3F)) ? (((a)*(b >> 6)) >> 9) :\
++       ((!(b & 0x1F)) ? (((a)*(b >> 5)) >> 10) :\
++       ((!(b & 0x0F)) ? (((a)*(b >> 4)) >> 11) :\
++       ((!(b & 0x07)) ? (((a)*(b >> 3)) >> 12) :\
++       ((!(b & 0x03)) ? (((a)*(b >> 2)) >> 13) :\
++       ((!(b & 0x01)) ? (((a)*(b >> 1)) >> 14) :\
++                        (((a)*(b   )) >> 15))))))))
++
++
++void dct64_1_486(int *out0,int *out1,int *b1,int *b2)
++{
++  b1[0x00] = b2[0x00] + b2[0x1F];
++  b1[0x1F] = MUL((b2[0x00] - b2[0x1F]),COS_0_0);
++
++  b1[0x01] = b2[0x01] + b2[0x1E];
++  b1[0x1E] = MUL((b2[0x01] - b2[0x1E]),COS_0_1);
++
++  b1[0x02] = b2[0x02] + b2[0x1D];
++  b1[0x1D] = MUL((b2[0x02] - b2[0x1D]),COS_0_2);
++
++  b1[0x03] = b2[0x03] + b2[0x1C];
++  b1[0x1C] = MUL((b2[0x03] - b2[0x1C]),COS_0_3);
++
++  b1[0x04] = b2[0x04] + b2[0x1B];
++  b1[0x1B] = MUL((b2[0x04] - b2[0x1B]),COS_0_4);
++
++  b1[0x05] = b2[0x05] + b2[0x1A];
++  b1[0x1A] = MUL((b2[0x05] - b2[0x1A]),COS_0_5);
++
++  b1[0x06] = b2[0x06] + b2[0x19];
++  b1[0x19] = MUL((b2[0x06] - b2[0x19]),COS_0_6);
++
++  b1[0x07] = b2[0x07] + b2[0x18];
++  b1[0x18] = MUL((b2[0x07] - b2[0x18]),COS_0_7);
++
++  b1[0x08] = b2[0x08] + b2[0x17];
++  b1[0x17] = MUL((b2[0x08] - b2[0x17]),COS_0_8);
++
++  b1[0x09] = b2[0x09] + b2[0x16];
++  b1[0x16] = MUL((b2[0x09] - b2[0x16]),COS_0_9);
++
++  b1[0x0A] = b2[0x0A] + b2[0x15];
++  b1[0x15] = MUL((b2[0x0A] - b2[0x15]),COS_0_10);
++
++  b1[0x0B] = b2[0x0B] + b2[0x14];
++  b1[0x14] = MUL((b2[0x0B] - b2[0x14]),COS_0_11);
++
++  b1[0x0C] = b2[0x0C] + b2[0x13];
++  b1[0x13] = MUL((b2[0x0C] - b2[0x13]),COS_0_12);
++
++  b1[0x0D] = b2[0x0D] + b2[0x12];
++  b1[0x12] = MULL((b2[0x0D] - b2[0x12]),COS_0_13);
++
++  b1[0x0E] = b2[0x0E] + b2[0x11];
++  b1[0x11] = MULL((b2[0x0E] - b2[0x11]),COS_0_14);
++
++  b1[0x0F] = b2[0x0F] + b2[0x10];
++  b1[0x10] = MULL((b2[0x0F] - b2[0x10]),COS_0_15);
++
++
++  b2[0x00] = b1[0x00] + b1[0x0F]; 
++  b2[0x0F] = MUL((b1[0x00] - b1[0x0F]),COS_1_0);
++  b2[0x01] = b1[0x01] + b1[0x0E]; 
++  b2[0x0E] = MUL((b1[0x01] - b1[0x0E]),COS_1_1);
++  b2[0x02] = b1[0x02] + b1[0x0D]; 
++  b2[0x0D] = MUL((b1[0x02] - b1[0x0D]),COS_1_2);
++  b2[0x03] = b1[0x03] + b1[0x0C]; 
++  b2[0x0C] = MUL((b1[0x03] - b1[0x0C]),COS_1_3);
++  b2[0x04] = b1[0x04] + b1[0x0B]; 
++  b2[0x0B] = MUL((b1[0x04] - b1[0x0B]),COS_1_4);
++  b2[0x05] = b1[0x05] + b1[0x0A]; 
++  b2[0x0A] = MUL((b1[0x05] - b1[0x0A]),COS_1_5);
++  b2[0x06] = b1[0x06] + b1[0x09]; 
++  b2[0x09] = MUL((b1[0x06] - b1[0x09]),COS_1_6);
++  b2[0x07] = b1[0x07] + b1[0x08]; 
++  b2[0x08] = MULL((b1[0x07] - b1[0x08]),COS_1_7);
++
++  b2[0x10] = b1[0x10] + b1[0x1F];
++  b2[0x1F] = MUL((b1[0x1F] - b1[0x10]),COS_1_0);
++  b2[0x11] = b1[0x11] + b1[0x1E];
++  b2[0x1E] = MUL((b1[0x1E] - b1[0x11]),COS_1_1);
++  b2[0x12] = b1[0x12] + b1[0x1D];
++  b2[0x1D] = MUL((b1[0x1D] - b1[0x12]),COS_1_2);
++  b2[0x13] = b1[0x13] + b1[0x1C];
++  b2[0x1C] = MUL((b1[0x1C] - b1[0x13]),COS_1_3);
++  b2[0x14] = b1[0x14] + b1[0x1B];
++  b2[0x1B] = MUL((b1[0x1B] - b1[0x14]),COS_1_4);
++  b2[0x15] = b1[0x15] + b1[0x1A];
++  b2[0x1A] = MUL((b1[0x1A] - b1[0x15]),COS_1_5);
++  b2[0x16] = b1[0x16] + b1[0x19];
++  b2[0x19] = MUL((b1[0x19] - b1[0x16]),COS_1_6);
++  b2[0x17] = b1[0x17] + b1[0x18];
++  b2[0x18] = MULL((b1[0x18] - b1[0x17]),COS_1_7);
++
++
++  b1[0x00] = b2[0x00] + b2[0x07];
++  b1[0x07] = MUL((b2[0x00] - b2[0x07]),COS_2_0);
++  b1[0x01] = b2[0x01] + b2[0x06];
++  b1[0x06] = MUL((b2[0x01] - b2[0x06]),COS_2_1);
++  b1[0x02] = b2[0x02] + b2[0x05];
++  b1[0x05] = MUL((b2[0x02] - b2[0x05]),COS_2_2);
++  b1[0x03] = b2[0x03] + b2[0x04];
++  b1[0x04] = MULL((b2[0x03] - b2[0x04]),COS_2_3);
++
++  b1[0x08] = b2[0x08] + b2[0x0F];
++  b1[0x0F] = MUL((b2[0x0F] - b2[0x08]),COS_2_0);
++  b1[0x09] = b2[0x09] + b2[0x0E];
++  b1[0x0E] = MUL((b2[0x0E] - b2[0x09]),COS_2_1);
++  b1[0x0A] = b2[0x0A] + b2[0x0D];
++  b1[0x0D] = MUL((b2[0x0D] - b2[0x0A]),COS_2_2);
++  b1[0x0B] = b2[0x0B] + b2[0x0C];
++  b1[0x0C] = MULL((b2[0x0C] - b2[0x0B]),COS_2_3);
++
++  b1[0x10] = b2[0x10] + b2[0x17];
++  b1[0x17] = MUL((b2[0x10] - b2[0x17]),COS_2_0);
++  b1[0x11] = b2[0x11] + b2[0x16];
++  b1[0x16] = MUL((b2[0x11] - b2[0x16]),COS_2_1);
++  b1[0x12] = b2[0x12] + b2[0x15];
++  b1[0x15] = MUL((b2[0x12] - b2[0x15]),COS_2_2);
++  b1[0x13] = b2[0x13] + b2[0x14];
++  b1[0x14] = MULL((b2[0x13] - b2[0x14]),COS_2_3);
++
++  b1[0x18] = b2[0x18] + b2[0x1F];
++  b1[0x1F] = MUL((b2[0x1F] - b2[0x18]),COS_2_0);
++  b1[0x19] = b2[0x19] + b2[0x1E];
++  b1[0x1E] = MUL((b2[0x1E] - b2[0x19]),COS_2_1);
++  b1[0x1A] = b2[0x1A] + b2[0x1D];
++  b1[0x1D] = MUL((b2[0x1D] - b2[0x1A]),COS_2_2);
++  b1[0x1B] = b2[0x1B] + b2[0x1C];
++  b1[0x1C] = MULL((b2[0x1C] - b2[0x1B]),COS_2_3);
++
++
++  b2[0x00] = b1[0x00] + b1[0x03];
++  b2[0x03] = MUL((b1[0x00] - b1[0x03]),COS_3_0);
++  b2[0x01] = b1[0x01] + b1[0x02];
++  b2[0x02] = MUL((b1[0x01] - b1[0x02]),COS_3_1);
++
++  b2[0x04] = b1[0x04] + b1[0x07];
++  b2[0x07] = MUL((b1[0x07] - b1[0x04]),COS_3_0);
++  b2[0x05] = b1[0x05] + b1[0x06];
++  b2[0x06] = MUL((b1[0x06] - b1[0x05]),COS_3_1);
++
++  b2[0x08] = b1[0x08] + b1[0x0B];
++  b2[0x0B] = MUL((b1[0x08] - b1[0x0B]),COS_3_0);
++  b2[0x09] = b1[0x09] + b1[0x0A];
++  b2[0x0A] = MUL((b1[0x09] - b1[0x0A]),COS_3_1);
++  
++  b2[0x0C] = b1[0x0C] + b1[0x0F];
++  b2[0x0F] = MUL((b1[0x0F] - b1[0x0C]),COS_3_0);
++  b2[0x0D] = b1[0x0D] + b1[0x0E];
++  b2[0x0E] = MUL((b1[0x0E] - b1[0x0D]),COS_3_1);
++
++  b2[0x10] = b1[0x10] + b1[0x13];
++  b2[0x13] = MUL((b1[0x10] - b1[0x13]),COS_3_0);
++  b2[0x11] = b1[0x11] + b1[0x12];
++  b2[0x12] = MUL((b1[0x11] - b1[0x12]),COS_3_1);
++
++  b2[0x14] = b1[0x14] + b1[0x17];
++  b2[0x17] = MUL((b1[0x17] - b1[0x14]),COS_3_0);
++  b2[0x15] = b1[0x15] + b1[0x16];
++  b2[0x16] = MUL((b1[0x16] - b1[0x15]),COS_3_1);
++
++  b2[0x18] = b1[0x18] + b1[0x1B];
++  b2[0x1B] = MUL((b1[0x18] - b1[0x1B]),COS_3_0);
++  b2[0x19] = b1[0x19] + b1[0x1A];
++  b2[0x1A] = MUL((b1[0x19] - b1[0x1A]),COS_3_1);
++
++  b2[0x1C] = b1[0x1C] + b1[0x1F];
++  b2[0x1F] = MUL((b1[0x1F] - b1[0x1C]),COS_3_0);
++  b2[0x1D] = b1[0x1D] + b1[0x1E];
++  b2[0x1E] = MUL((b1[0x1E] - b1[0x1D]),COS_3_1);
++
++  {
++    int i;
++    for(i=0;i<32;i+=4) {
++      b1[i+0x00] = b2[i+0x00] + b2[i+0x01];
++      b1[i+0x01] = MUL((b2[i+0x00] - b2[i+0x01]),COS_4_0);
++      b1[i+0x02] = b2[i+0x02] + b2[i+0x03];
++      b1[i+0x03] = MUL((b2[i+0x03] - b2[i+0x02]),COS_4_0);
++    }
++  }
++
++  b1[0x02] += b1[0x03];
++  b1[0x06] += b1[0x07];
++  b1[0x04] += b1[0x06];
++  b1[0x06] += b1[0x05];
++  b1[0x05] += b1[0x07];
++
++  b1[0x0A] += b1[0x0B];
++  b1[0x0E] += b1[0x0F];
++  b1[0x0C] += b1[0x0E];
++  b1[0x0E] += b1[0x0D];
++  b1[0x0D] += b1[0x0F];
++
++  b1[0x12] += b1[0x13];
++  b1[0x16] += b1[0x17];
++  b1[0x14] += b1[0x16];
++  b1[0x16] += b1[0x15];
++  b1[0x15] += b1[0x17];
++
++  b1[0x1A] += b1[0x1B];
++  b1[0x1E] += b1[0x1F];
++  b1[0x1C] += b1[0x1E];
++  b1[0x1E] += b1[0x1D];
++  b1[0x1D] += b1[0x1F];
++
++ SETOUT(out0,16,b1[0x00]);
++ SETOUT(out0,12,b1[0x04]);
++ SETOUT(out0, 8,b1[0x02]);
++ SETOUT(out0, 4,b1[0x06]);
++ SETOUT(out0, 0,b1[0x01]);
++ SETOUT(out1, 0,b1[0x01]);
++ SETOUT(out1, 4,b1[0x05]);
++ SETOUT(out1, 8,b1[0x03]);
++ SETOUT(out1,12,b1[0x07]);
++
++ b1[0x08] += b1[0x0C];
++ SETOUT(out0,14,b1[0x08]);
++ b1[0x0C] += b1[0x0a];
++ SETOUT(out0,10,b1[0x0C]);
++ b1[0x0A] += b1[0x0E];
++ SETOUT(out0, 6,b1[0x0A]);
++ b1[0x0E] += b1[0x09];
++ SETOUT(out0, 2,b1[0x0E]);
++ b1[0x09] += b1[0x0D];
++ SETOUT(out1, 2,b1[0x09]);
++ b1[0x0D] += b1[0x0B];
++ SETOUT(out1, 6,b1[0x0D]);
++ b1[0x0B] += b1[0x0F];
++ SETOUT(out1,10,b1[0x0B]);
++ SETOUT(out1,14,b1[0x0F]);
++
++ b1[0x18] += b1[0x1C];
++ SETOUT(out0,15,b1[0x10] + b1[0x18]);
++ SETOUT(out0,13,b1[0x18] + b1[0x14]);
++ b1[0x1C] += b1[0x1a];
++ SETOUT(out0,11,b1[0x14] + b1[0x1C]);
++ SETOUT(out0, 9,b1[0x1C] + b1[0x12]);
++ b1[0x1A] += b1[0x1E];
++ SETOUT(out0, 7,b1[0x12] + b1[0x1A]);
++ SETOUT(out0, 5,b1[0x1A] + b1[0x16]);
++ b1[0x1E] += b1[0x19];
++ SETOUT(out0, 3,b1[0x16] + b1[0x1E]);
++ SETOUT(out0, 1,b1[0x1E] + b1[0x11]);
++ b1[0x19] += b1[0x1D];
++ SETOUT(out1, 1,b1[0x11] + b1[0x19]);
++ SETOUT(out1, 3,b1[0x19] + b1[0x15]);
++ b1[0x1D] += b1[0x1B];
++ SETOUT(out1, 5,b1[0x15] + b1[0x1D]);
++ SETOUT(out1, 7,b1[0x1D] + b1[0x13]);
++ b1[0x1B] += b1[0x1F];
++ SETOUT(out1, 9,b1[0x13] + b1[0x1B]);
++ SETOUT(out1,11,b1[0x1B] + b1[0x17]);
++ SETOUT(out1,13,b1[0x17] + b1[0x1F]);
++ SETOUT(out1,15,b1[0x1F]);
++}
++
++
++/*
++ * the call via dct64 is a trick to force GCC to use
++ * (new) registers for the b1,b2 pointer to the bufs[xx] field
++ */
++void dct64_i486(int *a,int *b,real *samples)
++{
++  int bufs[64];
++  int i;
++
++#ifdef REAL_IS_FIXED  
++#define TOINT(a) ((a) * 32768 / (int)REAL_FACTOR)
++
++  for(i=0;i<32;i++) {
++    bufs[i]=TOINT(samples[i]);
++  }
++#else      
++  int *p = bufs;
++  register double const scale = ((65536.0 * 32) + 1) * 65536.0;
++  
++  for(i=0;i<32;i++) {
++    *((double *) (p++)) = scale + *samples++; /* beware on bufs overrun: 8B store from x87 */
++  }
++#endif
++  
++  dct64_1_486(a,b,bufs+32,bufs);
++}
++
+diff -urN mpg123-1.1.0.org/src/libmpg123/decode_i486.c mpg123-1.1.0/src/libmpg123/decode_i486.c
+--- mpg123-1.1.0.org/src/libmpg123/decode_i486.c	1970-01-01 01:00:00.000000000 +0100
++++ mpg123-1.1.0/src/libmpg123/decode_i486.c	2008-01-24 22:27:01.435829292 +0100
+@@ -0,0 +1,252 @@
++/*
++	decode_i486.c: i486 decode
++
++	copyright 1998-2006 by the mpg123 project - free software under the terms of the LGPL 2.1
++	see COPYING and AUTHORS files in distribution or http://mpg123.org
++	initially written by Fabrice Bellard
++
++	One has to see if the modification for non-static memory kills this optimization (cache locality?).
++*/
++
++/* 
++ * Subband Synthesis for MPEG Audio. 
++ *
++ * Version optimized for 80486 by using integer arithmetic,
++ * multiplications by shift and add, and by increasing locality in
++ * order to fit the 8KB L1 cache. This code should be compiled with gcc
++ * 2.7.2 or higher.
++ *
++ * Note: this version does not guaranty a good accuracy. The filter
++ * coefficients are quantified on 14 bits.
++ *
++ * (c) 1998 Fabrice Bellard 
++ */
++
++#include "mpg123lib_intern.h"
++
++#define FIR16_1(pos,c0,c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,c11,c12,c13,c14,c15) \
++{\
++  int sum;\
++  sum=(c0)*b0[0]+(c1)*b0[1]+(c2)*b0[2]+(c3)*b0[3]+\
++  (c4)*b0[4]+(c5)*b0[5]+(c6)*b0[6]+(c7)*b0[7]+\
++  (c8)*b0[8]+(c9)*b0[9]+(c10)*b0[10]+(c11)*b0[11]+\
++  (c12)*b0[12]+(c13)*b0[13]+(c14)*b0[14]+(c15)*b0[15];\
++  sum=(sum+(1 << 13))>>14;\
++  if (sum<-32768) sum=-32768;\
++  else if (sum>32767) sum=32767;\
++  samples[2*(pos)]=sum;\
++  b0+=FIR_BUFFER_SIZE;\
++}
++
++#define FIR16_2(pos1,c0,c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,c11,c12,c13,c14,c15,\
++              pos2,d0,d1,d2,d3,d4,d5,d6,d7,d8,d9,d10,d11,d12,d13,d14,d15) \
++{\
++  int sum1,sum2,v;\
++\
++  v=b0[0];\
++  sum1=(c0)*v;\
++  sum2=(d0)*v;\
++  v=b0[1];\
++  sum1+=(c1)*v;\
++  sum2+=(d1)*v;\
++  v=b0[2];\
++  sum1+=(c2)*v;\
++  sum2+=(d2)*v;\
++  v=b0[3];\
++  sum1+=(c3)*v;\
++  sum2+=(d3)*v;\
++  v=b0[4];\
++  sum1+=(c4)*v;\
++  sum2+=(d4)*v;\
++  v=b0[5];\
++  sum1+=(c5)*v;\
++  sum2+=(d5)*v;\
++  v=b0[6];\
++  sum1+=(c6)*v;\
++  sum2+=(d6)*v;\
++  v=b0[7];\
++  sum1+=(c7)*v;\
++  sum2+=(d7)*v;\
++  v=b0[8];\
++  sum1+=(c8)*v;\
++  sum2+=(d8)*v;\
++  v=b0[9];\
++  sum1+=(c9)*v;\
++  sum2+=(d9)*v;\
++  v=b0[10];\
++  sum1+=(c10)*v;\
++  sum2+=(d10)*v;\
++  v=b0[11];\
++  sum1+=(c11)*v;\
++  sum2+=(d11)*v;\
++  v=b0[12];\
++  sum1+=(c12)*v;\
++  sum2+=(d12)*v;\
++  v=b0[13];\
++  sum1+=(c13)*v;\
++  sum2+=(d13)*v;\
++  v=b0[14];\
++  sum1+=(c14)*v;\
++  sum2+=(d14)*v;\
++  v=b0[15];\
++  sum1+=(c15)*v;\
++  sum2+=(d15)*v;\
++\
++  sum1=(sum1+(1<<13))>>14;\
++  sum2=(sum2+(1<<13))>>14;\
++\
++  if (sum1<-32768) sum1=-32768;\
++  else if (sum1>32767) sum1=32767;\
++  samples[(pos1)*2]=sum1;\
++\
++  if (sum2<-32768) sum2=-32768;\
++  else if (sum2>32767) sum2=32767;\
++  samples[(pos2)*2]=sum2;\
++  b0+=FIR_BUFFER_SIZE;\
++}
++
++int synth_1to1_486(real *bandPtr, int channel, mpg123_handle *fr, int nb_blocks)
++{
++  short *samples = (short *) (fr->buffer.data+fr->buffer.fill);
++  int *b0,**buf;
++  int clip = 0; 
++  int block,b,bo_start;
++
++  /* samples address */
++  samples+=channel;
++
++  bo_start=fr->bo[channel];
++  buf = fr->int_buffs[channel];
++
++  b=bo_start;
++  for(block=0;block<nb_blocks;block++) {
++
++    /* FIR offset */
++    b++;
++    if (b >= FIR_BUFFER_SIZE) {
++      int *p,*q;
++      int c,i,j;
++      
++      /* we shift the buffers */
++      for(c=0;c<2;c++) {
++        p=&buf[c][0]+1;
++        q=p+(FIR_BUFFER_SIZE-FIR_SIZE);
++        for(i=0;i<17;i++) {
++          for(j=0;j<FIR_SIZE-1;j++) p[j]=q[j];
++          p+=FIR_BUFFER_SIZE;
++          q+=FIR_BUFFER_SIZE;
++        }
++      }
++      /* we update 'bo' accordingly */
++      b=fr->bo[channel]=FIR_SIZE;
++    }
++    
++    if(b & 1) {
++      dct64_i486(buf[1]+b,buf[0]+b,bandPtr);
++    } else {
++      dct64_i486(buf[0]+b,buf[1]+b,bandPtr);
++    }
++    bandPtr+=32;
++  }
++  fr->bo[channel]=b;
++
++  /* filter bank: part 1 */
++  b=bo_start;
++  for(block=0;block<nb_blocks;block++) {
++    b++;
++    if (b >= FIR_BUFFER_SIZE) b=FIR_SIZE;
++    if(b & 1) {
++      b0 = buf[0] + b - (FIR_SIZE-1);
++    } else {
++      b0 = buf[1] + b - (FIR_SIZE-1);
++    }
++
++ FIR16_1(0,-7,53,-114,509,-1288,1643,-9372,18759,9372,1643,1288,509,114,53,7,0);
++ FIR16_2(1,-6,52,-100,515,-1197,1783,-8910,18748,9834,1489,1379,500,129,54,7,0,
++ 31,0,-7,54,-129,500,-1379,1489,-9834,18748,8910,1783,1197,515,100,52,6);
++ FIR16_2(2,-6,50,-86,520,-1106,1910,-8447,18714,10294,1322,1469,488,145,55,8,0,
++ 30,0,-8,55,-145,488,-1469,1322,-10294,18714,8447,1910,1106,520,86,50,6);
++ FIR16_2(3,-5,49,-73,521,-1015,2023,-7986,18657,10751,1140,1559,473,161,56,9,0,
++ 29,0,-9,56,-161,473,-1559,1140,-10751,18657,7986,2023,1015,521,73,49,5);              
++    samples+=64;
++  }
++  samples-=64*nb_blocks;
++  
++  /* filter bank: part 2 */
++
++  b=bo_start;
++  for(block=0;block<nb_blocks;block++) {
++    b++;
++    if (b >= FIR_BUFFER_SIZE) b=FIR_SIZE;
++    if(b & 1) {
++      b0 = buf[0] + b - (FIR_SIZE-1) + 4*FIR_BUFFER_SIZE;
++    } else {
++      b0 = buf[1] + b - (FIR_SIZE-1) + 4*FIR_BUFFER_SIZE;
++    }
++
++ FIR16_2(4,-4,47,-61,521,-926,2123,-7528,18578,11205,944,1647,455,177,56,10,0,
++ 28,0,-10,56,-177,455,-1647,944,-11205,18578,7528,2123,926,521,61,47,4);
++ FIR16_2(5,-4,45,-49,518,-837,2210,-7072,18477,11654,733,1733,434,194,57,11,0,
++ 27,0,-11,57,-194,434,-1733,733,-11654,18477,7072,2210,837,518,49,45,4);
++ FIR16_2(6,-4,44,-38,514,-751,2284,-6620,18353,12097,509,1817,411,212,57,12,0,
++ 26,0,-12,57,-212,411,-1817,509,-12097,18353,6620,2284,751,514,38,44,4);
++ FIR16_2(7,-3,42,-27,508,-665,2347,-6173,18208,12534,270,1899,383,229,56,13,0,
++ 25,0,-13,56,-229,383,-1899,270,-12534,18208,6173,2347,665,508,27,42,3);             
++
++    samples+=64;
++  }
++  samples-=64*nb_blocks;
++
++  /* filter bank: part 3 */
++
++  b=bo_start;
++  for(block=0;block<nb_blocks;block++) {
++    b++;
++    if (b >= FIR_BUFFER_SIZE) b=FIR_SIZE;
++    if(b & 1) {
++      b0 = buf[0] + b - (FIR_SIZE-1) + 8*FIR_BUFFER_SIZE;
++    } else {
++      b0 = buf[1] + b - (FIR_SIZE-1) + 8*FIR_BUFFER_SIZE;
++    }
++
++ FIR16_2(8,-3,40,-18,500,-582,2398,-5732,18042,12963,17,1977,353,247,56,14,0,
++ 24,0,-14,56,-247,353,-1977,17,-12963,18042,5732,2398,582,500,18,40,3);
++ FIR16_2(9,-2,38,-9,490,-501,2437,-5297,17855,13383,-249,2052,320,266,55,15,0,
++ 23,0,-15,55,-266,320,-2052,-249,-13383,17855,5297,2437,501,490,9,38,2);
++ FIR16_2(10,-2,36,0,479,-423,2465,-4869,17647,13794,-530,2122,282,284,53,17,0,
++ 22,0,-17,53,-284,282,-2122,-530,-13794,17647,4869,2465,423,479,0,36,2);
++ FIR16_2(11,-2,34,7,467,-347,2483,-4449,17419,14194,-825,2188,242,302,52,18,0,
++ 21,0,-18,52,-302,242,-2188,-825,-14194,17419,4449,2483,347,467,-7,34,2);          
++
++    samples+=64;
++  }
++  samples-=64*nb_blocks;
++
++  /* filter bank: part 4 */
++
++  b=bo_start;
++  for(block=0;block<nb_blocks;block++) {
++    b++;
++    if (b >= FIR_BUFFER_SIZE) b=FIR_SIZE;
++    if(b & 1) {
++      b0 = buf[0] + b - (FIR_SIZE-1) + 12*FIR_BUFFER_SIZE;
++    } else {
++      b0 = buf[1] + b - (FIR_SIZE-1) + 12*FIR_BUFFER_SIZE;
++    }
++
++ FIR16_2(12,-2,33,14,454,-273,2491,-4038,17173,14583,-1133,2249,198,320,50,19,0,
++ 20,0,-19,50,-320,198,-2249,-1133,-14583,17173,4038,2491,273,454,-14,33,2);
++ FIR16_2(13,-1,31,20,439,-203,2489,-3637,16907,14959,-1454,2304,151,339,47,21,-1,
++ 19,-1,-21,47,-339,151,-2304,-1454,-14959,16907,3637,2489,203,439,-20,31,1);
++ FIR16_2(14,-1,29,26,424,-136,2479,-3245,16623,15322,-1788,2354,100,357,44,22,-1,
++ 18,-1,-22,44,-357,100,-2354,-1788,-15322,16623,3245,2479,136,424,-26,29,1);
++ FIR16_2(15,-1,27,31,408,-72,2459,-2863,16322,15671,-2135,2396,46,374,40,24,-1,
++ 17,-1,-24,40,-374,46,-2396,-2135,-15671,16322,2863,2459,72,408,-31,27,1);
++ FIR16_1(16,-1,0,36,0,-11,0,-2493,0,16004,0,2431,0,391,0,26,0);      
++
++    samples+=64;
++  }
++
++  return clip;
++}
++
+diff -urN mpg123-1.1.0.org/src/libmpg123/Makefile.am mpg123-1.1.0/src/libmpg123/Makefile.am
+--- mpg123-1.1.0.org/src/libmpg123/Makefile.am	2008-01-15 03:27:31.000000000 +0100
++++ mpg123-1.1.0/src/libmpg123/Makefile.am	2008-01-24 22:27:59.938664211 +0100
+@@ -75,6 +75,7 @@
+ 	dct64_altivec.c \
+ 	dct64.c \
+ 	dct64_i386.c \
++	dct64_i486.c \
+ 	dct64_mmx.S \
+ 	dct64_sse.S \
+ 	decode_3dnowext.S \
+@@ -82,6 +83,7 @@
+ 	decode_altivec.c \
+ 	decode.c \
+ 	decode_i386.c \
++	decode_i486.c \
+ 	decode_i586_dither.S \
+ 	decode_i586.S \
+ 	decode_mmx.S \
