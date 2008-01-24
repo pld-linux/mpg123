@@ -9,9 +9,11 @@
  #define MODULE_SYMBOL_PREFIX 	"mpg123_"
  #define MODULE_SYMBOL_SUFFIX 	"_module_info"
  
-@@ -77,12 +77,10 @@
+@@ -75,14 +75,11 @@
+ 	size_t module_path_len = 0;
+ 	char* module_symbol = NULL;
  	size_t module_symbol_len = 0;
- 	char *workdir = NULL;
+-	char *workdir = NULL;
  	char *moddir  = NULL;
 -	workdir = get_the_cwd();
  	moddir  = get_module_dir();
@@ -24,14 +26,6 @@
  		if(moddir  != NULL) free(moddir);
  		return NULL;
  	}
-@@ -75,7 +75,6 @@
- 	size_t module_path_len = 0;
- 	char* module_symbol = NULL;
- 	size_t module_symbol_len = 0;
--	char *workdir = NULL;
- 	char *moddir  = NULL;
- 	moddir  = get_module_dir();
- 	if(moddir == NULL)
 @@ -90,15 +87,14 @@
  	/* Initialize libltdl */
  	if (lt_dlinit()) error( "Failed to initialise libltdl" );
