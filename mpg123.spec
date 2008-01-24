@@ -233,7 +233,7 @@ Statyczna biblioteka mpg123.
 	--enable-modules \
 	--enable-static \
 	%{?with_mmx:--with-cpu=mmx} \
-	--with-default-audio=alsa,oss \
+	--with-default-audio=%{?with_alsa:alsa,}oss \
 	--with-optimization=0
 %{__make}
 
