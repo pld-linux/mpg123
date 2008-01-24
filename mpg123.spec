@@ -1,7 +1,4 @@
 #
-# TODO: fix dlopen (in progress)
-# TODO: recheck SDL ("still didn't work :/" before)
-#
 # Conditional build:
 %bcond_with	mmx	# use MMX-only code to decode stream instead of runtime detection
 %bcond_without	esd	# disable esound supprot
@@ -22,7 +19,7 @@ Summary(ru.UTF-8):	Проигрыватель MPEG аудиофайлов
 Summary(uk.UTF-8):	Програвач MPEG аудіофайлів
 Name:		mpg123
 Version:	1.1.0
-Release:	0.2
+Release:	0.3
 # some old parts are GPLed, but they are not included in package
 License:	LGPL v2.1
 Group:		Applications/Sound
@@ -30,7 +27,8 @@ Source0:	http://dl.sourceforge.net/mpg123/%{name}-%{version}.tar.bz2
 # Source0-md5:	4a200fd83ad1e64b34d711349cd65f23
 Patch0:		%{name}-am.patch
 Patch1:		%{name}-no-la.patch
-Patch2:		%{name}-i486.patch
+Patch2:		%{name}-multi-ao.patch
+Patch3:		%{name}-i486.patch
 URL:		http://www.mpg123.de/
 %{?with_sdl:BuildRequires:	SDL-devel >= 1.2.11}
 %{?with_alsa:BuildRequires:	alsa-lib-devel}
@@ -222,6 +220,7 @@ Statyczna biblioteka mpg123.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %{__libtoolize}
@@ -234,6 +233,7 @@ Statyczna biblioteka mpg123.
 	--enable-modules \
 	--enable-static \
 	%{?with_mmx:--with-cpu=mmx} \
+	--with-default-audio=alsa,oss \
 	--with-optimization=0
 %{__make}
 
