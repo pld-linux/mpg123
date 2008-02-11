@@ -18,17 +18,16 @@ Summary(pt_BR.UTF-8):	Tocador de arquivos MP3
 Summary(ru.UTF-8):	Проигрыватель MPEG аудиофайлов
 Summary(uk.UTF-8):	Програвач MPEG аудіофайлів
 Name:		mpg123
-Version:	1.1.0
-Release:	0.3
+Version:	1.2.0
+Release:	1
 # some old parts are GPLed, but they are not included in package
 License:	LGPL v2.1
 Group:		Applications/Sound
 Source0:	http://dl.sourceforge.net/mpg123/%{name}-%{version}.tar.bz2
-# Source0-md5:	4a200fd83ad1e64b34d711349cd65f23
+# Source0-md5:	3a5f7b36cbd8af1ae42a23e6e7a5ab38
 Patch0:		%{name}-am.patch
 Patch1:		%{name}-no-la.patch
 Patch2:		%{name}-multi-ao.patch
-Patch3:		%{name}-i486.patch
 URL:		http://www.mpg123.de/
 %{?with_sdl:BuildRequires:	SDL-devel >= 1.2.11}
 %{?with_alsa:BuildRequires:	alsa-lib-devel}
@@ -220,7 +219,6 @@ Statyczna biblioteka mpg123.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 
 %build
 %{__libtoolize}
@@ -309,6 +307,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -n libmpg123
 %defattr(644,root,root,755)
+%doc NEWS.libmpg123
 %attr(755,root,root) %{_libdir}/libmpg123.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libmpg123.so.0
 
