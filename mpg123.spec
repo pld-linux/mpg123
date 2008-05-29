@@ -21,7 +21,7 @@ Summary(ru.UTF-8):	Проигрыватель MPEG аудиофайлов
 Summary(uk.UTF-8):	Програвач MPEG аудіофайлів
 Name:		mpg123
 Version:	1.4.1
-Release:	2
+Release:	3
 # some old parts are GPLed, but they are not included in package
 License:	LGPL v2.1
 Group:		Applications/Sound
@@ -29,6 +29,7 @@ Source0:	http://dl.sourceforge.net/mpg123/%{name}-%{version}.tar.bz2
 # Source0-md5:	df541f2daf1e8c356b52be2edb2ad10b
 Patch0:		%{name}-am.patch
 Patch1:		%{name}-no-la.patch
+Patch2:		%{name}-ac.patch
 URL:		http://www.mpg123.de/
 %{?with_sdl:BuildRequires:	SDL-devel >= 1.2.11}
 %{?with_alsa:BuildRequires:	alsa-lib-devel}
@@ -219,6 +220,7 @@ Statyczna biblioteka mpg123.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 %{__libtoolize}
