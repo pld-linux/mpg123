@@ -30,6 +30,7 @@ Source0:	http://dl.sourceforge.net/mpg123/%{name}-%{version}.tar.bz2
 Patch0:		%{name}-am.patch
 Patch1:		%{name}-no-la.patch
 Patch2:		%{name}-ac.patch
+Patch3:		%{name}-ltdl.patch
 URL:		http://www.mpg123.de/
 %{?with_sdl:BuildRequires:	SDL-devel >= 1.2.11}
 %{?with_alsa:BuildRequires:	alsa-lib-devel}
@@ -221,6 +222,9 @@ Statyczna biblioteka mpg123.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
+
+rm -rf libltdl
 
 %build
 %{__libtoolize}
@@ -230,6 +234,7 @@ Statyczna biblioteka mpg123.
 %{__automake}
 # select "0" optimization, which doesn't add any -O to CFLAGS
 %configure \
+	--enable-ltdl-install=no \
 	--enable-modules \
 	--enable-static \
 	%{?with_mmx:--with-cpu=mmx} \
