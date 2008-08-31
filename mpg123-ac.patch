@@ -2,8 +2,8 @@
 +++ mpg123-1.5.0/configure.ac	2008-05-29 20:34:21.000000000 +0200
 @@ -12,7 +12,7 @@
  
- AC_INIT([mpg123], [1.5.0], [mpg123-devel@lists.sourceforge.net])
- LIBMPG123_VERSION=6:0:6
+ AC_INIT([mpg123], [1.5.1], [mpg123-devel@lists.sourceforge.net])
+ LIBMPG123_VERSION=7:0:7
 -AC_SUBST( LIBMPG123_VERSION )
 +AC_SUBST(LIBMPG123_VERSION)
  
