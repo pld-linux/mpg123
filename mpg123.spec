@@ -6,6 +6,7 @@
 %bcond_without	arts	# disable aRts support
 %bcond_without	jack	# disable jack support
 %bcond_without	nas	# diasble nas support
+%bcond_without	openal	# disable openal support
 %bcond_without	sdl	# disable sdl support
 %bcond_without	port	# disable portaudio support
 %bcond_without	pulse	# disable pulseaudio support
@@ -20,17 +21,17 @@ Summary(pt_BR.UTF-8):	Tocador de arquivos MP3
 Summary(ru.UTF-8):	Проигрыватель MPEG аудиофайлов
 Summary(uk.UTF-8):	Програвач MPEG аудіофайлів
 Name:		mpg123
-Version:	1.6.4
+Version:	1.9.1
 Release:	1
 # some old parts are GPLed, but they are not included in package
 License:	LGPL v2.1
 Group:		Applications/Sound
 Source0:	http://dl.sourceforge.net/mpg123/%{name}-%{version}.tar.bz2
-# Source0-md5:	a111bcb82628e602abd9a5860928e870
+# Source0-md5:	39aa4407b53fa8c86f7d963bfe0702c9
 Patch0:		%{name}-am.patch
 Patch1:		%{name}-no-la.patch
-Patch3:		%{name}-ltdl.patch
 URL:		http://www.mpg123.de/
+%{?with_openal:BuildRequires:	OpenAL-devel}
 %{?with_sdl:BuildRequires:	SDL-devel >= 1.2.11}
 %{?with_alsa:BuildRequires:	alsa-lib-devel}
 %{?with_arts:BuildRequires:	artsc-devel}
@@ -145,6 +146,18 @@ NAS audio output plugin for mpg123.
 %description nas -l pl.UTF-8
 Wtyczka wyjścia dźwięku NAS dla mpg123.
 
+%package openal
+Summary:	OpenAL audio output plugin for mpg123
+Summary(pl.UTF-8):	Wtyczka wyjścia dźwięku OpenAL dla mpg123
+Group:		Applications/Sound
+Requires:	%{name} = %{version}-%{release}
+
+%description openal
+OpenAL audio output plugin for mpg123.
+
+%description openal -l pl.UTF-8
+Wtyczka wyjścia dźwięku OpenAL dla mpg123.
+
 %package portaudio
 Summary:	PortAudio audio output plugin for mpg123
 Summary(pl.UTF-8):	Wtyczka wyjścia dźwięku PortAudio dla mpg123
@@ -220,7 +233,6 @@ Statyczna biblioteka mpg123.
 %setup -q
 %patch0 -p1
 %patch1 -p1
-%patch3 -p1
 
 rm -rf libltdl
 
@@ -294,6 +306,12 @@ rm -rf $RPM_BUILD_ROOT
 %files nas
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/mpg123/output_nas.so
+%endif
+
+%if %{with openal}
+%files openal
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/mpg123/output_openal.so
 %endif
 
 %if %{with port}
