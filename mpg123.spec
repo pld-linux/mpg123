@@ -1,7 +1,7 @@
 #
 # Conditional build:
 %bcond_with	mmx	# use MMX-only code to decode stream instead of runtime detection
-%bcond_without	esd	# disable esound supprot
+%bcond_with	esd	# disable esound supprot
 %bcond_without	alsa	# disable alsa support
 %bcond_with	arts	# enable aRts support
 %bcond_without	jack	# disable jack support
@@ -22,7 +22,7 @@ Summary(ru.UTF-8):	Проигрыватель MPEG аудиофайлов
 Summary(uk.UTF-8):	Програвач MPEG аудіофайлів
 Name:		mpg123
 Version:	1.9.1
-Release:	2
+Release:	3
 # some old parts are GPLed, but they are not included in package
 License:	LGPL v2.1
 Group:		Applications/Sound
