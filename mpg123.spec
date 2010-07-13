@@ -9,8 +9,8 @@
 %bcond_without	openal	# disable openal support
 %bcond_without	sdl	# disable sdl support
 %bcond_without	port	# disable portaudio support
-%bcond_without	pulse	# disable pulseaudio support
-#
+%bcond_without	pulseaudio	# disable pulseaudio support
+
 %ifarch pentium3 pentium4 athlon
 %define		with_mmx	1
 %endif
@@ -42,9 +42,9 @@ BuildRequires:	automake >= 1:1.7
 BuildRequires:	libltdl-devel
 BuildRequires:	libtool >= 2:1.5
 %{?with_nas:BuildRequires:	nas-devel}
-%{?with_port:BuildRequires:	portaudio-devel >= 18}
-%{?with_pulse:BuildRequires:	pulseaudio-devel}
 BuildRequires:	pkgconfig
+%{?with_port:BuildRequires:	portaudio-devel >= 18}
+%{?with_pulseaudio:BuildRequires:	pulseaudio-devel}
 Requires:	libmpg123 = %{version}-%{release}
 Suggests:	%{name}-alsa = %{version}-%{release}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -320,7 +320,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/mpg123/output_portaudio.so
 %endif
 
-%if %{with pulse}
+%if %{with pulseaudio}
 %files pulseaudio
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/mpg123/output_pulse.so
