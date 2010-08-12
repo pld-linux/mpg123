@@ -1,6 +1,6 @@
---- mpg123-1.1.0/src/module.c.orig	2008-01-15 03:27:32.000000000 +0100
-+++ mpg123-1.1.0/src/module.c	2008-01-23 23:58:43.093716521 +0100
-@@ -19,7 +19,7 @@
+--- mpg123-1.12.3/src/module.c.orig	2010-07-05 00:03:03.000000000 +0200
++++ mpg123-1.12.3/src/module.c	2010-08-12 16:06:12.000000000 +0200
+@@ -20,7 +20,7 @@
  #error Cannot build without LTDL library support
  #endif
  
@@ -9,7 +9,7 @@
  #define MODULE_SYMBOL_PREFIX 	"mpg123_"
  #define MODULE_SYMBOL_SUFFIX 	"_module_info"
  
-@@ -75,14 +75,11 @@
+@@ -102,14 +102,11 @@
  	size_t module_path_len = 0;
  	char* module_symbol = NULL;
  	size_t module_symbol_len = 0;
@@ -26,7 +26,7 @@
  		if(moddir  != NULL) free(moddir);
  		return NULL;
  	}
-@@ -90,19 +87,14 @@
+@@ -117,20 +114,15 @@
  	/* Initialize libltdl */
  	if (lt_dlinit()) error( "Failed to initialise libltdl" );
  
@@ -36,19 +36,20 @@
 -		goto om_bad;
 -	}
  	/* Work out the path of the module to open */
--	module_path_len = strlen(type) + 1 + strlen(name) + strlen(MODULE_FILE_SUFFIX) + 1;
+ 	/* Note that we need to open ./file, not just file! */
+-	module_path_len = 2 + strlen(type) + 1 + strlen(name) + strlen(MODULE_FILE_SUFFIX) + 1;
 +	module_path_len = strlen(moddir) + 1 + strlen(type) + 1 + strlen(name) + strlen(MODULE_FILE_SUFFIX) + 1;
  	module_path = malloc( module_path_len );
  	if (module_path == NULL) {
  		error1( "Failed to allocate memory for module name: %s", strerror(errno) );
  		goto om_bad;
  	}
--	snprintf( module_path, module_path_len, "%s_%s%s", type, name, MODULE_FILE_SUFFIX );
+-	snprintf( module_path, module_path_len, "./%s_%s%s", type, name, MODULE_FILE_SUFFIX );
 +	snprintf( module_path, module_path_len, "%s/%s_%s%s", moddir, type, name, MODULE_FILE_SUFFIX );
  	/* Display the path of the module created */
- 	debug1( "Module path: %s", module_path );
+ 	if(param.verbose > 1) fprintf(stderr, "Module path: %s\n", module_path );
  
-@@ -144,9 +140,7 @@
+@@ -179,9 +171,7 @@
  om_bad:
  	module = NULL;
  om_end:
