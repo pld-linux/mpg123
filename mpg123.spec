@@ -1,14 +1,14 @@
 #
 # Conditional build:
-%bcond_with	mmx	# use MMX-only code to decode stream instead of runtime detection
-%bcond_with	esd	# disable esound supprot
-%bcond_without	alsa	# disable alsa support
-%bcond_with	arts	# enable aRts support
-%bcond_without	jack	# disable jack support
-%bcond_without	nas	# diasble nas support
-%bcond_without	openal	# disable openal support
-%bcond_without	sdl	# disable sdl support
-%bcond_without	port	# disable portaudio support
+%bcond_with	mmx		# use MMX-only code to decode stream instead of runtime detection
+%bcond_with	esd		# disable esound supprot
+%bcond_without	alsa		# disable alsa support
+%bcond_with	arts		# enable aRts support
+%bcond_without	jack		# disable jack support
+%bcond_without	nas		# diasble nas support
+%bcond_without	openal		# disable openal support
+%bcond_without	sdl		# disable sdl support
+%bcond_without	portaudio	# disable portaudio support
 %bcond_without	pulseaudio	# disable pulseaudio support
 
 %ifarch pentium3 pentium4 athlon
@@ -43,7 +43,7 @@ BuildRequires:	libltdl-devel
 BuildRequires:	libtool >= 2:1.5
 %{?with_nas:BuildRequires:	nas-devel}
 BuildRequires:	pkgconfig
-%{?with_port:BuildRequires:	portaudio-devel >= 18}
+%{?with_portaudio:BuildRequires:	portaudio-devel >= 18}
 %{?with_pulseaudio:BuildRequires:	pulseaudio-devel}
 Requires:	libmpg123 = %{version}-%{release}
 Suggests:	%{name}-alsa = %{version}-%{release}
@@ -234,8 +234,6 @@ Statyczna biblioteka mpg123.
 %patch0 -p1
 %patch1 -p1
 
-rm -rf libltdl
-
 %build
 %{__libtoolize}
 %{__aclocal}
@@ -244,9 +242,10 @@ rm -rf libltdl
 %{__automake}
 # select "0" optimization, which doesn't add any -O to CFLAGS
 %configure \
-	--enable-ltdl-install=no \
+	--disable-ltdl-install \
 	--enable-modules \
 	--enable-static \
+	--with-audio=%{?with_alsa:alsa,}oss%{?with_esd:,esd}%{?with_jack:,jack}%{?with_portaudio:,portaudio}%{?with_pulseaudio:,pulse}%{?with_sdl:,sdl}%{?with_nas:,nas}%{?with_arts:,arts}%{?with_openal:,openal} \
 	%{?with_mmx:--with-cpu=mmx} \
 	--with-default-audio=%{?with_alsa:alsa,}oss \
 	--with-optimization=0
@@ -258,7 +257,7 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-rm -f $RPM_BUILD_ROOT%{_libdir}/mpg123/*.{la,a}
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/mpg123/*.{la,a}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -314,7 +313,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/mpg123/output_openal.so
 %endif
 
-%if %{with port}
+%if %{with portaudio}
 %files portaudio
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/mpg123/output_portaudio.so
