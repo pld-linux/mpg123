@@ -1,7 +1,7 @@
 #
 # Conditional build:
 %bcond_with	mmx		# use MMX-only code to decode stream instead of runtime detection
-%bcond_with	esd		# disable esound supprot
+%bcond_with	esd		# enable EsounD support
 %bcond_without	alsa		# disable alsa support
 %bcond_with	arts		# enable aRts support
 %bcond_without	jack		# disable jack support
@@ -21,16 +21,15 @@ Summary(pt_BR.UTF-8):	Tocador de arquivos MP3
 Summary(ru.UTF-8):	Проигрыватель MPEG аудиофайлов
 Summary(uk.UTF-8):	Програвач MPEG аудіофайлів
 Name:		mpg123
-Version:	1.12.4
-Release:	2
+Version:	1.12.5
+Release:	1
 # some old parts are GPLed, but they are not included in package
 License:	LGPL v2.1
 Group:		Applications/Sound
 Source0:	http://downloads.sourceforge.net/mpg123/%{name}-%{version}.tar.bz2
-# Source0-md5:	256ab49b228b334d18377e8485840391
+# Source0-md5:	01fa64533cade452c2b22a3ce14a2fcd
 Patch0:		%{name}-am.patch
 Patch1:		%{name}-no-la.patch
-Patch2:		%{name}-nul-overrun.patch
 URL:		http://www.mpg123.de/
 %{?with_openal:BuildRequires:	OpenAL-devel}
 %{?with_sdl:BuildRequires:	SDL-devel >= 1.2.11}
@@ -234,7 +233,6 @@ Statyczna biblioteka mpg123.
 %setup -q
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 
 %build
 %{__libtoolize}
