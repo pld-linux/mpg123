@@ -21,13 +21,13 @@ Summary(pt_BR.UTF-8):	Tocador de arquivos MP3
 Summary(ru.UTF-8):	Проигрыватель MPEG аудиофайлов
 Summary(uk.UTF-8):	Програвач MPEG аудіофайлів
 Name:		mpg123
-Version:	1.12.5
+Version:	1.13.0
 Release:	1
 # some old parts are GPLed, but they are not included in package
 License:	LGPL v2.1
 Group:		Applications/Sound
 Source0:	http://downloads.sourceforge.net/mpg123/%{name}-%{version}.tar.bz2
-# Source0-md5:	01fa64533cade452c2b22a3ce14a2fcd
+# Source0-md5:	fb416eb9962d1f1e4373a8ff916ac88a
 Patch0:		%{name}-am.patch
 Patch1:		%{name}-no-la.patch
 URL:		http://www.mpg123.de/
@@ -247,6 +247,7 @@ Statyczna biblioteka mpg123.
 	--with-audio=%{?with_alsa:alsa,}oss%{?with_esd:,esd}%{?with_jack:,jack}%{?with_portaudio:,portaudio}%{?with_pulseaudio:,pulse}%{?with_sdl:,sdl}%{?with_nas:,nas}%{?with_arts:,arts}%{?with_openal:,openal} \
 	%{?with_mmx:--with-cpu=mmx} \
 	--with-default-audio=%{?with_alsa:alsa,}oss \
+	--with-module-suffix=.so \
 	--with-optimization=0
 %{__make}
 
@@ -266,7 +267,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS COPYING ChangeLog NEWS README TODO doc/{ACCURACY,BENCHMARKING,BUGS,CONTACT,LICENSE,PATENTS,README.gain,README.remote,ROAD_TO_LGPL,THANKS}
+%doc AUTHORS COPYING NEWS README TODO doc/{ACCURACY,BENCHMARKING,BUGS,CONTACT,LICENSE,PATENTS,README.gain,README.remote,ROAD_TO_LGPL,THANKS}
 %ifarch athlon
 %doc doc/README.3DNOW
 %endif
