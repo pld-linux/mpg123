@@ -1,6 +1,6 @@
---- mpg123-1.12.3/src/module.c.orig	2010-07-05 00:03:03.000000000 +0200
-+++ mpg123-1.12.3/src/module.c	2010-08-12 16:06:12.000000000 +0200
-@@ -102,14 +102,11 @@
+--- mpg123-1.14.4/src/module.c.orig	2012-07-26 15:36:44.000000000 +0200
++++ mpg123-1.14.4/src/module.c	2012-10-28 12:11:45.381479443 +0100
+@@ -101,16 +101,12 @@
  	size_t module_path_len = 0;
  	char* module_symbol = NULL;
  	size_t module_symbol_len = 0;
@@ -12,12 +12,14 @@
 +	if(moddir == NULL)
  	{
 -		error("Failure getting workdir or moddir!");
--		if(workdir != NULL) free(workdir);
+-		if(workdir == NULL) fprintf(stderr, "Hint: I need to know the current working directory to be able to come back after hunting modules. I will not leave because I do not know where I am.\n");
 +		error("Failure getting moddir!");
+ 
+-		if(workdir != NULL) free(workdir);
  		if(moddir  != NULL) free(moddir);
  		return NULL;
  	}
-@@ -117,20 +114,15 @@
+@@ -118,20 +114,15 @@
  	/* Initialize libltdl */
  	if (lt_dlinit()) error( "Failed to initialise libltdl" );
  
@@ -40,7 +42,7 @@
  	/* Display the path of the module created */
  	if(param.verbose > 1) fprintf(stderr, "Module path: %s\n", module_path );
  
-@@ -179,9 +171,7 @@
+@@ -180,9 +171,7 @@
  om_bad:
  	module = NULL;
  om_end:
