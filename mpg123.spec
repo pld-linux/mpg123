@@ -21,15 +21,15 @@ Summary(pt_BR.UTF-8):	Tocador de arquivos MP3
 Summary(ru.UTF-8):	Проигрыватель MPEG аудиофайлов
 Summary(uk.UTF-8):	Програвач MPEG аудіофайлів
 Name:		mpg123
-Version:	1.16.0
+Version:	1.20.1
 Release:	1
 # some old parts are GPLed, but they are not included in package
 License:	LGPL v2.1
 Group:		Applications/Sound
 Source0:	http://downloads.sourceforge.net/mpg123/%{name}-%{version}.tar.bz2
-# Source0-md5:	169cfc32b32b5cae99212fe8e4347215
+# Source0-md5:	1b3e8765aa608e306ede1ec507b67b23
 Patch0:		%{name}-am.patch
-Patch1:		%{name}-no-la.patch
+#Patch1: %{name}-no-la.patch
 URL:		http://www.mpg123.de/
 %{?with_openal:BuildRequires:	OpenAL-devel}
 %{?with_sdl:BuildRequires:	SDL-devel >= 1.2.11}
@@ -232,7 +232,7 @@ Statyczna biblioteka mpg123.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
+#%patch1 -p1
 
 %build
 %{__libtoolize}
@@ -272,10 +272,16 @@ rm -rf $RPM_BUILD_ROOT
 %doc doc/README.3DNOW
 %endif
 %attr(755,root,root) %{_bindir}/mpg123
+%attr(755,root,root) %{_bindir}/mpg123-id3dump
+%attr(755,root,root) %{_bindir}/mpg123-strip
+%attr(755,root,root) %{_bindir}/out123
+
 %dir %{_libdir}/mpg123
 %attr(755,root,root) %{_libdir}/mpg123/output_dummy.so
 %attr(755,root,root) %{_libdir}/mpg123/output_oss.so
 %{_mandir}/man1/mpg123.1*
+%{_mandir}/man1/out123.1*
+
 
 %if %{with alsa}
 %files alsa
