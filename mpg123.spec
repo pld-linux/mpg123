@@ -1,3 +1,4 @@
+# TODO: tinyalsa?
 #
 # Conditional build:
 %bcond_with	mmx		# use MMX-only code to decode stream instead of runtime detection
@@ -29,7 +30,6 @@ Group:		Applications/Sound
 Source0:	http://downloads.sourceforge.net/mpg123/%{name}-%{version}.tar.bz2
 # Source0-md5:	1b3e8765aa608e306ede1ec507b67b23
 Patch0:		%{name}-am.patch
-#Patch1: %{name}-no-la.patch
 URL:		http://www.mpg123.de/
 %{?with_openal:BuildRequires:	OpenAL-devel}
 %{?with_sdl:BuildRequires:	SDL-devel >= 1.2.11}
@@ -232,7 +232,6 @@ Statyczna biblioteka mpg123.
 %prep
 %setup -q
 %patch0 -p1
-#%patch1 -p1
 
 %build
 %{__libtoolize}
@@ -281,7 +280,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/mpg123/output_oss.so
 %{_mandir}/man1/mpg123.1*
 %{_mandir}/man1/out123.1*
-
 
 %if %{with alsa}
 %files alsa
