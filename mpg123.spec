@@ -11,6 +11,7 @@
 %bcond_without	sdl		# disable sdl support
 %bcond_without	portaudio	# disable portaudio support
 %bcond_without	pulseaudio	# disable pulseaudio support
+%bcond_with	tinyalsa	# enable tinyalsa support
 
 %ifarch pentium3 pentium4 athlon
 %define		with_mmx	1
@@ -45,6 +46,7 @@ BuildRequires:	libtool >= 2:1.5
 BuildRequires:	pkgconfig
 %{?with_portaudio:BuildRequires:	portaudio-devel >= 18}
 %{?with_pulseaudio:BuildRequires:	pulseaudio-devel}
+%{?with_tinyalsa:BuildRequires:	tinyalsa-devel}
 Requires:	libmpg123 = %{version}-%{release}
 Suggests:	%{name}-alsa = %{version}-%{release}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -194,6 +196,18 @@ SDL audio output plugin for mpg123.
 %description sdl -l pl.UTF-8
 Wtyczka wyjścia dźwięku SDL dla mpg123.
 
+%package tinyalsa
+Summary:	tinyalsa audio output plugin for mpg123
+Summary(pl.UTF-8):	Wtyczka wyjścia dźwięku tinyalsa dla mpg123
+Group:		Applications/Sound
+Requires:	%{name} = %{version}-%{release}
+
+%description tinyalsa
+tinyalsa audio output plugin for mpg123.
+
+%description tinyalsa -l pl.UTF-8
+Wtyczka wyjścia dźwięku tinyalsa dla mpg123.
+
 %package -n libmpg123
 Summary:	An optimized MPEG Audio decoder library
 Summary(pl.UTF-8):	Zoptymalizowana biblioteka dekodera dźwięku MPEG
@@ -243,7 +257,7 @@ Statyczna biblioteka mpg123.
 %configure \
 	--enable-modules \
 	--enable-static \
-	--with-audio=%{?with_alsa:alsa,}oss%{?with_esd:,esd}%{?with_jack:,jack}%{?with_portaudio:,portaudio}%{?with_pulseaudio:,pulse}%{?with_sdl:,sdl}%{?with_nas:,nas}%{?with_arts:,arts}%{?with_openal:,openal} \
+	--with-audio=%{?with_alsa:alsa,}oss%{?with_esd:,esd}%{?with_jack:,jack}%{?with_portaudio:,portaudio}%{?with_pulseaudio:,pulse}%{?with_sdl:,sdl}%{?with_nas:,nas}%{?with_arts:,arts}%{?with_openal:,openal}%{?with_tinyalsa:,tinyalsa} \
 	%{?with_mmx:--with-cpu=mmx} \
 	--with-default-audio=%{?with_alsa:alsa,}oss \
 	--with-module-suffix=.so \
@@ -333,6 +347,12 @@ rm -rf $RPM_BUILD_ROOT
 %files sdl
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/mpg123/output_sdl.so
+%endif
+
+%if %{with tinyalsa}
+%files tinyalsa
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/mpg123/output_tinyalsa.so
 %endif
 
 %files -n libmpg123
