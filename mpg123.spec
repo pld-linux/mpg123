@@ -1,4 +1,3 @@
-# TODO: tinyalsa?
 #
 # Conditional build:
 %bcond_with	mmx		# use MMX-only code to decode stream instead of runtime detection
@@ -23,14 +22,13 @@ Summary(pt_BR.UTF-8):	Tocador de arquivos MP3
 Summary(ru.UTF-8):	Проигрыватель MPEG аудиофайлов
 Summary(uk.UTF-8):	Програвач MPEG аудіофайлів
 Name:		mpg123
-Version:	1.20.1
-Release:	2
+Version:	1.22.4
+Release:	1
 # some old parts are GPLed, but they are not included in package
 License:	LGPL v2.1
 Group:		Applications/Sound
 Source0:	http://downloads.sourceforge.net/mpg123/%{name}-%{version}.tar.bz2
-# Source0-md5:	1b3e8765aa608e306ede1ec507b67b23
-Patch0:		%{name}-am.patch
+# Source0-md5:	2dfafae3bbc532b4c8b04a77c6a6de89
 URL:		http://www.mpg123.de/
 %{?with_openal:BuildRequires:	OpenAL-devel}
 %{?with_sdl:BuildRequires:	SDL-devel >= 1.2.11}
@@ -245,7 +243,6 @@ Statyczna biblioteka mpg123.
 
 %prep
 %setup -q
-%patch0 -p1
 
 %build
 %{__libtoolize}
