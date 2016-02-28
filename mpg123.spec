@@ -11,6 +11,7 @@
 %bcond_without	portaudio	# disable portaudio support
 %bcond_without	pulseaudio	# disable pulseaudio support
 %bcond_with	tinyalsa	# enable tinyalsa support
+%bcond_without	static_libs	# static library
 
 %ifarch pentium3 pentium4 athlon
 %define		with_mmx	1
@@ -22,13 +23,13 @@ Summary(pt_BR.UTF-8):	Tocador de arquivos MP3
 Summary(ru.UTF-8):	Проигрыватель MPEG аудиофайлов
 Summary(uk.UTF-8):	Програвач MPEG аудіофайлів
 Name:		mpg123
-Version:	1.22.4
+Version:	1.23.2
 Release:	1
 # some old parts are GPLed, but they are not included in package
 License:	LGPL v2.1
 Group:		Applications/Sound
 Source0:	http://downloads.sourceforge.net/mpg123/%{name}-%{version}.tar.bz2
-# Source0-md5:	2dfafae3bbc532b4c8b04a77c6a6de89
+# Source0-md5:	0a535c0b501c584f43c919dfe6be9144
 URL:		http://www.mpg123.de/
 %{?with_openal:BuildRequires:	OpenAL-devel}
 %{?with_sdl:BuildRequires:	SDL-devel >= 1.2.11}
@@ -253,7 +254,7 @@ Statyczna biblioteka mpg123.
 # select "0" optimization, which doesn't add any -O to CFLAGS
 %configure \
 	--enable-modules \
-	--enable-static \
+	%{?with_static_libs:--enable-static} \
 	--with-audio=%{?with_alsa:alsa,}oss%{?with_esd:,esd}%{?with_jack:,jack}%{?with_portaudio:,portaudio}%{?with_pulseaudio:,pulse}%{?with_sdl:,sdl}%{?with_nas:,nas}%{?with_arts:,arts}%{?with_openal:,openal}%{?with_tinyalsa:,tinyalsa} \
 	%{?with_mmx:--with-cpu=mmx} \
 	--with-default-audio=%{?with_alsa:alsa,}oss \
@@ -267,7 +268,11 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/mpg123/*.{la,a}
+# obsoleted by pkg-config
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/lib*.la
+# loadable modules
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/mpg123/*.la \
+	%{?with_static_libs:$RPM_BUILD_ROOT%{_libdir}/mpg123/*.a}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -357,14 +362,22 @@ rm -rf $RPM_BUILD_ROOT
 %doc NEWS.libmpg123
 %attr(755,root,root) %{_libdir}/libmpg123.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libmpg123.so.0
+%attr(755,root,root) %{_libdir}/libout123.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libout123.so.0
 
 %files -n libmpg123-devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libmpg123.so
-%{_libdir}/libmpg123.la
+%attr(755,root,root) %{_libdir}/libout123.so
+%{_includedir}/fmt123.h
 %{_includedir}/mpg123.h
+%{_includedir}/out123.h
 %{_pkgconfigdir}/libmpg123.pc
+%{_pkgconfigdir}/libout123.pc
 
+%if %{with static_libs}
 %files -n libmpg123-static
 %defattr(644,root,root,755)
 %{_libdir}/libmpg123.a
+%{_libdir}/libout123.a
+%endif
