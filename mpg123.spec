@@ -1,6 +1,5 @@
 #
 # Conditional build:
-%bcond_with	mmx		# use MMX-only code to decode stream instead of runtime detection
 %bcond_with	esd		# enable EsounD support
 %bcond_without	alsa		# disable alsa support
 %bcond_with	arts		# enable aRts support
@@ -13,9 +12,6 @@
 %bcond_with	tinyalsa	# enable tinyalsa support
 %bcond_without	static_libs	# static library
 
-%ifarch pentium3 pentium4 athlon
-%define		with_mmx	1
-%endif
 Summary:	MPEG audio player
 Summary(es.UTF-8):	Ejecuta archivos MP3
 Summary(pl.UTF-8):	Odtwarzacz plików audio MPEG
@@ -23,14 +19,13 @@ Summary(pt_BR.UTF-8):	Tocador de arquivos MP3
 Summary(ru.UTF-8):	Проигрыватель MPEG аудиофайлов
 Summary(uk.UTF-8):	Програвач MPEG аудіофайлів
 Name:		mpg123
-Version:	1.23.8
+Version:	1.24.0
 Release:	1
 # some old parts are GPLed, but they are not included in package
 License:	LGPL v2.1
 Group:		Applications/Sound
 Source0:	http://downloads.sourceforge.net/mpg123/%{name}-%{version}.tar.bz2
-# Source0-md5:	4dde045123a2ad1e385a0a82c0ef9268
-Patch0:		%{name}-alsa.patch
+# Source0-md5:	75d62ac0cb713a7bac5af4ded4af2bb4
 URL:		http://www.mpg123.de/
 %{?with_openal:BuildRequires:	OpenAL-devel}
 %{?with_sdl:BuildRequires:	SDL-devel >= 1.2.11}
@@ -47,6 +42,9 @@ BuildRequires:	pkgconfig
 %{?with_portaudio:BuildRequires:	portaudio-devel >= 18}
 %{?with_pulseaudio:BuildRequires:	pulseaudio-devel}
 %{?with_tinyalsa:BuildRequires:	tinyalsa-devel}
+%ifarch %{x8664}
+BuildRequires:	yasm
+%endif
 Requires:	libmpg123 = %{version}-%{release}
 Suggests:	%{name}-alsa = %{version}-%{release}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -245,7 +243,6 @@ Statyczna biblioteka mpg123.
 
 %prep
 %setup -q
-%patch0 -p1
 
 %build
 %{__libtoolize}
@@ -258,9 +255,7 @@ Statyczna biblioteka mpg123.
 	--enable-modules \
 	%{?with_static_libs:--enable-static} \
 	--with-audio=%{?with_alsa:alsa,}oss%{?with_esd:,esd}%{?with_jack:,jack}%{?with_portaudio:,portaudio}%{?with_pulseaudio:,pulse}%{?with_sdl:,sdl}%{?with_nas:,nas}%{?with_arts:,arts}%{?with_openal:,openal}%{?with_tinyalsa:,tinyalsa} \
-	%{?with_mmx:--with-cpu=mmx} \
 	--with-default-audio=%{?with_alsa:alsa,}oss \
-	--with-module-suffix=.so \
 	--with-optimization=0
 %{__make}
 
@@ -272,9 +267,10 @@ rm -rf $RPM_BUILD_ROOT
 
 # obsoleted by pkg-config
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/lib*.la
-# loadable modules
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/mpg123/*.la \
-	%{?with_static_libs:$RPM_BUILD_ROOT%{_libdir}/mpg123/*.a}
+%if %{with static_libs}
+# useless static modules
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/mpg123/*.a
+%endif
 
 %clean
 rm -rf $RPM_BUILD_ROOT
