@@ -19,16 +19,16 @@ Summary(pt_BR.UTF-8):	Tocador de arquivos MP3
 Summary(ru.UTF-8):	Проигрыватель MPEG аудиофайлов
 Summary(uk.UTF-8):	Програвач MPEG аудіофайлів
 Name:		mpg123
-Version:	1.25.13
+Version:	1.26.0
 Release:	1
 # some old parts are GPLed, but they are not included in package
 License:	LGPL v2.1
 Group:		Applications/Sound
 Source0:	http://downloads.sourceforge.net/mpg123/%{name}-%{version}.tar.bz2
-# Source0-md5:	294a6c30546504ec3d0deac2b2ea22be
+# Source0-md5:	4493bf82f6707da17805ddeae71671f9
 URL:		http://www.mpg123.de/
 %{?with_openal:BuildRequires:	OpenAL-devel}
-%{?with_sdl:BuildRequires:	SDL-devel >= 1.2.11}
+%{?with_sdl:BuildRequires:	SDL2-devel >= 2.0}
 %{?with_alsa:BuildRequires:	alsa-lib-devel}
 %{?with_arts:BuildRequires:	artsc-devel}
 BuildRequires:	autoconf >= 2.57
@@ -362,20 +362,26 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %ghost %{_libdir}/libmpg123.so.0
 %attr(755,root,root) %{_libdir}/libout123.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libout123.so.0
+%attr(755,root,root) %{_libdir}/libsyn123.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libsyn123.so.0
 
 %files -n libmpg123-devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libmpg123.so
 %attr(755,root,root) %{_libdir}/libout123.so
+%attr(755,root,root) %{_libdir}/libsyn123.so
 %{_includedir}/fmt123.h
 %{_includedir}/mpg123.h
 %{_includedir}/out123.h
+%{_includedir}/syn123.h
 %{_pkgconfigdir}/libmpg123.pc
 %{_pkgconfigdir}/libout123.pc
+%{_pkgconfigdir}/libsyn123.pc
 
 %if %{with static_libs}
 %files -n libmpg123-static
 %defattr(644,root,root,755)
 %{_libdir}/libmpg123.a
 %{_libdir}/libout123.a
+%{_libdir}/libsyn123.a
 %endif
