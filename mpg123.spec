@@ -267,10 +267,6 @@ rm -rf $RPM_BUILD_ROOT
 
 # obsoleted by pkg-config
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/lib*.la
-%if %{with static_libs}
-# useless static modules
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/mpg123/*.a
-%endif
 
 %clean
 rm -rf $RPM_BUILD_ROOT
